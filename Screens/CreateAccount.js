@@ -43,8 +43,11 @@ export default function CreateAccount({ navigation }) {
             Create account
           </Text>
           <View style={tw`p-4 items-center content-center`}>
-            <View style={tw`p-17 mt-4 bg-gray-200 w-10 rounded-full`}>
-              <Image source={image.uri} />
+            <View style={tw`mt-2 rounded-full`}>
+              <Image
+                source={require("../assets/images/avatar.png")}
+                style={tw`h-36 w-36`}
+              />
               <TouchableOpacity
                 onPress={pickImage}
                 style={tw`absolute p-6 inset-x-22 inset-y-23 bg-red-800 rounded-full items-center content-center`}
@@ -59,7 +62,7 @@ export default function CreateAccount({ navigation }) {
             <Input
               placeholder="First Name"
               autofocus={true}
-              style={tw`p-4 w-90 mt-10 bg-gray-200 rounded-xl`}
+              style={tw`p-4 w-90 mt-7 bg-gray-200 rounded-xl`}
             />
             <Input
               placeholder="Last Name"
