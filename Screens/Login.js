@@ -12,6 +12,7 @@ import {
 import React from "react";
 import tw from "twrnc";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Feather from "@expo/vector-icons/Feather";
 import Input from "../Components/Input";
 
 export default function Login({ navigation }) {
@@ -28,17 +29,13 @@ export default function Login({ navigation }) {
                 navigation.goBack();
               }}
             >
-              <FontAwesome
-                name="arrow-left"
-                style={tw`text-red-800`}
-                size={20}
-              />
+              <Feather name="arrow-left" size={20} style={tw`text-red-800`} />
             </TouchableOpacity>
           </View>
           <View>
             <Image
-              style={[tw`h-70 w-80 mt-3`, styles.image]}
-              source={require("../assets/images/2.png")}
+              style={[tw`h-65 w-80 mt-3`, styles.image]}
+              source={require("../assets/images/3.png")}
             />
           </View>
           <Text style={tw`w-50 font-bold text-5xl mt-5`}>Welcome Back</Text>
@@ -55,7 +52,15 @@ export default function Login({ navigation }) {
             secureTextEntry={true}
           />
           <TouchableOpacity
-            style={tw`p-4 mt-8 rounded-xl bg-red-800 w-90 items-center content-center`}
+            style={tw`p-3`}
+            onPress={() => {
+              navigation.navigate("ForgotPassword");
+            }}
+          >
+            <Text style={tw`text-red-800 mt-1`}>Forgot Password ?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={tw`p-4 mt-3 rounded-xl bg-red-800 w-90 items-center content-center`}
             onPress={() => {
               navigation.navigate("Home");
             }}
@@ -82,4 +87,8 @@ export default function Login({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  image: {
+    resizeMode: "contain",
+  },
+});

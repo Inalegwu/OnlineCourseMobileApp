@@ -42,7 +42,11 @@ export default function OnBoard({ navigation }) {
       </View>
       <View style={tw`flex flex-row content-center p-3 mt-3 items-center`}>
         <Text>Don't have and account ? </Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("CreateAccount");
+          }}
+        >
           <Text style={tw`text-red-800 font-bold`}>Create Account</Text>
         </TouchableOpacity>
       </View>

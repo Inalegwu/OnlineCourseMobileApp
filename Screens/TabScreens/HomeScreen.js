@@ -12,6 +12,7 @@ import React from "react";
 import tw from "twrnc";
 import Input from "../../Components/Input";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import TopTutors from "../../Components/TopTutors";
 
 const offers = [
   {
@@ -69,6 +70,7 @@ export default function HomeScreen() {
             secureTextEntry={false}
           />
         </View>
+        {/* Offers Component */}
         <View style={tw`h-50 bg-red-800 ml-5 mr-5 rounded-xl`}>
           <ScrollView horizontal={true} indicatorStyle="white">
             {offers.map((item) => {
@@ -82,6 +84,8 @@ export default function HomeScreen() {
             })}
           </ScrollView>
         </View>
+        {/* Top Tutors Component */}
+        <TopTutors />
       </ScrollView>
     </KeyboardAvoidingView>
   );

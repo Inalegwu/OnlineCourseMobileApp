@@ -15,7 +15,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import * as ImagePicker from "expo-image-picker";
 
 export default function CreateAccount({ navigation }) {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("../assets/images/avatar.png");
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -42,7 +42,7 @@ export default function CreateAccount({ navigation }) {
           <Text style={tw`font-extrabold text-5xl w-50 mt-10 ml-3`}>
             Create account
           </Text>
-          <View style={tw`p-4 items-center content-center`}>
+          <View style={tw`p-4 m-1 items-center content-center`}>
             <View style={tw`mt-2 rounded-full`}>
               <Image
                 source={require("../assets/images/avatar.png")}
@@ -77,6 +77,9 @@ export default function CreateAccount({ navigation }) {
               style={tw`p-4 w-90 mt-5 bg-gray-200 rounded-xl`}
             />
             <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Home");
+              }}
               style={tw`p-4 w-90 bg-red-800 mt-7 rounded-lg items-center content-center`}
             >
               <Text style={tw`font-bold text-lg text-white`}>
