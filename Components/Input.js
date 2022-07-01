@@ -11,6 +11,7 @@ export default function Input({
   return (
     <TextInput
       style={style}
+      returnKeyType="submit"
       secureTextEntry={secureTextEntry}
       placeholder={placeholder}
       autoFocus={autofocus}

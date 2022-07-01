@@ -13,6 +13,7 @@ import tw from "twrnc";
 import Input from "../Components/Input";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import * as ImagePicker from "expo-image-picker";
+import Feather from "@expo/vector-icons/Feather";
 
 export default function CreateAccount({ navigation }) {
   const [image, setImage] = useState("../assets/images/avatar.png");
@@ -38,7 +39,21 @@ export default function CreateAccount({ navigation }) {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView style={tw`p-2`}>
-        <View style={tw`mt-10 p-4`}>
+        <View style={tw`flex flex-row m-2`}>
+          <TouchableOpacity
+            style={tw`m-1`}
+            onPress={() => {
+              navigation.navigate("Login");
+            }}
+          >
+            <Feather
+              name="arrow-left"
+              size={25}
+              style={tw`text-red-800 font-bold`}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={tw`mt-6 p-4`}>
           <Text style={tw`font-extrabold text-5xl w-50 mt-10 ml-3`}>
             Create account
           </Text>
@@ -54,7 +69,7 @@ export default function CreateAccount({ navigation }) {
               >
                 <FontAwesome5
                   name="camera"
-                  style={tw`text-white absolute mt-3`}
+                  style={tw`text-white absolute top-3 left-3`}
                   size={22}
                 />
               </TouchableOpacity>
@@ -73,7 +88,7 @@ export default function CreateAccount({ navigation }) {
               style={tw`p-4 w-90 mt-5 bg-gray-200 rounded-xl`}
             />
             <Input
-              placeholder="Verify Email"
+              placeholder="Password"
               style={tw`p-4 w-90 mt-5 bg-gray-200 rounded-xl`}
             />
             <TouchableOpacity

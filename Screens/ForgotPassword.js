@@ -41,12 +41,20 @@ export default function ForgotPassword({ navigation }) {
               style={tw`p-5 mt-8 bg-gray-200 rounded-lg`}
             />
             <TouchableOpacity
-              style={tw`ml-2 mt-4`}
+              style={tw`ml-2 mt-5`}
               onPress={() => {
                 console.log("Well Too Bad For You");
               }}
             >
               <Text style={tw`text-red-800`}>I don't remember my email</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                console.log("Stop Forcing Me To Recover Your Account");
+              }}
+              style={tw`p-5 bg-red-800 mt-8 items-center content-center rounded-lg`}
+            >
+              <Text style={tw`font-bold text-white`}>Recover</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
