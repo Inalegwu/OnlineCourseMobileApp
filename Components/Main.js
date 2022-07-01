@@ -8,13 +8,14 @@ import Login from "../Screens/Login";
 import Home from "../Screens/Home";
 import ForgotPassword from "../Screens/ForgotPassword";
 import { StatusBar } from "expo-status-bar";
+import OTP from "../Screens/OTP";
 
 const Stack = createStackNavigator();
 
 export default function Main() {
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="dark"/>
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="OnBoard"
@@ -25,6 +26,7 @@ export default function Main() {
           <Stack.Screen name="CreateAccount" component={CreateAccount} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen name="OTP" component={OTP} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

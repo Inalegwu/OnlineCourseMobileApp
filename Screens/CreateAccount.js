@@ -38,8 +38,8 @@ export default function CreateAccount({ navigation }) {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ScrollView style={tw`p-2`}>
-        <View style={tw`flex flex-row m-2`}>
+      <ScrollView style={tw`p-1`}>
+        <View style={tw`flex flex-row m-2 mt-10 ml-4`}>
           <TouchableOpacity
             style={tw`m-1`}
             onPress={() => {
@@ -53,8 +53,8 @@ export default function CreateAccount({ navigation }) {
             />
           </TouchableOpacity>
         </View>
-        <View style={tw`mt-6 p-4`}>
-          <Text style={tw`font-extrabold text-5xl w-50 mt-10 ml-3`}>
+        <View style={tw`p-4`}>
+          <Text style={tw`font-extrabold text-5xl w-50 mt-2 ml-3`}>
             Create account
           </Text>
           <View style={tw`p-4 m-1 items-center content-center`}>

@@ -50,7 +50,7 @@ export default function ForgotPassword({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                console.log("Stop Forcing Me To Recover Your Account");
+                navigation.navigate("OTP");
               }}
               style={tw`p-5 bg-red-800 mt-8 items-center content-center rounded-lg`}
             >
