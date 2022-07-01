@@ -48,7 +48,11 @@ export default function TopTutors() {
           </Text>
         </TouchableOpacity>
       </View>
-      <ScrollView horizontal={true} style={tw`mt-2`}>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        horizontal={true}
+        style={tw`mt-2`}
+      >
         {tutors.map((item) => {
           return (
             <TutorItem

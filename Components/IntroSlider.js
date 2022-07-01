@@ -34,7 +34,7 @@ export default function IntroSlider(props) {
           style={[tw`h-100 w-100`, { resizeMode: "contain" }]}
           source={item.image}
         />
-        <Text style={tw`text-5xl mt-10 text-center font-extrabold`}>
+        <Text style={tw`text-4xl ml-1 mt-10 text-center font-extrabold`}>
           {item.text}
         </Text>
       </View>
@@ -61,7 +61,7 @@ export default function IntroSlider(props) {
   const _renderPrevBtn = () => {
     return (
       <View style={tw`p-4 mr-2`}>
-        <Text style={tw`text-red-800 font-bold`}>Prev</Text>
+        <Text style={tw`text-red-800 font-bold`}>Previous</Text>
       </View>
     );
   };

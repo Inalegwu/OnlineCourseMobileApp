@@ -6,7 +6,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  TextInput,
   Platform,
 } from "react-native";
 import React from "react";
@@ -34,20 +33,20 @@ export default function Login({ navigation }) {
           </View>
           <View>
             <Image
-              style={[tw`h-65 w-80 mt-3`, styles.image]}
+              style={[tw`h-55 w-80 mt-3`, styles.image]}
               source={require("../assets/images/3.png")}
             />
           </View>
-          <Text style={tw`w-50 font-bold text-5xl mt-5`}>Welcome Back</Text>
+          <Text style={tw`w-50 font-bold text-4xl mt-2`}>Welcome Back</Text>
         </View>
-        <View style={tw`p-3 m-2 mt--2`}>
+        <View style={tw`p-3 m-2`}>
           <Input
-            style={tw`p-5 bg-gray-200 mt-2 rounded-xl`}
+            style={tw`p-4 bg-gray-200 rounded-xl`}
             placeholder="Email"
             autoFocus={true}
           />
           <Input
-            style={tw`p-5 bg-gray-200 mt-2 rounded-xl`}
+            style={tw`p-4 bg-gray-200 mt-3 rounded-xl`}
             placeholder="Password"
             secureTextEntry={true}
           />
@@ -60,7 +59,7 @@ export default function Login({ navigation }) {
             <Text style={tw`text-red-800 mt-1`}>Forgot Password ?</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={tw`p-4 mt-3 rounded-xl bg-red-800 w-90 items-center content-center`}
+            style={tw`p-4 mt-3 rounded-xl bg-red-800 w-93 items-center content-center`}
             onPress={() => {
               navigation.navigate("Home");
             }}
@@ -70,6 +69,22 @@ export default function Login({ navigation }) {
             </Text>
           </TouchableOpacity>
         </View>
+        {/* Login With Container */}
+        <View
+          style={tw`flex items-center content-center justify-evenly w-90 flex-row p-2 ml-4 mr-4`}
+        >
+          <TouchableOpacity
+            style={tw`p-3 h-15 w-15 items-center content-center shadow-md rounded-full bg-gray-200`}
+          >
+            <FontAwesome name="google" size={20} style={tw`mt-2`} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={tw`p-3 h-15 w-15 shadow-md items-center content-center rounded-full bg-gray-200`}
+          >
+            <FontAwesome name="facebook" size={20} style={tw`mt-2`} />
+          </TouchableOpacity>
+        </View>
+        {/* Gutter */}
         <View
           style={tw`flex ml-20 flex-row p-5 w-100 items-center content-center`}
         >
