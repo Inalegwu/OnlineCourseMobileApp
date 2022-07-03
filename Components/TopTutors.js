@@ -51,7 +51,7 @@ export default function TopTutors() {
       <ScrollView
         showsHorizontalScrollIndicator={false}
         horizontal={true}
-        style={tw`mt-2`}
+        style={tw`mt-4`}
       >
         {tutors.map((item) => {
           return (

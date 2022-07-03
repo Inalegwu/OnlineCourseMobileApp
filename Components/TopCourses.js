@@ -12,7 +12,7 @@ import tw from "twrnc";
 import * as API from "../data/remote/userApiCalls";
 import CourseItem from "./CourseItem";
 
-export default function TopCourses() {
+export default function TopCourses({ navigation }) {
   const [loading, setloading] = useState(false);
   const [fetchedData, setFetchedData] = useState();
   const [categories, setCategories] = useState();
@@ -24,14 +24,13 @@ export default function TopCourses() {
     .catch((error) => {
       console.log(error.toString() + "unable to complete top courses call");
     });
-  //   API.fetchCategories()
-  //     .then((data) => {
-  //       setCategories(data.data);
-  //       setloading(true);
-  //     })
-  //     .catch(() => {
-  //       console.log("unable to complete categories call");
-  //     });
+  API.fetchCategories()
+    .then((data) => {
+      setCategories(data.data);
+    })
+    .catch((error) => {
+      console.log(error.toString() + "unable to complete categories call");
+    });
   return (
     <View style={tw`p-5 justify-start`}>
       {/* Details Buttons */}
@@ -44,6 +43,9 @@ export default function TopCourses() {
         </TouchableOpacity>
       </View>
       {/* Categories Controller */}
+      {/* <View style={tw`mt-2 p-3`}>
+        <Text>{categories}</Text>
+      </View> */}
       {/* <View style={tw`p-2 mt-3 flex flex-row`}>
         {<Text>{categories}</Text>}
       </View> */}
@@ -61,7 +63,9 @@ export default function TopCourses() {
           />
         ) : (
           fetchedData.map((data) => {
-            return <CourseItem key={data.id} data={data} />;
+            return (
+              <CourseItem navigation={navigation} key={data.id} data={data} />
+            );
           })
         )}
       </ScrollView>

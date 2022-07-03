@@ -8,8 +8,12 @@ import Feather from "@expo/vector-icons/Feather";
 import InboxScreen from "./TabScreens/InboxScreen";
 import CartScreen from "./TabScreens/CartScreen";
 import CoursesScreen from "./TabScreens/CoursesScreen";
+import { StackActions } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import CourseDetails from "./TabScreens/SubScreens/CourseDetails";
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export default function Home() {
   const color = "#8D161A";

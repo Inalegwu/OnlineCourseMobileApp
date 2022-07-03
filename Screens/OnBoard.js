@@ -18,16 +18,16 @@ export default function OnBoard({ navigation }) {
           <View style={tw`mr-5 p-2`}>
             <FontAwesome name="google" />
           </View>
-          <Text style={tw`text-sm mt-1 font-bold`}>Login With Google</Text>
+          <Text style={tw`text-base mt-1 font-bold`}>Login With Google</Text>
         </View>
         <View style={tw`p-8 w-90 rounded-2xl mt-2 flex flex-row bg-gray-200`}>
           <View style={tw`mr-5 p-2`}>
             <FontAwesome name="facebook" />
           </View>
-          <Text style={tw`text-sm mt-1 font-bold`}>Login With Facebook</Text>
+          <Text style={tw`text-base mt-1 font-bold`}>Login With Facebook</Text>
         </View>
       </View>
-      <Text style={tw`text-sm font-bold mt-3`}>or</Text>
+      <Text style={tw`text-base font-bold mt-3`}>or</Text>
       <View style={tw`mt-7`}>
         <TouchableOpacity
           style={tw`p-5 w-90 rounded-2xl bg-red-800 items-center`}
