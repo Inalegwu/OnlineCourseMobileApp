@@ -8,13 +8,39 @@ import {
   Image,
   Platform,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import tw from "twrnc";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Feather from "@expo/vector-icons/Feather";
 import Input from "../Components/Input";
+import * as API from "../data/remote/userApiCalls";
 
 export default function Login({ navigation }) {
+  const [isValid, setIsValid] = useState(false);
+  const [token, setToken] = useState("");
+  const [fetchedEmail, setEmail] = useState("");
+  const [fetchedPassword, setPassword] = useState("");
+
+  function authenticate(email, password) {
+    API.login(email, password)
+      .then((data) => {
+        setIsValid(data.status);
+        setToken(data.data.token);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
+
+  const submitPassword = (password) => {
+    setPassword(password);
+    console.log(fetchedPassword);
+  };
+  const submitEmail = (email) => {
+    setEmail(email);
+    console.log(fetchedEmail);
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -44,11 +70,13 @@ export default function Login({ navigation }) {
             style={tw`p-4 bg-gray-200 rounded-xl`}
             placeholder="Email"
             autoFocus={true}
+            submit={submitEmail}
           />
           <Input
             style={tw`p-4 bg-gray-200 mt-3 rounded-xl`}
             placeholder="Password"
             secureTextEntry={true}
+            submit={submitPassword}
           />
           <TouchableOpacity
             style={tw`p-3`}
@@ -60,9 +88,7 @@ export default function Login({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={tw`p-4 mt-3 rounded-xl bg-red-800 w-93 items-center content-center`}
-            onPress={() => {
-              navigation.navigate("Home");
-            }}
+            onPress={authenticate(fetchedEmail, fetchedPassword)}
           >
             <Text style={[tw`text-lg font-bold`, { color: "white" }]}>
               Login

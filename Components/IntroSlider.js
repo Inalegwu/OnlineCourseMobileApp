@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import { Text, View, Image, TouchableOpacity, StatusBar } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 import tw from "twrnc";
 import { FontAwesome } from "@expo/vector-icons";
@@ -71,15 +71,18 @@ export default function IntroSlider(props) {
   };
 
   return (
-    <AppIntroSlider
-      renderItem={_renderItem}
-      data={slides}
-      keyExtractor={keyExtractor}
-      activeDotStyle={{ backgroundColor: "#8D161A" }}
-      renderNextButton={_renderNextBtn}
-      renderDoneButton={_renderDoneBtn}
-      renderPrevButton={_renderPrevBtn}
-      onDone={handleDone}
-    />
+    <>
+      <StatusBar style="dark" />
+      <AppIntroSlider
+        renderItem={_renderItem}
+        data={slides}
+        keyExtractor={keyExtractor}
+        activeDotStyle={{ backgroundColor: "#8D161A" }}
+        renderNextButton={_renderNextBtn}
+        renderDoneButton={_renderDoneBtn}
+        renderPrevButton={_renderPrevBtn}
+        onDone={handleDone}
+      />
+    </>
   );
 }

@@ -13,6 +13,7 @@ import tw from "twrnc";
 import * as API from "../../../data/remote/userApiCalls";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import WebView from "react-native-webview";
 
 export default function CourseDetails({ route, navigation }) {
   const { data } = route.params;
@@ -25,13 +26,13 @@ export default function CourseDetails({ route, navigation }) {
   };
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       {/* Top View */}
       <View>
         <Image
           source={{ uri: route.params.data.thumbnail }}
           style={[
-            tw`h-90 w-full`,
+            tw`h-95 w-full`,
             {
               shadowColor: "#171717",
               shadowOffset: { width: -2, height: 4 },
@@ -59,7 +60,7 @@ export default function CourseDetails({ route, navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView style={tw``}>
+      <ScrollView style={tw`p-2`}>
         {/* Title */}
         <View style={tw` mt-3 flex flex-row justify-between m-2`}>
           <Text style={tw`text-3xl w-85 ml-2 text-black font-bold`}>
@@ -88,7 +89,11 @@ export default function CourseDetails({ route, navigation }) {
           </View>
           <View style={tw`mt-3 ml-2 mr-2 flex flex-row`}>
             <Text style={tw`font-bold text-red-800 text-xl`}>{data.price}</Text>
-            <Text>{data.discount_price}</Text>
+            {data.discounted_flag === null ? null : (
+              <Text style={tw`text-gray-400 ml-4 mt-2`}>
+                {data.discounted_price}
+              </Text>
+            )}
           </View>
           <View
             style={tw`flex flex-row items-start content-start justify-between ml-2 mr-2 mt-3`}
@@ -121,9 +126,6 @@ export default function CourseDetails({ route, navigation }) {
               {/* {data.short_description.slice(0, 62) + "..."} */}
               {data.short_description}
             </Text>
-            {/* <Text style={tw`mt-3 text-gray-900 font-bold`}>
-              {data.description.toString()}
-            </Text> */}
           </View>
           <TouchableOpacity
             style={tw`p-4 mt-4 items-center content-center rounded-full bg-red-800`}

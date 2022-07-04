@@ -5,6 +5,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import CourseDetails from "./SubScreens/CourseDetails";
 import RenderHome from "./SubScreens/RenderHome";
+import AccountDetails from "./SubScreens/AccountDetails";
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ export default function HomeScreen() {
     >
       <Stack.Screen name="Home" component={RenderHome} />
       <Stack.Screen name="CourseDetails" component={CourseDetails} />
+      <Stack.Screen name="AccountDetails" component={AccountDetails} />
     </Stack.Navigator>
   );
 }

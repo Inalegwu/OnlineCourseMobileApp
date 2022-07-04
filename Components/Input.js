@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import tw from "twrnc";
 
 export default function Input({
@@ -7,7 +7,10 @@ export default function Input({
   secureTextEntry,
   style,
   autofocus,
+  onChangeText,
+  submit,
 }) {
+  const [text, setText] = useState("");
   return (
     <TextInput
       style={style}
@@ -15,6 +18,10 @@ export default function Input({
       secureTextEntry={secureTextEntry}
       placeholder={placeholder}
       autoFocus={autofocus}
+      enablesReturnKeyAutomatically={true}
+      onSubmitEditing={(text) => {
+        submit(text);
+      }}
     />
   );
 }
