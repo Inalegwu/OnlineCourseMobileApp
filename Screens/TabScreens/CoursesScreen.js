@@ -1,11 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import tw from "twrnc";
 import { NetworkContext } from "../../Components/ContextProvider";
-import * as API from "../../data/remote/userApiCalls";
-import CourseItem from "../../Components/CourseItem";
 import { createStackNavigator } from "@react-navigation/stack";
-import renderCourses from "./CoursesSubScreens/renderCourses";
+import RenderCourses from "./CoursesSubScreens/RenderCourses";
+import CourseDetailsScreen from "./CoursesSubScreens/CourseDetailsScreen";
 
 const Stack = createStackNavigator();
 
@@ -14,7 +12,8 @@ export default function CoursesScreen() {
   return (
     <NetworkContext.Provider value={data}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="MyCourse" component={renderCourses} />
+        <Stack.Screen name="MyCourse" component={RenderCourses} />
+        <Stack.Screen name="CourseDetails" component={CourseDetailsScreen} />
       </Stack.Navigator>
     </NetworkContext.Provider>
   );

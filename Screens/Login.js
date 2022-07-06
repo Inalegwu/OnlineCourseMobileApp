@@ -8,6 +8,7 @@ import {
   Image,
   Platform,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
@@ -29,19 +30,23 @@ export default function Login({ navigation }) {
   };
   const authenticate = () => {
     console.log("Authenticating...");
-    API.login(fetchedEmail, fetchedPassword)
-      .then((data) => {
-        if (data.data.validity == 1) {
-          console.log(data.data);
-          navigation.navigate("Home", { data: data.data });
-        } else {
-          alert("Invalid Username or Password");
-          console.log("Couldn't Authenticate");
-        }
-      })
-      .catch((error) => {
-        alert(error);
-      });
+    if (fetchedEmail === undefined && fetchedPassword === undefined) {
+      alert("Cant Login without an Email or Password");
+    } else {
+      API.login(fetchedEmail, fetchedPassword)
+        .then((data) => {
+          if (data.data.validity == 1) {
+            console.log(data.data);
+            navigation.navigate("Home", { data: data.data });
+          } else {
+            alert("Invalid Username or Password");
+            console.log("Couldn't Authenticate");
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
   };
   return (
     <KeyboardAvoidingView
