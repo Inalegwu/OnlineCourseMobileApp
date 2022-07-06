@@ -17,13 +17,15 @@ import Input from "../../../Components/Input";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import OffersComponent from "../../../Components/OffersComponent";
 import TopCourses from "../../../Components/TopCourses";
+import { NetworkContext } from "../../../Components/ContextProvider";
 
-export default function RenderHome({ navigation }) {
+export default function RenderHome({ navigation, route }) {
   // TODO caching result of api request to prevent constant loading
   const [searchText, setSearchText] = useState();
   const search = (text) => {
     console.log(text);
   };
+  const data = React.useContext(NetworkContext);
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}
@@ -48,7 +50,7 @@ export default function RenderHome({ navigation }) {
               <View style={tw`ml-2`}>
                 <Text style={tw`text-xs text-gray-400`}>Hello</Text>
                 <Text style={tw`font-extrabold text-gray-800 text-base`}>
-                  Ikwue Inalegwu
+                  {data.first_name + " " + data.last_name}
                 </Text>
               </View>
             </View>

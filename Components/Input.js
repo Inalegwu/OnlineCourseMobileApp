@@ -19,9 +19,10 @@ export default function Input({
       placeholder={placeholder}
       autoFocus={autofocus}
       enablesReturnKeyAutomatically={true}
-      onSubmitEditing={(text) => {
-        submit(text);
+      onChange={({ nativeEvent }) => {
+        submit(nativeEvent.text);
       }}
+      autoCapitalize="false"
     />
   );
 }

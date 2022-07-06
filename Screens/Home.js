@@ -11,14 +11,17 @@ import CoursesScreen from "./TabScreens/CoursesScreen";
 import { StackActions } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import CourseDetails from "./TabScreens/SubScreens/CourseDetails";
+import { NetworkContext } from "../Components/ContextProvider";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-export default function Home() {
+export default function Home({ navigation, route }) {
   const color = "#8D161A";
+  const { data } = route.params;
+  console.log(data);
   return (
-    <>
+    <NetworkContext.Provider value={data}>
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={{
@@ -66,7 +69,7 @@ export default function Home() {
           component={CoursesScreen}
         />
       </Tab.Navigator>
-    </>
+    </NetworkContext.Provider>
   );
 }
 

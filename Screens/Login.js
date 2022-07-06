@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
@@ -16,31 +17,32 @@ import Input from "../Components/Input";
 import * as API from "../data/remote/userApiCalls";
 
 export default function Login({ navigation }) {
-  const [isValid, setIsValid] = useState(false);
-  const [token, setToken] = useState("");
-  const [fetchedEmail, setEmail] = useState("");
-  const [fetchedPassword, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [fetchedEmail, setEmail] = useState();
+  const [fetchedPassword, setPassword] = useState();
 
-  function authenticate(email, password) {
-    API.login(email, password)
+  const submitPassword = (password) => {
+    setPassword(password);
+  };
+  const submitEmail = (email) => {
+    setEmail(email);
+  };
+  const authenticate = () => {
+    console.log("Authenticating...");
+    API.login(fetchedEmail, fetchedPassword)
       .then((data) => {
-        setIsValid(data.status);
-        setToken(data.data.token);
+        if (data.data.validity == 1) {
+          console.log(data.data);
+          navigation.navigate("Home", { data: data.data });
+        } else {
+          alert("Invalid Username or Password");
+          console.log("Couldn't Authenticate");
+        }
       })
       .catch((error) => {
         alert(error);
       });
-  }
-
-  const submitPassword = (password) => {
-    setPassword(password);
-    console.log(fetchedPassword);
   };
-  const submitEmail = (email) => {
-    setEmail(email);
-    console.log(fetchedEmail);
-  };
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -81,14 +83,16 @@ export default function Login({ navigation }) {
           <TouchableOpacity
             style={tw`p-3`}
             onPress={() => {
-              navigation.navigate("ForgotPassword");
+              authenticate();
             }}
           >
             <Text style={tw`text-red-800 mt-1`}>Forgot Password ?</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={tw`p-4 mt-3 rounded-xl bg-red-800 w-93 items-center content-center`}
-            onPress={authenticate(fetchedEmail, fetchedPassword)}
+            onPress={() => {
+              authenticate();
+            }}
           >
             <Text style={[tw`text-lg font-bold`, { color: "white" }]}>
               Login

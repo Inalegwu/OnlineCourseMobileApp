@@ -1,7 +1,9 @@
 const apiService = require("./userApiCalls");
 
-const arcToken =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMjc0OCIsImZpcnN0X25hbWUiOiJNYXJjdXMiLCJsYXN0X25hbWUiOiJEYXNoZSIsImVtYWlsIjoibWFyY3VzZGFzaGUuZGV2ZWxvcGVyQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwidmFsaWRpdHkiOjF9.1CGt3rcoe6R-e0ma6dsH_5Gebnnhuybzx2_q9aa6YUQ";
+// const arcToken =
+//   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMjc0OCIsImZpcnN0X25hbWUiOiJNYXJjdXMiLCJsYXN0X25hbWUiOiJEYXNoZSIsImVtYWlsIjoibWFyY3VzZGFzaGUuZGV2ZWxvcGVyQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwidmFsaWRpdHkiOjF9.1CGt3rcoe6R-e0ma6dsH_5Gebnnhuybzx2_q9aa6YUQ";
+
+let arcToken;
 
 // apiService.fetchTopCourses().then(data => console.log(data))
 
@@ -18,10 +20,10 @@ const arcToken =
 // apiService.fetchSystemSettings().then(data => console.log(data))
 
 apiService
-  .login("marcusdashe.developer@gmail.com", "__Marc406")
+  .login("siphoikwue@outlook.com", "inalegwu2004")
   .then((data) => console.log(data));
 
-// apiService.fetchMyCourse(arcToken).then(data => console.log(data))
+// apiService.fetchMyCourse(arcToken).then((data) => console.log(data));
 
 // apiService.fetchMyWishList(arcToken).then(data => console.log(data))
 
