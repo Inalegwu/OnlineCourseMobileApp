@@ -24,7 +24,7 @@ export default function CourseDetailsScreen({ navigation, route }) {
     <>
       <View>
         {/* image */}
-        <Image source={{ uri: data.thumbnail }} style={tw`h-100 w-150`} />
+        <Image source={{ uri: data.thumbnail }} style={tw`h-100 w-full`} />
         <TouchableOpacity
           style={tw`absolute top-93 left-32 p-3 shadow-xl rounded-full w-40 bg-red-800`}
         >
