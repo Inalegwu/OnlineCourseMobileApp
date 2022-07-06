@@ -23,7 +23,11 @@ export default function RenderHome({ navigation, route }) {
   // TODO caching result of api request to prevent constant loading
   const [searchText, setSearchText] = useState();
   const search = (text) => {
-    console.log(text);
+    if (text != null) {
+      console.log(text);
+    } else {
+      console.log("null text");
+    }
   };
   const data = React.useContext(NetworkContext);
   return (
@@ -44,7 +48,11 @@ export default function RenderHome({ navigation, route }) {
               >
                 <Image
                   style={tw`h-10 w-10 p-4 rounded-full`}
-                  source={require("../../../assets/images/person.jpg")}
+                  source={{
+                    uri:
+                      `https://e-limi.africa/uploads/user_image/placeholder.png` ||
+                      `https://e-limi.africa/uploads/user_image/${data.user_id}.jpg`,
+                  }}
                 />
               </TouchableOpacity>
               <View style={tw`ml-2`}>

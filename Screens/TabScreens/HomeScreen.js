@@ -13,7 +13,6 @@ const Stack = createStackNavigator();
 
 export default function HomeScreen() {
   const contextData = React.useContext(NetworkContext);
-  console.log(contextData);
   return (
     <NetworkContext.Provider value={contextData}>
       <Stack.Navigator

@@ -29,18 +29,15 @@ export default function Login({ navigation }) {
     setEmail(email);
   };
   const authenticate = () => {
-    console.log("Authenticating...");
     if (fetchedEmail === undefined && fetchedPassword === undefined) {
       alert("Cant Login without an Email or Password");
     } else {
       API.login(fetchedEmail, fetchedPassword)
         .then((data) => {
           if (data.data.validity == 1) {
-            console.log(data.data);
             navigation.navigate("Home", { data: data.data });
           } else {
             alert("Invalid Username or Password");
-            console.log("Couldn't Authenticate");
           }
         })
         .catch((error) => {

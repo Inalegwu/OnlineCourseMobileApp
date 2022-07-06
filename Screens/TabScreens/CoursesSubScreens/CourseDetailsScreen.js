@@ -17,7 +17,7 @@ export default function CourseDetailsScreen({ navigation, route }) {
     try {
       await Share.share({ message: data.shareable_link });
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
   return (

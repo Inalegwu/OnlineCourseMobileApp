@@ -1,26 +1,60 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import React from "react";
 import tw from "twrnc";
 import { NetworkContext } from "../../../Components/ContextProvider";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Input from "../../../Components/Input";
 
-export default function AccountDetails() {
+export default function AccountDetails({ navigation }) {
   const data = React.useContext(NetworkContext);
   return (
-    <>
-      <View style={tw`mt-10 ml-5 mr-5`}>
-        <View style={tw`w-full content-center items-center`}>
-          <Image source={{ uri: data.thumbnail }} style={tw`h-20 w-20`} />
-          <View>
-            <Text style={tw`font-bold text-center text-2xl mt-5`}>
-              {data.first_name}
-            </Text>
-            <Text style={tw`font-bold text-center text-xl`}>
-              {data.last_name}
-            </Text>
-          </View>
+    <View style={tw`mt-10 ml-5 mr-5`}>
+      <View style={tw`w-full mt-2 p-1 flex flex-row justify-between`}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}
+          style={tw`p-3`}
+        >
+          <FontAwesome name="arrow-left" size={20} style={tw`text-red-800`} />
+        </TouchableOpacity>
+      </View>
+      <View style={tw`w-full h-40 mt-8 items-center content-center`}>
+        <Image
+          source={{
+            uri: "https://e-limi.africa/uploads/user_image/placeholder.png",
+          }}
+          style={[tw`h-40 w-40 rounded-full`, { resizeMode: "contain" }]}
+        />
+        <View>
+          <Text style={tw`font-bold text-center text-2xl mt-5`}>
+            {data.first_name}
+          </Text>
+          <Text style={tw`font-bold text-center text-3xl`}>
+            {data.last_name}
+          </Text>
         </View>
       </View>
-    </>
+      <View style={tw`p-1 mt-23`}>
+        <ScrollView>
+          <Input
+            style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
+            placeholder={data.first_name}
+          />
+          <Input
+            style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
+            placeholder={data.last_name}
+          />
+        </ScrollView>
+      </View>
+    </View>
   );
 }
 
