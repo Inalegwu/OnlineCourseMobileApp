@@ -52,28 +52,32 @@ export default function RenderCourses({ navigation }) {
             />
           ) : (
             myCourses.map((data) => {
-              return (
-                <TouchableOpacity
-                  key={data.id}
-                  style={tw`p-6 mt-5 bg-gray-200 rounded-lg flex flex-row`}
-                  onPress={() => {
-                    navigation.navigate("CourseDetails", { data: data });
-                  }}
-                >
-                  <View>
-                    <Image
-                      style={tw`h-18 w-18 rounded-lg mt-1`}
-                      source={{ uri: data.thumbnail }}
-                    />
-                  </View>
-                  <View style={tw`w-60 ml-3`}>
-                    <Text style={tw`font-bold text-lg text-gray-800`}>
-                      {data.title}
-                    </Text>
-                    <Text>{data.short_description.slice(0, 54) + "..."}</Text>
-                  </View>
-                </TouchableOpacity>
-              );
+              if (data === null) {
+                return <Text>You Currently Don't Have Any Courses</Text>;
+              } else {
+                return (
+                  <TouchableOpacity
+                    key={data.id}
+                    style={tw`p-6 mt-5 bg-gray-200 rounded-lg flex flex-row`}
+                    onPress={() => {
+                      navigation.navigate("CourseDetails", { data: data });
+                    }}
+                  >
+                    <View>
+                      <Image
+                        style={tw`h-18 w-18 rounded-lg mt-1`}
+                        source={{ uri: data.thumbnail }}
+                      />
+                    </View>
+                    <View style={tw`w-60 ml-3`}>
+                      <Text style={tw`font-bold text-lg text-gray-800`}>
+                        {data.title}
+                      </Text>
+                      <Text>{data.short_description.slice(0, 54) + "..."}</Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              }
             })
           )}
         </ScrollView>

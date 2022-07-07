@@ -22,9 +22,13 @@ const arcToken =
 
 // apiService.fetchSystemSettings().then(data => console.log(data))
 
-// apiService.signUp("evelyn", "simon", "evelynsimon@gmail.com", "1234567").then(data => console.log(data))
+// apiService
+//   .signUp("evelyn", "simon", "evelynsimon@gmail.com", "1234567")
+//   .then((data) => console.log(data));
 
-// apiService.login("mqrksimon@gmail.com", "75356ab").then(data => console.log(data))
+apiService
+  .login("evelynsimon@gmail.com", "1234567")
+  .then((data) => console.log(data));
 
 // apiService.forgotPassword("marcusdashe.developer@gmail.com").then(data => console.log(data))
 

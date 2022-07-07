@@ -14,9 +14,40 @@ import Input from "../Components/Input";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import * as ImagePicker from "expo-image-picker";
 import Feather from "@expo/vector-icons/Feather";
+import * as API from "../data/remote/userApiCalls";
 
 export default function CreateAccount({ navigation }) {
   const [image, setImage] = useState("../assets/images/avatar.png");
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const submitFirstName = (firstName) => {
+    setFirstName(firstName);
+  };
+  const submitLastName = (lastName) => {
+    setLastName(lastName);
+  };
+  const sumbitEmail = (email) => {
+    setEmail(email);
+  };
+  const submitPassword = (password) => {
+    setPassword(password);
+  };
+
+  const createAccount = () => {
+    console.log("Creating Account...");
+    API.signUp(firstName, lastName, email, password)
+      .then((data) => {
+        console.log(data);
+        console.log("Account Created Successfully");
+        navigation.navigate("Login");
+      })
+      .catch((error) => {
+        console.log(error + "Can't Create Account");
+      });
+  };
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -38,7 +69,7 @@ export default function CreateAccount({ navigation }) {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ScrollView style={tw`p-1`}>
+      <ScrollView style={tw`p-3`}>
         <View style={tw`flex flex-row m-2 mt-10 ml-4`}>
           <TouchableOpacity
             style={tw`m-1`}
@@ -78,22 +109,27 @@ export default function CreateAccount({ navigation }) {
               placeholder="First Name"
               autofocus={true}
               style={tw`p-4 w-90 mt-7 bg-gray-200 rounded-xl`}
+              submit={submitFirstName}
             />
             <Input
               placeholder="Last Name"
               style={tw`p-4 w-90 mt-5 bg-gray-200 rounded-xl`}
+              submit={submitLastName}
             />
             <Input
               placeholder="Email"
               style={tw`p-4 w-90 mt-5 bg-gray-200 rounded-xl`}
+              submit={sumbitEmail}
             />
             <Input
               placeholder="Password"
               style={tw`p-4 w-90 mt-5 bg-gray-200 rounded-xl`}
+              submit={submitPassword}
+              secureTextEntry={true}
             />
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("Home");
+                createAccount();
               }}
               style={tw`p-4 w-90 bg-red-800 mt-7 rounded-lg items-center content-center`}
             >

@@ -14,6 +14,12 @@ import Input from "../../../Components/Input";
 
 export default function AccountDetails({ navigation }) {
   const data = React.useContext(NetworkContext);
+
+  const logout = () => {
+    data.token = "";
+    navigation.navigate("Login");
+  };
+
   return (
     <View style={tw`mt-10 ml-5 mr-5`}>
       <View style={tw`w-full mt-2 p-1 flex flex-row justify-between`}>
@@ -52,6 +58,13 @@ export default function AccountDetails({ navigation }) {
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
             placeholder={data.last_name}
           />
+
+          <TouchableOpacity
+            style={tw`p-3 mt-3 bg-red-600 items-center content-center w-full rounded-lg`}
+            onPress={logout}
+          >
+            <Text style={tw`font-bold text-white text-lg`}>Logout</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </View>
