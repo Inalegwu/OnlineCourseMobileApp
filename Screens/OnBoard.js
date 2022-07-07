@@ -5,15 +5,15 @@ import { FontAwesome } from "@expo/vector-icons";
 
 export default function OnBoard({ navigation }) {
   return (
-    <View style={tw`p-5 mt-6 content-center items-center`}>
+    <View style={tw`p-5 m-5 mt-6 content-center items-center`}>
       <Image
-        style={[tw`h-80 w-100`, { resizeMode: "contain" }]}
+        style={[tw`h-65 w-100`, { resizeMode: "contain" }]}
         source={require("../assets/images/3.png")}
       />
       <Text style={tw`w-80 font-extrabold text-3xl`}>
         Welcome to the E-Limi Learning Platform
       </Text>
-      <View style={tw`w-90 mt-5`}>
+      <View style={tw`w-90 mt-5 m-3`}>
         <View style={tw`p-8 w-90 rounded-2xl mt-2 flex flex-row bg-gray-200`}>
           <View style={tw`mr-5 p-2`}>
             <FontAwesome name="google" />

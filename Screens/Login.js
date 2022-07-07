@@ -63,7 +63,7 @@ export default function Login({ navigation }) {
           </View>
           <View>
             <Image
-              style={[tw`h-55 w-80 mt-3`, styles.image]}
+              style={[tw`h-40 w-80 mt-3`, styles.image]}
               source={require("../assets/images/3.png")}
             />
           </View>
@@ -91,7 +91,7 @@ export default function Login({ navigation }) {
             <Text style={tw`text-red-800 mt-1`}>Forgot Password ?</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={tw`p-4 mt-3 rounded-xl bg-red-800 w-93 items-center content-center`}
+            style={tw`p-4 mt-3 rounded-xl bg-red-800 items-center content-center`}
             onPress={() => {
               authenticate();
             }}
@@ -103,7 +103,7 @@ export default function Login({ navigation }) {
         </View>
         {/* Login With Container */}
         <View
-          style={tw`flex items-center content-center justify-evenly w-90 flex-row p-2 ml-4 mr-4`}
+          style={tw`flex items-center content-center justify-evenly w-80 flex-row p-2 ml-4 mr-4`}
         >
           <TouchableOpacity
             style={tw`p-3 h-15 w-15 items-center content-center shadow-md rounded-full bg-gray-200`}
@@ -117,9 +117,7 @@ export default function Login({ navigation }) {
           </TouchableOpacity>
         </View>
         {/* Gutter */}
-        <View
-          style={tw`flex ml-20 flex-row p-5 w-100 items-center content-center`}
-        >
+        <View style={tw`flex ml-20 flex-row p-5 items-center content-center`}>
           <Text>Don't have an account ?</Text>
           <TouchableOpacity
             onPress={() => {

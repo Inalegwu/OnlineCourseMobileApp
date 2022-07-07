@@ -1,9 +1,8 @@
 const apiService = require("./userApiCalls");
+const FormData = require("form-data");
 
-// const arcToken =
-//   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMjc0OCIsImZpcnN0X25hbWUiOiJNYXJjdXMiLCJsYXN0X25hbWUiOiJEYXNoZSIsImVtYWlsIjoibWFyY3VzZGFzaGUuZGV2ZWxvcGVyQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwidmFsaWRpdHkiOjF9.1CGt3rcoe6R-e0ma6dsH_5Gebnnhuybzx2_q9aa6YUQ";
-
-let arcToken;
+const arcToken =
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMjc0OCIsImZpcnN0X25hbWUiOiJwdXJpc3QiLCJsYXN0X25hbWUiOiJzaW1vbiIsImVtYWlsIjoibXFya3NpbW9uQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwidmFsaWRpdHkiOjF9.o2zAZDhlnks_it3BJfMkBia5IDot-HnXGxlYhO12p1w";
 
 // apiService.fetchTopCourses().then(data => console.log(data))
 
@@ -13,30 +12,67 @@ let arcToken;
 
 // apiService.fetchCourseById(1).then(data => console.log(data))
 
+// apiService.fetchAllSection(arcToken, "4").then(data => console.log(data))
+
+// apiService.fetchAllLessonsSectionWise(arcToken, "179").then(data => console.log(data))
+
 // apiService.fetchSystemLanguages().then(data => console.log(data))
 
 // apiService.fetchCourseBySearchString("Figma").then(data => console.log(data))
 
 // apiService.fetchSystemSettings().then(data => console.log(data))
 
-apiService
-  .login("siphoikwue@outlook.com", "inalegwu2004")
-  .then((data) => console.log(data));
+// apiService.signUp("evelyn", "simon", "evelynsimon@gmail.com", "1234567").then(data => console.log(data))
 
-// apiService.fetchMyCourse(arcToken).then((data) => console.log(data));
+// apiService.login("mqrksimon@gmail.com", "75356ab").then(data => console.log(data))
+
+// apiService.forgotPassword("marcusdashe.developer@gmail.com").then(data => console.log(data))
+
+// apiService.updateUserData(arcToken, {
+//     email: "mqrksimon@gmail.com",
+//     fName: "purist",
+//     lName: "simon",
+//     fbLink: "https://www.facebook.com/puristsimon",
+//     twLink: "https://www.twitter.com/marcusdashe",
+//     lkLink: "https://www.linkedin.com/marcusdashe",
+//     biography: "proudly aspie"
+// }).then(data => console.log(data))
+
+// function callit() {
+//     let formData = new FormData()
+//     formData.append('image',
+//         {
+//             uri: "",
+//             name:`${arcToken}.jpg`,
+//             type:'image/jpg'
+//         })
+//     apiService.uploadUserImage(arcToken, formData).then(data => console.log(data))
+// };
+
+// apiService.resetPassword(arcToken, "75356ab", "7654321", "7654321").then(data => console.log(data))
+
+// apiService.fetchUserInfo(arcToken).then(data => console.log(data))
+
+// apiService.enrol(arcToken, '7').then(data => console.log(data))
+
+// apiService.fetchMyCourse(arcToken).then(data => console.log(data))
 
 // apiService.fetchMyWishList(arcToken).then(data => console.log(data))
-
-// apiService.fetchAllSection(arcToken, "19").then(data => console.log(data))
-
-// apiService.fetchAllLessonsSectionWise(arcToken, "179").then(data => console.log(data))
 
 // apiService.toggleWishListItem(arcToken).then(data => console.log(data))
 
 // apiService.fetchLessonDetails(arcToken, "523").then(data => console.log(data))
 
-// (isset($_GET['auth_token']) && !empty($_GET['auth_token'])) || (
+// apiService.fetchCourseDetails(arcToken, "2").then(data => console.log(data))
 
-// apiService.fetchCourseDetails(arcToken, "7").then(data => console.log(data))
+// apiService.submitQuiz(arcToken, "560").then(data => console.log(data.data.submitted_quiz_info[1]))
 
-// apiService.submitQuiz("523").then(data => console.log(data))
+// apiService.submitQuiz(arcToken, "560").then(data => console.log(data))
+
+// const formData = new FormData()
+
+// formData.append('file', {
+//     uri: Platform.OS === 'android' ? uri : 'file://' + photo.uri,
+//     name: 'test',
+//     type: 'image/jpeg' // or your mime type what you want
+// });

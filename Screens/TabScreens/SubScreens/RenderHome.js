@@ -34,6 +34,7 @@ export default function RenderHome({ navigation, route }) {
     <ScrollView
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
+      contentContainerStyle={tw`bg-gray-100 dark:bg-gray-900`}
     >
       <View style={[tw`p-6`]}>
         {/* navbar */}

@@ -35,7 +35,7 @@ export default function RenderCourses({ navigation }) {
     <>
       <View style={tw`mt-10 ml-5 mr-5`}>
         <Text
-          style={tw`mt-4 ml-1 w-90 text-center font-bold text-2xl text-gray-800`}
+          style={tw`mt-4 ml-1 w-full mb-3 text-center font-bold text-2xl text-gray-800`}
         >
           My Courses
         </Text>

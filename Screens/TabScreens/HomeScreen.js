@@ -8,10 +8,13 @@ import RenderHome from "./SubScreens/RenderHome";
 import AccountDetails from "./SubScreens/AccountDetails";
 import { NetworkContext } from "../../Components/ContextProvider";
 import React from "react";
+import tw, { useDeviceContext, useAppColorScheme } from "twrnc";
 
 const Stack = createStackNavigator();
 
 export default function HomeScreen() {
+  useDeviceContext(tw, { withDeviceColorScheme: true });
+
   const contextData = React.useContext(NetworkContext);
   return (
     <NetworkContext.Provider value={contextData}>

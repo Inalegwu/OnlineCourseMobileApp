@@ -31,7 +31,7 @@ export default function CourseItem({ data, navigation }) {
         />
       </View>
       {/* Course Brief Info */}
-      <View style={tw`w-50 justify-start mt-3`}>
+      <View style={tw`w-30 justify-start mt-3`}>
         {data.discount_flag === true ? (
           <View
             style={tw`p-1 items-center rounded-lg bg-red-200 border-red-800 w-10`}
@@ -40,10 +40,10 @@ export default function CourseItem({ data, navigation }) {
           </View>
         ) : null}
 
-        <Text style={tw`font-bold text-5 text-gray-900`}>{data.title}</Text>
+        <Text style={tw`font-bold text-4 text-gray-900`}>{data.title}</Text>
         <Text style={tw`font-bold text-red-800`}>{data.price}</Text>
         <Text style={tw`text-gray-700`}>
-          {data.short_description.slice(0, 30) + "..."}
+          {data.short_description.slice(0, 20) + "..."}
         </Text>
       </View>
       {/* Bookmark Course */}

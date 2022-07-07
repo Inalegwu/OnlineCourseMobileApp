@@ -30,6 +30,7 @@ export default function Home({ navigation, route }) {
           tabBarLabelStyle: { fontWeight: "bold" },
           tabBarActiveTintColor: "#8D161A",
           tabBarInactiveTintColor: "black",
+          tabBarStyle: { height: 50, padding: 3 },
         }}
       >
         <Tab.Screen

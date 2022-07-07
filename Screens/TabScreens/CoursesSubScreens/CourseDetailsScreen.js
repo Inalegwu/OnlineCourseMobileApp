@@ -20,20 +20,53 @@ export default function CourseDetailsScreen({ navigation, route }) {
       alert(error);
     }
   };
+  const modules_done = data.total_number_of_completed_lessons;
+  const total_modules = data.total_number_of_lessons;
+  let calc_width = (modules_done / total_modules) * 100;
+  // let calc_width = 45;
   return (
     <>
-      <View>
-        {/* image */}
-        <Image source={{ uri: data.thumbnail }} style={tw`h-100 w-full`} />
-        <TouchableOpacity
-          style={tw`absolute top-93 left-32 p-3 shadow-xl rounded-full w-40 bg-red-800`}
-        >
-          <Text style={tw`font-bold text-white text-center`}>
-            {data.status == "active" ? "Enrolled" : "Enroll"}
+      <Image source={{ uri: data.thumbnail }} style={tw`h-100 w-full`} />
+      <ScrollView contentContainerStyle={tw`p-4`}>
+        <View style={tw`h-full`}>
+          <Text style={tw`font-bold text-gray-900 text-2xl`}>{data.title}</Text>
+          <Text style={tw`text-gray-600 font-bold mt-1`}>
+            {data.instructor_name}
           </Text>
-        </TouchableOpacity>
-      </View>
-      <ScrollView></ScrollView>
+          {console.log(data)}
+          <Text style={tw`text-gray-500 mt-2`}>{data.short_description}</Text>
+          <Text style={tw`font-bold text-gray-800 text-lg mt-3 mb-1`}>
+            Outcomes
+          </Text>
+          <View style={tw`mb-4`}>
+            {data.outcomes.map((item) => {
+              return <Text key={item}>{item}</Text>;
+            })}
+          </View>
+          <View style={tw`mb-10`}>
+            <Text style={tw`mb-2 font-bold text-gray-800 text-lg`}>
+              Progress
+            </Text>
+            <View style={tw`w-full bg-gray-300 rounded-full`}>
+              <View
+                style={tw`bg-red-900 w-${
+                  calc_width <= 80 ? calc_width : "full"
+                } p-1 rounded-full`}
+              ></View>
+            </View>
+            <Text style={tw`text-gray-500 mt-1`}>
+              {data.total_number_of_completed_lessons +
+                "/" +
+                data.total_number_of_lessons}
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={tw`p-5 shadow-lg items-center content-center rounded-full bg-red-800 w-full`}
+          >
+            <Text style={tw`font-bold text-white`}>Continue Learning</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </>
   );
 }

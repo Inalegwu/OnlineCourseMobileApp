@@ -41,7 +41,9 @@ export default function CourseDetails({ route, navigation }) {
             },
           ]}
         />
-        <View style={tw`mt-15 ml-6 mr-6 flex absolute flex-row justify-around`}>
+        <View
+          style={tw`mt-15 ml-6 mr-6 flex absolute flex-row justify-between`}
+        >
           {/* Back Btn */}
           <TouchableOpacity
             onPress={() => {
@@ -51,7 +53,7 @@ export default function CourseDetails({ route, navigation }) {
             <FontAwesome size={20} style={tw`text-red-300`} name="arrow-left" />
           </TouchableOpacity>
           {/* Share Button */}
-          <TouchableOpacity onPress={shareData} style={tw`left-80`}>
+          <TouchableOpacity onPress={shareData} style={tw`left-70 top-1`}>
             <Ionicons
               name="md-share-social-sharp"
               size={20}
@@ -128,7 +130,7 @@ export default function CourseDetails({ route, navigation }) {
             </Text>
           </View>
           <TouchableOpacity
-            style={tw`p-4 mt-4 items-center content-center rounded-full bg-red-800`}
+            style={tw`p-4 mt-4 mb-7 items-center content-center rounded-full bg-red-800`}
           >
             <Text style={tw`font-bold text-white text-lg`}>
               Enroll - {data.price}
