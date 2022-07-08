@@ -32,7 +32,7 @@ export default function OnBoard({ navigation }) {
         <TouchableOpacity
           style={tw`p-5 w-90 rounded-2xl bg-red-800 items-center`}
           onPress={() => {
-            navigation.navigate("Login");
+            navigation.navigate("Login", { previous_screen: "OnBoard" });
           }}
         >
           <Text style={[tw`font-bold text-lg`, { color: "white" }]}>

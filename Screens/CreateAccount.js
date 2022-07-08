@@ -42,10 +42,13 @@ export default function CreateAccount({ navigation }) {
       .then((data) => {
         console.log(data);
         console.log("Account Created Successfully");
-        navigation.navigate("Login");
+        navigation.navigate("Login", {
+          data: data,
+          previous_screen: "CreateAccount",
+        });
       })
       .catch((error) => {
-        console.log(error + "Can't Create Account");
+        console.log(error + " " + "Can't Create Account");
       });
   };
 

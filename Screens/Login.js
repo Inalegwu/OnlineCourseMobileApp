@@ -17,14 +17,19 @@ import Feather from "@expo/vector-icons/Feather";
 import Input from "../Components/Input";
 import * as API from "../data/remote/userApiCalls";
 import { NetworkContext } from "../Components/ContextProvider";
+import Toast from "react-native-root-toast";
 
-export default function Login({ navigation }) {
+export default function Login({ navigation, route }) {
   const [loading, setLoading] = useState(false);
   const [fetchedEmail, setEmail] = useState();
   const [fetchedPassword, setPassword] = useState();
-
+  const [isVisible, setIsVisible] = useState(false);
+  const { previous_screen } = route.params;
+  let createAccountData;
+  if (previous_screen == "CreateAccount") {
+    createAccountData = route.params;
+  }
   const data = React.useContext(NetworkContext);
-
   const submitPassword = (password) => {
     setPassword(password);
   };
@@ -51,6 +56,7 @@ export default function Login({ navigation }) {
   };
   return (
     <NetworkContext.Provider value={data}>
+      {console.log(createAccountData)}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >

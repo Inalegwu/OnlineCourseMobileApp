@@ -6,14 +6,29 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import tw from "twrnc";
 import { NetworkContext } from "../../../Components/ContextProvider";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Input from "../../../Components/Input";
+import * as ImagePicker from "expo-image-picker";
 
 export default function AccountDetails({ navigation }) {
   const data = React.useContext(NetworkContext);
+  const [image, setImage] = useState("../../../assets/images/avatar.png");
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+    console.log(result);
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   const logout = () => {
     data.token = "";

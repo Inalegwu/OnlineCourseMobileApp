@@ -13,10 +13,11 @@ import tw from "twrnc";
 import * as API from "../../../data/remote/userApiCalls";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import WebView from "react-native-webview";
+import { NetworkContext } from "../../../Components/ContextProvider";
 
 export default function CourseDetails({ route, navigation }) {
   const { data } = route.params;
+  const [isEnrolled, setIsEnrolled] = useState(false);
   const shareData = async () => {
     try {
       await Share.share({ message: data.shareable_link });
@@ -24,8 +25,22 @@ export default function CourseDetails({ route, navigation }) {
       alert(error);
     }
   };
+  const userData = React.useContext(NetworkContext);
+
+  const enrol = () => {
+    console.log("Enrolling...");
+    API.enrol(userData.token, data.id)
+      .then((data) => {
+        console.log(data);
+        setIsEnrolled(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
-    <>
+    <NetworkContext.Provider value={userData}>
       <StatusBar style="light" />
       {/* Top View */}
       <View>
@@ -130,14 +145,19 @@ export default function CourseDetails({ route, navigation }) {
             </Text>
           </View>
           <TouchableOpacity
-            style={tw`p-4 mt-4 mb-7 items-center content-center rounded-full bg-red-800`}
+            style={
+              isEnrolled === false
+                ? tw`p-4 mt-4 mb-7 items-center content-center rounded-full bg-red-800`
+                : tw`p-4 mt-4 mb-7 items-center content-center rounded-full bg-gray-300`
+            }
+            onPress={enrol}
           >
             <Text style={tw`font-bold text-white text-lg`}>
-              Enroll - {data.price}
+              {isEnrolled === false ? `Enroll - ${data.price}` : "Enrolled"}
             </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </>
+    </NetworkContext.Provider>
   );
 }
