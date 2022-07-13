@@ -32,7 +32,9 @@ export default function AccountDetails({ navigation }) {
 
   const logout = () => {
     data.token = "";
-    navigation.navigate("Login");
+    navigation.navigate("Login",{
+      previousScreen:"AccountDetails"
+    });
   };
 
   return (

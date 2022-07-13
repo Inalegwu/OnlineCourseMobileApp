@@ -17,7 +17,6 @@ import Feather from "@expo/vector-icons/Feather";
 import Input from "../Components/Input";
 import * as API from "../data/remote/userApiCalls";
 import { NetworkContext } from "../Components/ContextProvider";
-import Toast from "react-native-root-toast";
 
 export default function Login({ navigation, route }) {
   const [loading, setLoading] = useState(false);
@@ -37,14 +36,18 @@ export default function Login({ navigation, route }) {
     setEmail(email);
   };
   const authenticate = () => {
+    console.log("Authenticating...")
+    console.log(fetchedEmail,fetchedPassword)
     if (fetchedEmail === undefined && fetchedPassword === undefined) {
       alert("Cant Login without an Email or Password");
     } else {
       API.login(fetchedEmail, fetchedPassword)
         .then((data) => {
           if (data.data.validity == 1) {
+            console.log(data.data)
             navigation.navigate("Home", { data: data.data });
           } else {
+            console.log(data.data)
             alert("Invalid Username or Password");
           }
         })

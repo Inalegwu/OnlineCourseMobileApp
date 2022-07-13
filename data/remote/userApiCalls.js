@@ -115,8 +115,7 @@ module.exports =  {
         if(email && password)
             return apiCall({
                 url: "/login", 
-                params: { email, password },
-               
+                params: { email, password } 
             })
         },
 

@@ -40,7 +40,7 @@ export default function CreateAccount({ navigation }) {
     console.log("Creating Account...");
     API.signUp(firstName, lastName, email, password)
       .then((data) => {
-        console.log(data);
+        console.log(data.data);
         console.log("Account Created Successfully");
         navigation.navigate("Login", {
           data: data,

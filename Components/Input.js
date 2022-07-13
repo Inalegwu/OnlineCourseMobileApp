@@ -10,7 +10,6 @@ export default function Input({
   onChangeText,
   submit,
 }) {
-  const [text, setText] = useState("");
   return (
     <TextInput
       style={style}
