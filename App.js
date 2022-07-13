@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { useState } from "react";
 import React from "react";
 import IntroSlider from "./Components/IntroSlider";
@@ -46,4 +46,3 @@ export default function App() {
   }
 }
 
-const styles = StyleSheet.create({});
