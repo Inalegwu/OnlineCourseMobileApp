@@ -25,7 +25,14 @@ export default function CourseDetails({ route, navigation }) {
       alert(error);
     }
   };
+  // !read only
   const userData = React.useContext(NetworkContext);
+
+  const addToCart = () => {
+    console.log(
+      "adding" + " " + data.title + " " + "at" + data.price + " " + "To cart..."
+    );
+  };
 
   const enrol = () => {
     console.log("Enrolling...");
@@ -68,12 +75,8 @@ export default function CourseDetails({ route, navigation }) {
             <FontAwesome size={20} style={tw`text-red-300`} name="arrow-left" />
           </TouchableOpacity>
           {/* Share Button */}
-          <TouchableOpacity onPress={shareData} style={tw`left-70 top-1`}>
-            <Ionicons
-              name="md-share-social-sharp"
-              size={20}
-              style={tw`text-red-300`}
-            />
+          <TouchableOpacity onPress={shareData} style={tw`left-78 top--3`}>
+            <Ionicons name="share" size={30} style={tw`text-red-300`} />
           </TouchableOpacity>
         </View>
       </View>
@@ -150,7 +153,9 @@ export default function CourseDetails({ route, navigation }) {
                 ? tw`p-4 mt-4 mb-7 items-center content-center rounded-full bg-red-800`
                 : tw`p-4 mt-4 mb-7 items-center content-center rounded-full bg-gray-300`
             }
-            onPress={enrol}
+            onPress={
+              data.price != "free" || "Free" || "FREE" ? addToCart : enrol
+            }
           >
             <Text style={tw`font-bold text-white text-lg`}>
               {isEnrolled === false ? `Enroll - ${data.price}` : "Enrolled"}

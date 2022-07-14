@@ -5,6 +5,7 @@ import IntroSlider from "./Components/IntroSlider";
 import Main from "./Components/Main";
 import { RootSiblingParent } from "react-native-root-siblings";
 import { NetworkContext } from "./Components/ContextProvider";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -30,19 +31,22 @@ export default function App() {
       </RootSiblingParent>
     );
   } else {
-    <NetworkContext.Provider value={data}>
-      <RootSiblingParent>
-        {/* if the token value of the data is null , re render with the app intro slider else return only app */}
-        {data.token != null ? (
-          <Main />
-        ) : (
-          [
-            <IntroSlider handleDone={handleShowIntro} /> && <Main />,
-            !showIntro && <Main />,
-          ]
-        )}
-      </RootSiblingParent>
-    </NetworkContext.Provider>;
+    <>
+      <StatusBar backgroundColor="#F3F4F6" />
+      <NetworkContext.Provider value={data}>
+        <RootSiblingParent>
+          {/* if the token value of the data is null , re render with the app intro slider else return only app */}
+          {data.token != null ? (
+            <Main />
+          ) : (
+            [
+              <IntroSlider handleDone={handleShowIntro} /> && <Main />,
+              !showIntro && <Main />,
+            ]
+          )}
+        </RootSiblingParent>
+      </NetworkContext.Provider>
+      ;
+    </>;
   }
 }
-

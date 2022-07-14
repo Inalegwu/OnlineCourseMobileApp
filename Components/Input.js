@@ -21,6 +21,7 @@ export default function Input({
       onChange={({ nativeEvent }) => {
         submit(nativeEvent.text);
       }}
+      autoCapitalize="none"
     />
   );
 }

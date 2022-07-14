@@ -24,14 +24,14 @@ export default function CourseItem({ data, navigation }) {
       }}
     >
       {/* Course Image */}
-      <View style={tw`w-27 p-3`}>
+      <View style={tw`w-30 p-3`}>
         <Image
           source={{ uri: data.thumbnail }}
-          style={tw`h-20 w-20 rounded-2xl`}
+          style={tw`h-25 w-25 rounded-2xl`}
         />
       </View>
       {/* Course Brief Info */}
-      <View style={tw`w-30 justify-start mt-3`}>
+      <View style={tw`w-46 justify-start mt-6`}>
         {data.discount_flag === true ? (
           <View
             style={tw`p-1 items-center rounded-lg bg-red-200 border-red-800 w-10`}
@@ -48,7 +48,7 @@ export default function CourseItem({ data, navigation }) {
       </View>
       {/* Bookmark Course */}
       <TouchableOpacity
-        style={tw`p-4 mt-2`}
+        style={tw`p-4 mt-5`}
         onPress={() => {
           toggleBookMarked();
         }}
@@ -56,11 +56,11 @@ export default function CourseItem({ data, navigation }) {
         {bookMarked === false ? (
           <Ionicons
             name="md-bookmark-outline"
-            size={20}
+            size={25}
             style={tw`text-red-800`}
           />
         ) : (
-          <Ionicons name="md-bookmark" size={20} style={tw`text-red-800`} />
+          <Ionicons name="md-bookmark" size={25} style={tw`text-red-800`} />
         )}
       </TouchableOpacity>
     </TouchableOpacity>

@@ -32,8 +32,8 @@ export default function AccountDetails({ navigation }) {
 
   const logout = () => {
     data.token = "";
-    navigation.navigate("Login",{
-      previousScreen:"AccountDetails"
+    navigation.navigate("Login", {
+      previousScreen: "AccountDetails",
     });
   };
 
@@ -49,41 +49,69 @@ export default function AccountDetails({ navigation }) {
           <FontAwesome name="arrow-left" size={20} style={tw`text-red-800`} />
         </TouchableOpacity>
       </View>
-      <View style={tw`w-full h-40 mt-8 items-center content-center`}>
-        <Image
-          source={{
-            uri: "https://e-limi.africa/uploads/user_image/placeholder.png",
-          }}
-          style={[tw`h-40 w-40 rounded-full`, { resizeMode: "contain" }]}
-        />
-        <View>
-          <Text style={tw`font-bold text-center text-2xl mt-5`}>
-            {data.first_name}
-          </Text>
-          <Text style={tw`font-bold text-center text-3xl`}>
-            {data.last_name}
-          </Text>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={tw`w-full pb-100`}
+      >
+        <View style={tw`w-full h-40 mt-8 items-center content-center`}>
+          <Image
+            source={{
+              uri: "https://e-limi.africa/uploads/user_image/placeholder.png",
+            }}
+            style={[tw`h-40 w-40 rounded-full`, { resizeMode: "contain" }]}
+          />
+          <View>
+            <Text style={tw`font-bold text-center text-2xl mt-5`}>
+              {data.first_name}
+            </Text>
+            <Text style={tw`font-bold text-center text-3xl`}>
+              {data.last_name}
+            </Text>
+          </View>
         </View>
-      </View>
-      <View style={tw`p-1 mt-23`}>
-        <ScrollView>
+        <View style={tw`p-1 mt-23`}>
+          <Text
+            style={tw`text-left mt-5 text-lg left-3 font-bold text-gray-500`}
+          >
+            Edit Details
+          </Text>
           <Input
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
-            placeholder={data.first_name}
+            placeholder="First Name"
           />
           <Input
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
-            placeholder={data.last_name}
+            placeholder="Last Name"
           />
-
+          <Input
+            style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
+            placeholder="Email"
+          />
+          <Input
+            style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
+            placeholder="LinkedIn"
+          />
+          <Input
+            style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
+            placeholder="Twitter"
+          />
+          <TouchableOpacity
+            style={tw`p-3 mt-3 bg-green-600 mt-3 items-center content-center w-full rounded-lg`}
+            onPress={() => {
+              console.log("dont change anything bozo");
+            }}
+          >
+            <Text style={tw`font-bold text-white text-lg`}>Update Info</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={tw`p-3 mt-3 bg-red-600 items-center content-center w-full rounded-lg`}
             onPress={logout}
           >
             <Text style={tw`font-bold text-white text-lg`}>Logout</Text>
           </TouchableOpacity>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }

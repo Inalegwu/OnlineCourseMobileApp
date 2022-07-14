@@ -1,13 +1,18 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { NetworkContext } from "../../Components/ContextProvider";
+import RenderCart from "./CartSubScreens/renderCart";
 import React from "react";
-import tw from "twrnc";
+import { createStackNavigator } from "@react-navigation/stack";
+
+const Stack = createStackNavigator();
 
 export default function CartScreen() {
+  const { data } = React.useContext(NetworkContext);
   return (
-    <View style={[tw`p-10`]}>
-      <Text>CartScreen</Text>
-    </View>
+    <NetworkContext.Provider value={data}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="cartScreen" component={RenderCart} />
+      </Stack.Navigator>
+    </NetworkContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({});

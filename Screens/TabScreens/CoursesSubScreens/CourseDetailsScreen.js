@@ -5,14 +5,23 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Share,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import tw from "twrnc";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-
+import BookmarkBtn from "../../../Components/BookmarkBtn";
 export default function CourseDetailsScreen({ navigation, route }) {
+  const [bookmarked, setBookmarked] = useState(false);
   const { data } = route.params;
+  const setBookmark = () => {
+    if (bookmarked === false) {
+      setBookmarked(true);
+    } else {
+      setBookmarked(false);
+    }
+  };
   const shareData = async () => {
     try {
       await Share.share({ message: data.shareable_link });
@@ -26,7 +35,27 @@ export default function CourseDetailsScreen({ navigation, route }) {
   // let calc_width = 45;
   return (
     <>
+      <View
+        style={tw`absolute flex flex-row z-10 top-10 p-4 w-full justify-between`}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
+          <FontAwesome style={tw`text-red-800`} name="arrow-left" size={28} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={shareData}>
+          <Ionicons style={tw`text-red-800`} name="share" size={30} />
+        </TouchableOpacity>
+      </View>
       <Image source={{ uri: data.thumbnail }} style={tw`h-100 w-full`} />
+      <BookmarkBtn
+        onPress={setBookmark}
+        size={18}
+        style={tw`p-5 bg-gray-200 w-15 top-92 left-80 rounded-full shadow-lg items-center content-center absolute z-10`}
+        iconName={bookmarked === false ? "bookmark-outline" : "bookmark"}
+      />
       <ScrollView contentContainerStyle={tw`p-4`}>
         <View style={tw`h-full`}>
           <Text style={tw`font-bold text-gray-900 text-2xl`}>{data.title}</Text>

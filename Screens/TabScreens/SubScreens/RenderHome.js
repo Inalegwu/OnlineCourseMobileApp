@@ -31,66 +31,75 @@ export default function RenderHome({ navigation, route }) {
   };
   const data = React.useContext(NetworkContext);
   return (
-    <ScrollView
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={tw`bg-gray-100 dark:bg-gray-900`}
-    >
-      <View style={[tw`p-6`]}>
-        {/* navbar */}
-        <View style={tw`mt-10 flex flex-row justify-between`}>
-          <View style={tw`flex flex-row`}>
-            {/* // Image and greeting */}
-            <View style={tw`w-70 flex flex-row`}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("AccountDetails");
-                }}
-              >
-                <Image
-                  style={tw`h-10 w-10 p-4 rounded-full`}
-                  source={{
-                    uri:
-                      `https://e-limi.africa/uploads/user_image/placeholder.png` ||
-                      `https://e-limi.africa/uploads/user_image/${data.user_id}.jpg`,
+    <>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={tw`bg-gray-100 dark:bg-gray-900`}
+      >
+        <View style={[tw`p-6`]}>
+          {/* navbar */}
+          <View style={tw`mt-10 flex flex-row justify-between`}>
+            <View style={tw`flex flex-row`}>
+              {/* // Image and greeting */}
+              <View style={tw`w-70 flex flex-row`}>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("AccountDetails");
                   }}
-                />
-              </TouchableOpacity>
-              <View style={tw`ml-2`}>
-                <Text style={tw`text-xs text-gray-400`}>Hello</Text>
-                <Text style={tw`font-extrabold text-gray-800 text-base`}>
-                  {data.first_name + " " + data.last_name}
-                </Text>
+                >
+                  <Image
+                    style={tw`h-10 w-10 p-4 rounded-full`}
+                    source={{
+                      uri:
+                        `https://e-limi.africa/uploads/user_image/placeholder.png` ||
+                        `https://e-limi.africa/uploads/user_image/${data.user_id}.jpg`,
+                    }}
+                  />
+                </TouchableOpacity>
+                <View style={tw`ml-2`}>
+                  <Text style={tw`text-xs text-gray-400`}>Hello</Text>
+                  <Text style={tw`font-extrabold text-gray-800 text-base`}>
+                    {data.first_name + " " + data.last_name}
+                  </Text>
+                </View>
+              </View>
+              {/* icons */}
+              <View style={tw`flex flex-row justify-around p-3`}>
+                <TouchableOpacity style={tw`w-10`}>
+                  <FontAwesome name="bell" size={20} style={tw`text-red-800`} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={tw`w-10`}
+                  onPress={() => {
+                    navigation.navigate("BookmarkScreen", {
+                      data: data,
+                    });
+                  }}
+                >
+                  <FontAwesome
+                    name="bookmark"
+                    size={20}
+                    style={tw`text-red-800`}
+                  />
+                </TouchableOpacity>
               </View>
             </View>
-            {/* icons */}
-            <View style={tw`flex flex-row justify-around p-3`}>
-              <TouchableOpacity style={tw`w-10`}>
-                <FontAwesome name="bell" size={20} style={tw`text-red-800`} />
-              </TouchableOpacity>
-              <TouchableOpacity style={tw`w-10`}>
-                <FontAwesome
-                  name="bookmark"
-                  size={20}
-                  style={tw`text-red-800`}
-                />
-              </TouchableOpacity>
-            </View>
           </View>
+          {/* search bar */}
+          <Input
+            style={tw`p-4 mt-5 rounded-xl bg-gray-200`}
+            placeholder="Search"
+            secureTextEntry={false}
+            onChangeText={search()}
+          />
         </View>
-        {/* search bar */}
-        <Input
-          style={tw`p-4 mt-5 rounded-xl bg-gray-200`}
-          placeholder="Search"
-          secureTextEntry={false}
-          onChangeText={search()}
-        />
-      </View>
-      {/* Offers Component */}
-      <OffersComponent />
-      {/* Top Courses Component */}
-      <TopCourses navigation={navigation} />
-    </ScrollView>
+        {/* Offers Component */}
+        <OffersComponent />
+        {/* Top Courses Component */}
+        <TopCourses navigation={navigation} />
+      </ScrollView>
+    </>
   );
 }
 

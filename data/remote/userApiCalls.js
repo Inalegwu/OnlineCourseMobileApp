@@ -11,7 +11,7 @@ async function apiCall(config){
         if(res.status === 200 && res.data !== null)
             return { status: true, data : res.data }
         else 
-            return { status: true, message: "Failed to fetch data" }
+            return { status: false, message: "Failed to fetch data" }
         }  
     catch(ex){
         return { status: false, message : ex.message }
@@ -22,29 +22,34 @@ module.exports =  {
 
     /***** Unauthenticated Routes ****/
 
-    // Get All Top Courses or a Course by ID
-    fetchTopCourses :  (courseId="") => { 
-                    if(courseId)  
-                        return apiCall({
-                            url:`/top_courses/${courseId}`
-                        })
-                    else 
-                        return apiCall({
-                            url: `/top_courses`
-                        })
-                },
-
     // Get all Categories or a Category by ID
-    fetchCategories :  (categoryId="") =>  {
+    fetchCategories :  (categoryId) =>  {
                     if(categoryId)
-                        return apiCall({
-                            url: `/categories/${categoryId}`
-                        })
+                        return apiCall({ url: `categories/${categoryId}`})
                     else
-                        return apiCall({
-                            url: `/categories`
-                        })
+                        return apiCall({url: "categories"})
             },
+    
+    // Fetch all Sub Categories By Parent Category
+    fetchSubCategories: (parentID) => {
+            if(parentID)
+                return apiCall({url: `sub_categories/${parentID}`})
+            else 
+                return apiCall({url:`sub_categories`})
+    },
+    
+
+     // Get All Top Courses or a Course by ID
+     fetchTopCourses :  (courseId="") => { 
+        if(courseId)  
+            return apiCall({
+                url:`/top_courses/${courseId}`
+            })
+        else 
+            return apiCall({
+                url: `/top_courses`
+            })
+    },
 
     // Fetch all the courses belong to a certain category
     fetchCategorywiseCourses : (categoryId="") => {
@@ -64,6 +69,7 @@ module.exports =  {
             })
         }
     },
+    
 
     // Fetch Course by Search String
     fetchCourseBySearchString : (searchString) => {
@@ -74,40 +80,75 @@ module.exports =  {
             })
         }
     },
-    
-    // Fetch all Languages Supported by the System
-    fetchSystemLanguages : () => {
+
+      // Get All Sections by Course ID
+   fetchAllSection: (token, courseID) => {
+    return apiCall({
+        url:  "/sections",
+        headers: { Auth: token },
+        params: { course_id: courseID}
+    })
+},
+
+
+ // Fetch all System Settings
+ fetchSystemSettings: () => {
+    return apiCall({
+        url: "/system_settings"
+    })
+},
+
+     // Fetch all Languages Supported by the System
+     fetchSystemLanguages : () => {
         return apiCall({
-            url: "/api/languages", 
-        })
-    },
-    
-    // Fetch all System Settings
-    fetchSystemSettings: () => {
-        return apiCall({
-            url: "/system_settings"
+            url: "/languages", 
         })
     },
 
+ 
+
+    // Get image for course, categories or user image
+// type can either be: user_image, course_thumbnail, category_thumbnail
+    fetchImage: (type, identifier="8") => {
+        if(type && identifier ){
+            return apiCall({
+                url: "image",
+                params: { type: type, identifier: identifier }
+            })
+        }
+
+    },
+   
     // Sign up New User
     signUp: (fName, lName, email, password) => {
+        if(fName && lName && email && password)
         return apiCall({
             url: "/signup",
             method: "post",
             data: `first_name=${fName}&last_name=${lName}&email=${email}&password=${password}`
         })
+        else{
+            console.log("Please provide all the required fields")
+            return 1
+        }
+        
     },
 
     // Forgot Password
     forgotPassword: (email) => {
+        if(email)
         return apiCall({
             url: "/forgot_password",
             method: "post",
             data: `email=${email}`
         })
+        else{
+            console.log("Please provide all the required fields")
+            return 1
+        }
     },
 
-   
+
     /* Authenticated Routes */
 
     // Login User
@@ -115,12 +156,25 @@ module.exports =  {
         if(email && password)
             return apiCall({
                 url: "/login", 
-                params: { email, password } 
+                params: { email, password },
+        
             })
         },
 
-     // Reset Password
-     resetPassword: (token, currentPassword, newPassword, confirmedNewPassword) => {
+ // Update User Data
+ updateUserData: (token, data) => {
+    if(token && data)
+        return apiCall({
+            url: "/update_userdata",
+            method: "post",
+            headers: { Auth: token },
+            data: `email=${data.email}&first_name=${data.fName}&last_name=${data.lName}&facebook_link=${data.fbLink}&twitter_link=${data.twLink}&linkedin_link=${data.lkLink}&biography=${data.biography}`
+        })
+
+},
+
+// Reset Password
+resetPassword: (token, currentPassword, newPassword, confirmedNewPassword) => {
         if(token)
         return apiCall({
             url: "/update_password",
@@ -130,34 +184,7 @@ module.exports =  {
         })
     },
     
-    // Update User Data
-    updateUserData: (token, data) => {
-        if(token && data)
-            return apiCall({
-                url: "/update_userdata",
-                method: "post",
-                headers: { Auth: token },
-                data: `email=${data.email}&first_name=${data.fName}&last_name=${data.lName}&facebook_link=${data.fbLink}&twitter_link=${data.twLink}&linkedin_link=${data.lkLink}&biography=${data.biography}`
-            })
-
-    },
-
-    //  Use React Native react-native-image-picker 
-    // Upload User Image
-    uploadUserImage: (token, imageData) => {
-        if(token && imageData)
-            return apiCall({
-                url: "/upload_user_image",
-                method: "post",
-                headers: { 
-                    Auth: token,
-                    'Content-Type': 'multipart/form-data'
-                },
-                data: imageData
-            })
-    },
    
-
     // Get User Info
     fetchUserInfo: (token) => {
             if(token)
@@ -177,9 +204,9 @@ module.exports =  {
                 headers: { Auth: token }
             })
         }
-    },
+    }, 
             
-    // My Course
+    // Fetch My Course
     fetchMyCourse: (token) => {
             if(token){
                 return apiCall({ 
@@ -189,7 +216,7 @@ module.exports =  {
             }
     },
 
-    // My Wish List
+    // Fetch My Wish List
     fetchMyWishList: (token) => {
         if(token){
             return apiCall({
@@ -198,14 +225,51 @@ module.exports =  {
             })
         }
     },
-    // Get All Sections by Course ID
-    fetchAllSection: (token, courseID) => {
+
+     // Toggle Wish List Items
+     toggleWishListItem: (token) => {
         return apiCall({
-            url:  "/sections",
-            headers: {Auth: token },
-            params: { course_id: courseID}
+            url: "/toggle_wishlist_items",
+            headers: {Auth: token}
         })
     },
+
+
+    // Get all Lessons either by Course ID, Section ID or Lesson ID by setting the type to
+   // course, section or lesson together with ID
+   fetchLessons: (token, type, id) => {
+    if(token && type && id){
+        return apiCall({
+            url: "api_lessons",
+            headers: { Auth: token },
+            params: { type: type, cou_sec_les_id: id }
+        })
+    }
+    else 
+     console.log("Make sure you supply all the required params")
+},
+
+     // Fetch Lesson Details
+     fetchLessonDetails: (token, lessonID) => {
+        if(token && lessonID)
+        return apiCall({
+            url: "/lesson_details",
+            headers: { Auth: token},
+            params: {lesson_id: lessonID}
+        })
+    },
+
+    fetchLessonThumbnailUrl: (token, lessonID)=> {
+        if(token && lessonID){
+            return apiCall({ 
+                url: "lesson_thumbnail",
+                headers: { Auth: token },
+                params: { lesson_id: lessonID }
+            })
+        }
+        else 
+         console.log("Make sure you supply all the required params")
+   }, 
 
     // Get All Sectionwise Lessons
     fetchAllLessonsSectionWise: (token, sectionID) => {
@@ -216,31 +280,58 @@ module.exports =  {
         })
     },
 
-    // Toggle Wish List Items
-    toggleWishListItem: (token) => {
-        return apiCall({
-            url: "/toggle_wishlist_items",
-            headers: {Auth: token}
-        })
+   // Fetch Course Details
+   fetchCourseDetails: (token, courseID) => {
+    return apiCall({
+        url: "/course_details_by_id",
+        headers: { Auth: token },
+        params: { course_id: courseID }
+    })
+},
+
+    // Fetch My Courses by Category Wise
+    fetchMyCoursesCategoryWise: (token, categoryID) => {
+        if(token && categoryID){
+            return apiCall({
+                url: "my_courses_by_category_id",
+                headers: { Auth: token },
+                params: { category_id: categoryID }
+             })
+    }
+    else 
+    console.log("Make sure you supply all the required params")
+},
+
+ //  Use React Native react-native-image-picker 
+    // Upload User Image
+    uploadUserImage: (token, imageData) => {
+        if(token && imageData)
+            return apiCall({
+                url: "/upload_user_image",
+                method: "post",
+                headers: { 
+                    Auth: token,
+                    'Content-Type': 'multipart/form-data'
+                },
+                data: imageData
+            })
     },
 
-    // Fetch Lesson Details
-    fetchLessonDetails: (token, lessonID) => {
+    // Save Course Progress
+    saveCourseProgress: (token, lessonID, progress) => {
         return apiCall({
-            url: "/lesson_details",
-            headers: { Auth: token},
-            params: {lesson_id: lessonID}
-        })
-    },
-
-    // Fetch Course Details
-    fetchCourseDetails: (token, courseID) => {
-        return apiCall({
-            url: "/course_details_by_id",
+            url: "/save_course_progress",
             headers: { Auth: token },
-            params: { course_id: courseID }
+            params: {lesson_id: lessonID, progress: progress } 
         })
     },
+
+
+    // course_purchase      Crud_Model.php
+
+    // get_instructor       User_Model
+
+    // add_submission       Crud_Model.php
 
     // Submit Quiz 
     submitQuiz: (token, lessonID) => {
@@ -252,13 +343,15 @@ module.exports =  {
         })
     },
 
+    
+
+    
+
     // enrol_to_free_course     Crud_Model.php
 
       
     // enrol_a_user_manually   Crud_Model.php
 
- 
-    // course_purchase      Crud_Model.php
 
     // Update user password
     updatePassword: (token, newPassword)=> {
@@ -278,11 +371,7 @@ module.exports =  {
 
 
     /**  TODO API  **/
-    // filter_course
-
-    // course_data
-
-    // get_image
+    
 
     //  is_purchased
 
@@ -294,7 +383,7 @@ module.exports =  {
 
     // add_user  User_Model
 
-    // get_instructor User_Model
+
 
    
 }
