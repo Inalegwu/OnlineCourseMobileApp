@@ -35,7 +35,7 @@ export default function CourseDetails({ route, navigation }) {
   };
 
   const enrol = () => {
-    console.log("Enrolling...");
+    console.log("Enrolling...");  
     API.enrol(userData.token, data.id)
       .then((data) => {
         console.log(data);

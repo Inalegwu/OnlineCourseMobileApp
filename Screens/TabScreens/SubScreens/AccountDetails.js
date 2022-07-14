@@ -12,11 +12,18 @@ import { NetworkContext } from "../../../Components/ContextProvider";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Input from "../../../Components/Input";
 import * as ImagePicker from "expo-image-picker";
+import * as API from "../../../data/remote/userApiCalls";
 
 export default function AccountDetails({ navigation }) {
   const data = React.useContext(NetworkContext);
   const [image, setImage] = useState("../../../assets/images/avatar.png");
-
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [linkedIn, setLinkedIn] = useState("");
+  const [email, setEmail] = useState("");
+  const [twitter, setTwitter] = useState("");
+  // select image from users image library
+  //TODO take image
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -35,6 +42,40 @@ export default function AccountDetails({ navigation }) {
     navigation.navigate("Login", {
       previousScreen: "AccountDetails",
     });
+  };
+
+  // submit functions for input fields
+  const submitFirstName = (firstName) => {
+    setFirstName(firstName);
+  };
+  const submitLastName = (lastName) => {
+    setLastName(lastName);
+  };
+  const submitLinkedIn = (linkedIn) => {
+    setLinkedIn(linkedIn);
+  };
+  const submitEmail = (email) => {
+    setEmail(email);
+  };
+  const submitTwitter = (twitter) => {
+    setTwitter(twitter);
+  };
+
+  // update user info function
+
+  const updateUserInfo = () => {
+    if (email == "" || firstName == "") {
+      alert("Fill In Fields");
+    } else {
+      console.log("Updating User Info...");
+      API.updateUserData(data.token)
+        .then((data) => {
+          console.log(data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -79,18 +120,22 @@ export default function AccountDetails({ navigation }) {
           <Input
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
             placeholder="First Name"
+            submit={submitFirstName()}
           />
           <Input
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
             placeholder="Last Name"
+            submit={submitLastName()}
           />
           <Input
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
             placeholder="Email"
+            submit={submitEmail()}
           />
           <Input
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
             placeholder="LinkedIn"
+            submit={submitLinkedIn()}
           />
           <Input
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
