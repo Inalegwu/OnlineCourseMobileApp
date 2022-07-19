@@ -32,7 +32,7 @@ export default function App() {
     );
   } else {
     <>
-      <StatusBar backgroundColor="#F3F4F6" />
+      <StatusBar style="light" />
       <NetworkContext.Provider value={data}>
         <RootSiblingParent>
           {/* if the token value of the data is null , re render with the app intro slider else return only app */}

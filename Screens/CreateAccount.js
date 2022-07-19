@@ -7,6 +7,7 @@ import {
   Platform,
   TouchableOpacity,
   Image,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import tw from "twrnc";
@@ -38,18 +39,23 @@ export default function CreateAccount({ navigation }) {
 
   const createAccount = () => {
     console.log("Creating Account...");
-    API.signUp(firstName, lastName, email, password)
-      .then((data) => {
-        console.log(data.data);
-        console.log("Account Created Successfully");
-        navigation.navigate("Login", {
-          data: data,
-          previous_screen: "CreateAccount",
+    if (
+      (email != null, firstName != null, lastName != null, password != null)
+    ) {
+      API.signUp(firstName, lastName, email, password)
+        .then((data) => {
+          console.log(data);
+          navigation.navigate("Login", {
+            data: data,
+            previous_screen: "CreateAccount",
+          });
+        })
+        .catch((error) => {
+          console.log(error + " " + "Can't Create Account");
         });
-      })
-      .catch((error) => {
-        console.log(error + " " + "Can't Create Account");
-      });
+    } else {
+      Alert.alert("Error", "Please Fill All Fields");
+    }
   };
 
   const pickImage = async () => {
@@ -88,7 +94,7 @@ export default function CreateAccount({ navigation }) {
           </TouchableOpacity>
         </View>
         <View style={tw`p-4`}>
-          <Text style={tw`font-extrabold text-5xl w-50 mt-2 ml-3`}>
+          <Text style={tw`font-extrabold text-4xl w-50 mt-2 ml-3`}>
             Create account
           </Text>
           <View style={tw`p-4 m-1 items-center content-center`}>
@@ -145,7 +151,9 @@ export default function CreateAccount({ navigation }) {
             <Text style={tw`ml-20`}>Already have and account ?</Text>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("Login");
+                navigation.navigate("Login", {
+                  previous_screen: "CreateAccount",
+                });
               }}
             >
               <Text style={tw`text-red-800 font-bold`}>Login</Text>

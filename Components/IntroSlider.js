@@ -72,7 +72,7 @@ export default function IntroSlider(props) {
 
   return (
     <>
-      <StatusBar style="light" backgroundColor="white" />
+      <StatusBar style="dark" backgroundColor="white" />
       <AppIntroSlider
         renderItem={_renderItem}
         data={slides}

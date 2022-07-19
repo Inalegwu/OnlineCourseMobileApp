@@ -45,7 +45,7 @@ export default function RenderHome({ navigation, route }) {
               <View style={tw`w-70 flex flex-row`}>
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("AccountDetails");
+                    navigation.navigate("AccountDetails", { data: data });
                   }}
                 >
                   <Image

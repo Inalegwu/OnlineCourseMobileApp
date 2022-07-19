@@ -23,12 +23,8 @@ export default function Login({ navigation, route }) {
   const [fetchedEmail, setEmail] = useState();
   const [fetchedPassword, setPassword] = useState();
   const [isVisible, setIsVisible] = useState(false);
-  const { previous_screen } = route.params;
-  let createAccountData;
-  if (previous_screen == "CreateAccount") {
-    createAccountData = route.params;
-  }
   const data = React.useContext(NetworkContext);
+  const { previous_screen, previous_screenData } = route.params;
   const submitPassword = (password) => {
     setPassword(password);
   };
@@ -36,18 +32,17 @@ export default function Login({ navigation, route }) {
     setEmail(email);
   };
   const authenticate = () => {
-    console.log("Authenticating...")
-    console.log(fetchedEmail,fetchedPassword)
+    console.log("Authenticating...");
     if (fetchedEmail === undefined && fetchedPassword === undefined) {
       alert("Cant Login without an Email or Password");
     } else {
       API.login(fetchedEmail, fetchedPassword)
         .then((data) => {
           if (data.data.validity == 1) {
-            console.log(data.data)
+            console.log(data.data);
             navigation.navigate("Home", { data: data.data });
           } else {
-            console.log(data.data)
+            console.log(data.data);
             alert("Invalid Username or Password");
           }
         })
@@ -59,7 +54,7 @@ export default function Login({ navigation, route }) {
   };
   return (
     <NetworkContext.Provider value={data}>
-      {console.log(createAccountData)}
+      {console.log(previous_screen, previous_screenData)}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
@@ -99,7 +94,7 @@ export default function Login({ navigation, route }) {
             <TouchableOpacity
               style={tw`p-3`}
               onPress={() => {
-                authenticate();
+                navigation.navigate("ForgotPassword");
               }}
             >
               <Text style={tw`text-red-800 mt-1`}>Forgot Password ?</Text>

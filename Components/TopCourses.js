@@ -29,17 +29,6 @@ export default function TopCourses({ navigation }) {
       });
   }, [fetchedData, setFetchedData, loading, setloading]);
 
-  useEffect(() => {
-    API.fetchCategories()
-      .then((data) => {
-        setCategories(data.data);
-        setCategoriesLoading(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [categoriesLoading, setCategoriesLoading]);
-
   return (
     <View style={tw`p-5 mt-5 justify-start`}>
       {/* Details Buttons */}
@@ -51,38 +40,6 @@ export default function TopCourses({ navigation }) {
           </Text>
         </TouchableOpacity>
       </View>
-      {/* Categories Controller
-      <View>
-        {categoriesLoading === false ? (
-          <ActivityIndicator
-            style={tw`text-center left-2 mt-4`}
-            size="large"
-            color="#8D161A"
-          />
-        ) : (
-          <ScrollView
-            horizontal={true}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            style={tw`p-2 flex flex-row`}
-            contentContainerStyle={{ justifyContent: "space-between" }}
-          >
-            {categories.map((data) => {
-              return (
-                <TouchableOpacity
-                  style={[
-                    tw`p-2 mt-2 border border-red-800 ml-2 mr-2 rounded-full`,
-                  ]}
-                  key={data.id}
-                >
-                  <Text>{data.name}</Text>
-                </TouchableOpacity>
-              );
-            })}
-          </ScrollView>
-        )}
-      </View> */}
-      {/* ScrollView */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}

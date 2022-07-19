@@ -3,7 +3,7 @@
 const axios = require("axios").default
 
 
-const API_BASE_URI = "https://e-limi.africa/api"
+const API_BASE_URI = "https://andios.e-limi.africa/api"
 
 async function apiCall(config){
     try{
@@ -64,7 +64,7 @@ module.exports =  {
     fetchCourseById : (courseId) => {
         if(courseId){
             return apiCall({
-                url: "/course_object_by_id", 
+                url: "/course_by_id", 
                 params: { course_id: courseId }
             })
         }
@@ -184,36 +184,54 @@ resetPassword: (token, currentPassword, newPassword, confirmedNewPassword) => {
         })
     },
     
-   
+// Update user password
+// updatePassword: (token, newPassword)=> {
+//     if(token && newPassword)
+//     return apiCall({
+//         url: "/update_password",
+//         headers: { Auth: token },
+//         data: `lesson_id=${lessonID}`
+//     })
+// }, 
     // Get User Info
-    fetchUserInfo: (token) => {
+fetchUserInfo: (token) => {
             if(token)
             return apiCall({
                 url: "/userdata",
                 headers: { Auth: token}
-            })
+        })
     },
     
     // Enrol into a Course
     enrol : (token, courseID) => {
         if(token && courseID){
             return apiCall({
-                url: "/enrol",
+                url: "enrol",
                 method: "post",
                 data: `course_id=${courseID}`,
                 headers: { Auth: token }
             })
         }
     }, 
+
+    // Fetch My Enrolment History
+    fetchEnrolmentHistory: (token) => {
+        if(token)
+            return apiCall({
+                url: "/enrol_history_by_user_id",
+                headers: { Auth: token }
+            })
+    },
+   
             
     // Fetch My Course
     fetchMyCourse: (token) => {
-            if(token){
+            if(token)
                 return apiCall({ 
                     url: "/my_courses",
                     headers: { Auth: token }
                 })
-            }
+            
     },
 
     // Fetch My Wish List
@@ -301,6 +319,15 @@ resetPassword: (token, currentPassword, newPassword, confirmedNewPassword) => {
     else 
     console.log("Make sure you supply all the required params")
 },
+// Fetch Instructor(s)
+fetchInstructorsByIdOrWithoutID: (token, instructorID) => {
+    if(token && instructorID)
+        return apiCall({ url: "instructor", headers: { Auth: token }, params: { instructor_id: instructorID }})
+    else if (typeof instructorID === "undefined" || token)
+        return apiCall({ url: "instructor", headers: { Auth: token } })
+    else 
+        return {status: "failed", reason: "token and instructor ID is not given"}
+},
 
  //  Use React Native react-native-image-picker 
     // Upload User Image
@@ -326,12 +353,34 @@ resetPassword: (token, currentPassword, newPassword, confirmedNewPassword) => {
         })
     },
 
+    // Course Purchase and create Records on Payment Table
+    coursePurchase: (token, amount, courseID, method="flutterwave") => {
+            if(token && method && amount && courseID){
+                return apiCall({
+                    url: "course_purchase",
+                    method: "post",
+                    data: `method=${method}&amount_paid=${amount}&course_id=${courseID}`,
+                    headers: {Auth: token}
+                })
+            }
+    },
 
+    // RewriteCond %{HTTPS} !=on
+	// RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+
+    // RewriteCond %{HTTPS} off
+    // RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    // course_purchase_post
     // course_purchase      Crud_Model.php
 
-    // get_instructor       User_Model
+
+    // upload_user_image    User_Model
+
+    // get_user_image_url   User_Model
 
     // add_submission       Crud_Model.php
+
+    // getWishLists         Crud_Model.php
 
     // Submit Quiz 
     submitQuiz: (token, lessonID) => {
@@ -348,27 +397,7 @@ resetPassword: (token, currentPassword, newPassword, confirmedNewPassword) => {
     
 
     // enrol_to_free_course     Crud_Model.php
-
-      
-    // enrol_a_user_manually   Crud_Model.php
-
-
-    // Update user password
-    updatePassword: (token, newPassword)=> {
-        return apiCall({
-            url: "/update_password",
-            headers: { Auth: token },
-            data: `lesson_id=${lessonID}`
-        })
-    }
     
-
-    
-    
-
-    
-        
-
 
     /**  TODO API  **/
     
@@ -383,7 +412,4 @@ resetPassword: (token, currentPassword, newPassword, confirmedNewPassword) => {
 
     // add_user  User_Model
 
-
-
-   
 }

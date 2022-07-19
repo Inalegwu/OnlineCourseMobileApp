@@ -17,11 +17,7 @@ import * as API from "../../../data/remote/userApiCalls";
 export default function AccountDetails({ navigation }) {
   const data = React.useContext(NetworkContext);
   const [image, setImage] = useState("../../../assets/images/avatar.png");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [linkedIn, setLinkedIn] = useState("");
   const [email, setEmail] = useState("");
-  const [twitter, setTwitter] = useState("");
   // select image from users image library
   //TODO take image
   const pickImage = async () => {
@@ -45,21 +41,6 @@ export default function AccountDetails({ navigation }) {
   };
 
   // submit functions for input fields
-  const submitFirstName = (firstName) => {
-    setFirstName(firstName);
-  };
-  const submitLastName = (lastName) => {
-    setLastName(lastName);
-  };
-  const submitLinkedIn = (linkedIn) => {
-    setLinkedIn(linkedIn);
-  };
-  const submitEmail = (email) => {
-    setEmail(email);
-  };
-  const submitTwitter = (twitter) => {
-    setTwitter(twitter);
-  };
 
   // update user info function
 
@@ -113,29 +94,25 @@ export default function AccountDetails({ navigation }) {
         </View>
         <View style={tw`p-1 mt-23`}>
           <Text
-            style={tw`text-left mt-5 text-lg left-3 font-bold text-gray-500`}
+            style={tw`text-left mt-5 text-xl left-2 font-bold text-gray-800`}
           >
             Edit Details
           </Text>
           <Input
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
             placeholder="First Name"
-            submit={submitFirstName()}
           />
           <Input
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
             placeholder="Last Name"
-            submit={submitLastName()}
           />
           <Input
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
             placeholder="Email"
-            submit={submitEmail()}
           />
           <Input
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
             placeholder="LinkedIn"
-            submit={submitLinkedIn()}
           />
           <Input
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
