@@ -35,7 +35,7 @@ export default function CourseDetails({ route, navigation }) {
   };
 
   const enrol = () => {
-    console.log("Enrolling...");  
+    console.log("Enrolling...");
     API.enrol(userData.token, data.id)
       .then((data) => {
         console.log(data);
@@ -153,9 +153,7 @@ export default function CourseDetails({ route, navigation }) {
                 ? tw`p-4 mt-4 mb-7 items-center content-center rounded-full bg-red-800`
                 : tw`p-4 mt-4 mb-7 items-center content-center rounded-full bg-gray-300`
             }
-            onPress={
-              data.price != "free" || "Free" || "FREE" ? addToCart : enrol
-            }
+            onPress={enrol}
           >
             <Text style={tw`font-bold text-white text-lg`}>
               {isEnrolled === false ? `Enroll - ${data.price}` : "Enrolled"}

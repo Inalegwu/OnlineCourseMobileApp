@@ -76,7 +76,7 @@ export default function AccountDetails({ navigation }) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={tw`w-full pb-100`}
       >
-        <View style={tw`w-full h-40 mt-8 items-center content-center`}>
+        <View style={tw`w-full h-40 mt-20 items-center content-center`}>
           <Image
             source={{
               uri: "https://e-limi.africa/uploads/user_image/placeholder.png",
@@ -93,7 +93,7 @@ export default function AccountDetails({ navigation }) {
           </View>
         </View>
         <View style={tw`p-1 mt-23`}>
-          <Text
+          {/* <Text
             style={tw`text-left mt-5 text-xl left-2 font-bold text-gray-800`}
           >
             Edit Details
@@ -117,21 +117,23 @@ export default function AccountDetails({ navigation }) {
           <Input
             style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
             placeholder="Twitter"
-          />
-          <TouchableOpacity
-            style={tw`p-3 mt-3 bg-green-600 mt-3 items-center content-center w-full rounded-lg`}
-            onPress={() => {
-              console.log("dont change anything bozo");
-            }}
-          >
-            <Text style={tw`font-bold text-white text-lg`}>Update Info</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={tw`p-3 mt-3 bg-red-600 items-center content-center w-full rounded-lg`}
-            onPress={logout}
-          >
-            <Text style={tw`font-bold text-white text-lg`}>Logout</Text>
-          </TouchableOpacity>
+          /> */}
+          <View style={tw`mt-3 p-3`}>
+            {/* <TouchableOpacity
+              style={tw`p-3 mt-3 bg-green-900 mt-3 items-center content-center w-full rounded-lg`}
+              onPress={() => {
+                console.log("dont change anything bozo");
+              }}
+            >
+              <Text style={tw`font-bold text-white text-lg`}>Update Info</Text>
+            </TouchableOpacity> */}
+            <TouchableOpacity
+              style={tw`p-3 mt-3 bg-red-700 items-center content-center w-full rounded-lg`}
+              onPress={logout}
+            >
+              <Text style={tw`font-bold text-white text-lg`}>Logout</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>

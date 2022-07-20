@@ -4,6 +4,7 @@ import { NetworkContext } from "../../Components/ContextProvider";
 import { createStackNavigator } from "@react-navigation/stack";
 import renderCourses from "./CoursesSubScreens/renderCourses";
 import CourseDetailsScreen from "./CoursesSubScreens/CourseDetailsScreen";
+import AttendCourse from "./CoursesSubScreens/AttendCourse";
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,7 @@ export default function CoursesScreen() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="MyCourse" component={renderCourses} />
         <Stack.Screen name="CourseDetails" component={CourseDetailsScreen} />
+        <Stack.Screen name="AttendCourse" component={AttendCourse} />
       </Stack.Navigator>
     </NetworkContext.Provider>
   );

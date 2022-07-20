@@ -1,7 +1,8 @@
-const apiService = require("./userApiCalls")
-const FormData = require("form-data")
+const apiService = require("./userApiCalls");
+const FormData = require("form-data");
 
-const arcToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMjc0OCIsImZpcnN0X25hbWUiOiJwdXJpc3QiLCJsYXN0X25hbWUiOiJzaW1vbiIsImVtYWlsIjoibXFya3NpbW9uQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwidmFsaWRpdHkiOjF9.YkwO_ewh2j8HYcpoO-LdhNNaid_qLJno1UtoXSRjdJY'
+const arcToken =
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMjc0OCIsImZpcnN0X25hbWUiOiJwdXJpc3QiLCJsYXN0X25hbWUiOiJzaW1vbiIsImVtYWlsIjoibXFya3NpbW9uQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwidmFsaWRpdHkiOjF9.YkwO_ewh2j8HYcpoO-LdhNNaid_qLJno1UtoXSRjdJY";
 // const criToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzE4OCIsImZpcnN0X25hbWUiOiJjaHJpc3RhYmVsIiwibGFzdF9uYW1lIjoic2ltb24iLCJlbWFpbCI6ImNyaXNpbW9uQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwidmFsaWRpdHkiOjF9.z-ut9-ewWv3x8UalTQOcIRWpwL7KHa4ZdCRwNAX0ig0'
 
 // apiService.fetchTopCourses().then(data => console.log(data))
@@ -28,12 +29,13 @@ const arcToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMjc0OCIsI
 
 // apiService.fetchSystemLanguages().then(data => console.log(data))
 
-
 // apiService.fetchImage("course_thumbnail").then(data=> console.log(data))
 
 // apiService.signUp("christabel", "simon", "crisimon@gmail.com", "123456").then(data => console.log(data))
 
-// apiService.login("mqrksimon@gmail.com", "58a8564").then(data => console.log(data))
+// apiService
+//   .login("ikwueinalegwu@gmail.com", "inalegwu2004")
+//   .then((data) => console.log(data));
 // crisimon@gmail.com    -   123456
 // mqrksimon@gmail.com   -   7654321
 // apiService.forgotPassword("mqrksimon@gmail.com").then(data => console.log(data))
@@ -62,7 +64,9 @@ const arcToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMjc0OCIsI
 
 // apiService.toggleWishListItem(arcToken).then(data => console.log(data))
 
-// apiService.fetchLessons(arcToken, "course", "7").then(data => console.log(data)) 
+apiService
+  .fetchLessons(arcToken, "course", "7")
+  .then((data) => console.log(data));
 
 // apiService.fetchLessonDetails(arcToken, "334").then(data => console.log(data))
 
@@ -92,5 +96,3 @@ const arcToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMjc0OCIsI
 //         })
 //     apiService.uploadUserImage(arcToken, formData).then(data => console.log(data))
 // };
-
-

@@ -12,7 +12,8 @@ import tw from "twrnc";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import BookmarkBtn from "../../../Components/BookmarkBtn";
-export default function CourseDetailsScreen({ navigation, route }) {
+
+export default function RenderCourseDetails({ navigation, route }) {
   const [bookmarked, setBookmarked] = useState(false);
   const { data } = route.params;
   const setBookmark = () => {
@@ -91,8 +92,11 @@ export default function CourseDetailsScreen({ navigation, route }) {
           </View>
           <TouchableOpacity
             style={tw`p-5 shadow-lg items-center content-center rounded-full bg-red-800 w-full`}
+            onPress={() => {
+              navigation.navigate("AttendCourse", { courseData: data });
+            }}
           >
-            <Text style={tw`font-bold text-white`}>Continue Learning</Text>
+            <Text style={tw`font-bold  text-white`}>Start Lesson</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
