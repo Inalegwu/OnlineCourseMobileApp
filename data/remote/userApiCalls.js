@@ -344,6 +344,7 @@ fetchInstructorsByIdOrWithoutID: (token, instructorID) => {
             })
     },
 
+    
     // Save Course Progress
     saveCourseProgress: (token, lessonID, progress) => {
         return apiCall({
@@ -365,11 +366,38 @@ fetchInstructorsByIdOrWithoutID: (token, instructorID) => {
             }
     },
 
+    // Fetch Payment History of a user
+    fetchPaymentHistory: (token) => {
+        if(token)
+            return apiCall({
+                url: "purchase_history",
+                headers: {Auth: token}
+            })
+        else 
+            console.log("Unauthorized access")
+    },
+
+    // Fetch Payment Details by Payment ID
+    fetchPaymentDetails: (token, paymentID) => {
+            if(token && paymentID)
+                return apiCall({
+                    url: "payment_details_by_id",
+                    headers: {Auth: token},
+                    params: { payment_id : paymentID } 
+                })
+            else 
+                console.log("Illegal arguments")
+
+    },
+    
+    
+
     // RewriteCond %{HTTPS} !=on
 	// RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
 
     // RewriteCond %{HTTPS} off
     // RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
     // course_purchase_post
     // course_purchase      Crud_Model.php
 
@@ -401,15 +429,12 @@ fetchInstructorsByIdOrWithoutID: (token, instructorID) => {
 
     /**  TODO API  **/
     
-
-    //  is_purchased
-
     // certificate_addon_get
 
-    // get_quiz_questions  CRUD_Model.php
+    // get_quiz_questions  Crud_Model.php
 
     // get_quiz_question_by_id   Crud_Model.php
 
-    // add_user  User_Model
+    
 
 }
