@@ -22,6 +22,8 @@ export default function AttendCourse({ navigation, route }) {
   // useEffect(() => {
 
   // }, [fetchedData, setFetchedData, isLoading, setIsLoading]);
+  // ! useEffect makes data load from beggining of application launch
+  // ! this was the cause of the bottle  neck
   API.fetchLessons(userData.token, "course", courseData.id)
     .then((data) => {
       console.log(data.data);
@@ -83,7 +85,11 @@ export default function AttendCourse({ navigation, route }) {
                   <View>
                     <TouchableOpacity
                       onPress={() => {
-                        navigation.navigate("VideoScreen", { data: item });
+                        if (item.lesson_type == "video") {
+                          navigation.navigate("VideoScreen", { data: item });
+                        } else {
+                          navigation.navigate("ReaderScreen", { data: item });
+                        }
                       }}
                       style={tw`p-5 bg-red-800 rounded-full`}
                     >

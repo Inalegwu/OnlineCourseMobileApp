@@ -1,11 +1,29 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import tw from "twrnc";
+import WebView from "react-native-webview";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-export default function ReaderScreen() {
+export default function ReaderScreen({ navigation, route }) {
+  const { data } = route.params;
   return (
-    <View style={tw`p-3 mt-8`}>
-      <Text>ReaderScreen</Text>
+    <View>
+      <View
+        style={tw`bg-white flex flex-row justify-around shadow-lg w-full p-10 h-30 items-center content-center`}
+      >
+        <View style={tw`flex flex-row mt-5 justify-between`}>
+          <TouchableOpacity
+            style={tw`mr-4`}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <FontAwesome name="arrow-left" size={20} />
+          </TouchableOpacity>
+          <Text style={tw`w-70 m-auto font-bold text-sm`}>{data.title}</Text>
+        </View>
+      </View>
     </View>
   );
 }

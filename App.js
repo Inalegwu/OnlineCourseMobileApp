@@ -30,10 +30,12 @@ export default function App() {
   // context if data is not null , wrap application in network context and pass data
   if (data == null) {
     return (
-      <RootSiblingParent>
-        {showIntro && <IntroSlider handleDone={handleShowIntro} />}
-        {!showIntro && <Main />}
-      </RootSiblingParent>
+      <>
+        <RootSiblingParent>
+          {showIntro && <IntroSlider handleDone={handleShowIntro} />}
+          {!showIntro && <Main />}
+        </RootSiblingParent>
+      </>
     );
   } else {
     <>
