@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Share,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import tw from "twrnc";
 import * as API from "../../../data/remote/userApiCalls";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -34,22 +34,47 @@ export default function CourseDetails({ route, navigation }) {
     );
   };
 
-  const enrol = () => {
-    console.log("Enrolling...");
-    API.enrol(userData.token, data.id)
+  const checkEnrollment = (courseData, userData) => {
+    console.log("Fetching enrolled courses...");
+    API.fetchMyCourse(userData.token)
       .then((data) => {
-        console.log(data);
-        setIsEnrolled(true);
+        const enrollementData = data.data;
+        console.log(enrollementData);
+        for (let index = 0; index < enrollementData.length; index++) {
+          const element = enrollementData[index];
+          if ((element.id = courseData.id)) {
+            console.log("matching id detected");
+            setIsEnrolled(true);
+          } else {
+            console.log("no matching id detected");
+            setIsEnrolled(false);
+          }
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+  const enrol = () => {
+    console.log("Enrolling...");
+    useEffect(() => {
+      API.enrol(userData.token, data.id)
+        .then((data) => {
+          console.log(data);
+          setIsEnrolled(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, [setIsEnrolled, isEnrolled]);
+  };
+
   return (
     <NetworkContext.Provider value={userData}>
       <StatusBar style="light" />
       {/* Top View */}
+      {checkEnrollment(data, userData)}
       <View>
         <Image
           source={{ uri: route.params.data.thumbnail }}
@@ -153,7 +178,7 @@ export default function CourseDetails({ route, navigation }) {
                 ? tw`p-4 mt-4 mb-7 items-center content-center rounded-full bg-red-800`
                 : tw`p-4 mt-4 mb-7 items-center content-center rounded-full bg-gray-300`
             }
-            onPress={enrol}
+            onPress={enrol()}
           >
             <Text style={tw`font-bold text-white text-lg`}>
               {isEnrolled === false ? `Enroll - ${data.price}` : "Enrolled"}

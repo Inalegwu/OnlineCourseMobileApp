@@ -7,13 +7,13 @@ export default function OnBoard({ navigation }) {
   return (
     <View style={tw`p-5 m-5 mt-6 content-center items-center`}>
       <Image
-        style={[tw`h-65 w-100`, { resizeMode: "contain" }]}
+        style={[tw`h-140 w-100`, { resizeMode: "contain" }]}
         source={require("../assets/images/3.png")}
       />
       <Text style={tw`w-80 font-extrabold text-3xl`}>
         Welcome to the E-Limi Learning Platform
       </Text>
-      <View style={tw`w-90 mt-5 m-3`}>
+      {/* <View style={tw`w-90 mt-5 m-3`}>
         <View style={tw`p-8 w-90 rounded-2xl mt-2 flex flex-row bg-gray-200`}>
           <View style={tw`mr-5 p-2`}>
             <FontAwesome name="google" />
@@ -26,11 +26,11 @@ export default function OnBoard({ navigation }) {
           </View>
           <Text style={tw`text-base mt-1 font-bold`}>Login With Facebook</Text>
         </View>
-      </View>
-      <Text style={tw`text-base font-bold mt-3`}>or</Text>
+      </View> */}
+      {/* <Text style={tw`text-base font-bold mt-3`}>or</Text> */}
       <View style={tw`mt-7`}>
         <TouchableOpacity
-          style={tw`p-5 w-90 rounded-2xl bg-red-800 items-center`}
+          style={tw`p-5 w-85 rounded-2xl bg-red-800 items-center`}
           onPress={() => {
             navigation.navigate("Login", { previous_screen: "OnBoard" });
           }}

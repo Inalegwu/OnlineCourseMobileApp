@@ -9,6 +9,7 @@ import {
   Platform,
   ActivityIndicator,
   Alert,
+  Modal,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
@@ -23,6 +24,7 @@ export default function Login({ navigation, route }) {
   const [fetchedEmail, setEmail] = useState();
   const [fetchedPassword, setPassword] = useState();
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const data = React.useContext(NetworkContext);
   const { previous_screen, previous_screenData } = route.params;
   const submitPassword = (password) => {
@@ -37,10 +39,12 @@ export default function Login({ navigation, route }) {
       alert("Cant Login without an Email or Password");
     } else {
       API.login(fetchedEmail, fetchedPassword)
+        .then(setIsLoading(true))
         .then((data) => {
           if (data.data.validity == 1) {
             console.log(data.data);
             navigation.navigate("Home", { data: data.data });
+            setIsLoading(false);
           } else {
             console.log(data.data);
             alert("Invalid Username or Password");
@@ -105,14 +109,18 @@ export default function Login({ navigation, route }) {
                 authenticate();
               }}
             >
-              <Text style={[tw`text-lg font-bold`, { color: "white" }]}>
-                Login
-              </Text>
+              {isLoading === true ? (
+                <ActivityIndicator color="white" size={30} />
+              ) : (
+                <Text style={[tw`text-lg font-bold`, { color: "white" }]}>
+                  Login
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
           {/* Login With Container */}
           <View
-            style={tw`flex items-center content-center justify-evenly w-80 flex-row p-2 ml-4 mr-4`}
+            style={tw`flex items-center content-center justify-evenly w-full flex-row p-2 ml-4 mr-4`}
           >
             <TouchableOpacity
               style={tw`p-3 h-15 w-15 items-center content-center shadow-md rounded-full bg-gray-200`}

@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text, View, LogBox } from "react-native";
 import { useState } from "react";
 import React from "react";
 import IntroSlider from "./Components/IntroSlider";
@@ -6,6 +6,11 @@ import Main from "./Components/Main";
 import { RootSiblingParent } from "react-native-root-siblings";
 import { NetworkContext } from "./Components/ContextProvider";
 import { StatusBar } from "expo-status-bar";
+
+LogBox.ignoreLogs([
+  "ViewPropTypes will be removed",
+  "ColorPropType will be removed",
+]);
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true);

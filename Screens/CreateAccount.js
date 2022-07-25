@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import tw from "twrnc";
@@ -23,6 +24,7 @@ export default function CreateAccount({ navigation }) {
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const submitFirstName = (firstName) => {
     setFirstName(firstName);
@@ -43,6 +45,7 @@ export default function CreateAccount({ navigation }) {
       (email != null, firstName != null, lastName != null, password != null)
     ) {
       API.signUp(firstName, lastName, email, password)
+        .then(setIsLoading(true))
         .then((data) => {
           console.log(data);
           navigation.navigate("Login", {
@@ -143,7 +146,11 @@ export default function CreateAccount({ navigation }) {
               style={tw`p-4 w-90 bg-red-800 mt-7 rounded-lg items-center content-center`}
             >
               <Text style={tw`font-bold text-lg text-white`}>
-                Create Account
+                {isLoading === false ? (
+                  "Create Account"
+                ) : (
+                  <ActivityIndicator size={30} color="white" />
+                )}
               </Text>
             </TouchableOpacity>
           </View>

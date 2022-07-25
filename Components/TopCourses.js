@@ -18,16 +18,18 @@ export default function TopCourses({ navigation }) {
   const [categoriesLoading, setCategoriesLoading] = useState(false);
   const [categories, setCategories] = useState();
   const [isActive, setisActive] = useState();
-  useEffect(() => {
-    API.fetchTopCourses()
-      .then((data) => {
-        setFetchedData(data.data);
-        setloading(true);
-      })
-      .catch((error) => {
-        console.log(error.toString() + "unable to complete top courses call");
-      });
-  }, [fetchedData, setFetchedData, loading, setloading]);
+  // useEffect(() => {
+
+  // }, [fetchedData, setFetchedData, loading, setloading]);
+
+  API.fetchTopCourses()
+    .then((data) => {
+      setFetchedData(data.data);
+      setloading(true);
+    })
+    .catch((error) => {
+      console.log(error.toString() + "unable to complete top courses call");
+    });
 
   return (
     <View style={tw`p-5 mt-5 justify-start`}>
