@@ -10,7 +10,7 @@ export default function ReaderScreen({ navigation, route }) {
   return (
     <View>
       <View
-        style={tw`bg-white flex flex-row justify-around shadow-lg w-full p-10 h-30 items-center content-center`}
+        style={tw`bg-white absolute z-1 flex flex-row justify-around shadow-lg w-full p-10 h-30 items-center content-center`}
       >
         <View style={tw`flex flex-row mt-5 justify-between`}>
           <TouchableOpacity
@@ -23,6 +23,9 @@ export default function ReaderScreen({ navigation, route }) {
           </TouchableOpacity>
           <Text style={tw`w-70 m-auto font-bold text-sm`}>{data.title}</Text>
         </View>
+        <WebView
+          source={{ uri: "https://duckduckgo.com/?q=pdf+link&t=min&ia=web" }}
+        />
       </View>
     </View>
   );
