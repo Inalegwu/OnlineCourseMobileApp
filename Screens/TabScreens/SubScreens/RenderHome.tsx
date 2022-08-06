@@ -10,7 +10,6 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
-  AsyncStorage,
 } from "react-native";
 import React, { useState } from "react";
 import tw, { useDeviceContext, useAppColorScheme } from "twrnc";
@@ -23,17 +22,6 @@ import { NetworkContext } from "../../../Components/ContextProvider";
 export default function RenderHome({ navigation, route }) {
   // TODO caching result of api request to prevent constant loading
   const [searchText, setSearchText] = useState();
-  const getToken = () => {
-    let JSONData: string;
-    AsyncStorage.getItem("userData")
-      .then((data) => {
-        JSONData = JSON.parse(data);
-        console.log(JSONData, "Data Fetched Successfully....");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   const search = (text) => {
     if (text != null) {
       console.log(text);
@@ -49,7 +37,6 @@ export default function RenderHome({ navigation, route }) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={tw`bg-gray-100 dark:bg-gray-900`}
       >
-        {getToken()}
         <View style={[tw`p-6`]}>
           {/* navbar */}
           <View style={tw`mt-10 flex flex-row justify-between`}>

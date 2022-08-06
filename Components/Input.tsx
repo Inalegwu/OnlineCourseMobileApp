@@ -2,14 +2,21 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
 import tw from "twrnc";
 
+interface Props {
+  placeholder: string;
+  secureTextEntry: boolean;
+  style: Object;
+  autofocus: boolean;
+  submit?: void;
+}
+
 export default function Input({
   placeholder,
   secureTextEntry,
   style,
   autofocus,
-  onChangeText,
   submit,
-}) {
+}: Props) {
   return (
     <TextInput
       style={style}

@@ -8,7 +8,6 @@ import {
   Image,
   Platform,
   ActivityIndicator,
-  AsyncStorage,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
@@ -34,17 +33,6 @@ export default function Login({ navigation, route }) {
     setEmail(email);
   };
 
-  const setToken = async (user: Object) => {
-    await AsyncStorage.setItem("userData", JSON.stringify(user));
-  };
-
-  const getToken = () => {
-    AsyncStorage.getItem("userData").then((data) => {
-      persistData = JSON.parse(data);
-      console.log(persistData, "Persistent Data Recovered...");
-    });
-  };
-
   const authenticate = () => {
     console.log("Authenticating...");
     if (fetchedEmail === undefined && fetchedPassword === undefined) {
@@ -56,7 +44,6 @@ export default function Login({ navigation, route }) {
           if (data.data.validity == 1) {
             console.log(data.data);
             console.log("Setting token...");
-            setToken(data);
             navigation.navigate("Home", { data: data.data });
             setIsLoading(false);
           } else {
@@ -71,7 +58,6 @@ export default function Login({ navigation, route }) {
   };
   return (
     <>
-      {getToken()}
       <NetworkContext.Provider value={data}>
         {console.log(previous_screen, previous_screenData)}
         <KeyboardAvoidingView

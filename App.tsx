@@ -1,4 +1,4 @@
-import { Text, View, LogBox, AsyncStorage } from "react-native";
+import { Text, View, LogBox } from "react-native";
 import { useState } from "react";
 import React from "react";
 import IntroSlider from "./Components/IntroSlider";
@@ -6,7 +6,6 @@ import Main from "./Components/Main";
 import { RootSiblingParent } from "react-native-root-siblings";
 import { NetworkContext } from "./Components/ContextProvider";
 import { StatusBar } from "expo-status-bar";
-import Home from "./Screens/Home";
 
 LogBox.ignoreLogs([
   "ViewPropTypes will be removed",
@@ -18,11 +17,6 @@ export default function App() {
   // initialize variable data and set it's default to null
   let userData = null;
   // check if network context is null . if so , leave data as null if not , set data to the value of network context
-  const getToken = () => {
-    AsyncStorage.getItem("userData").then((data) => {
-      userData = JSON.parse(data);
-    });
-  };
   // handles the action of done button of app intro slider
   const handleShowIntro = () => {
     setShowIntro(false);
@@ -40,7 +34,21 @@ export default function App() {
     );
   } else {
     <>
-      <Home />
+      <StatusBar style="light" />
+      <NetworkContext.Provider value={userData}>
+        <RootSiblingParent>
+          {/* if the token value of the data is null , re render with the app intro slider else return only app */}
+          {userData.token != null ? (
+            <Main />
+          ) : (
+            [
+              <IntroSlider handleDone={handleShowIntro} /> && <Main />,
+              !showIntro && <Main />,
+            ]
+          )}
+        </RootSiblingParent>
+      </NetworkContext.Provider>
+      ;
     </>;
   }
 }

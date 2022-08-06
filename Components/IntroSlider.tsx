@@ -2,8 +2,6 @@ import "react-native-gesture-handler";
 import { Text, View, Image, TouchableOpacity, StatusBar } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 import tw from "twrnc";
-import { FontAwesome } from "@expo/vector-icons";
-import { useEffect } from "react";
 
 // slides data
 const slides = [
