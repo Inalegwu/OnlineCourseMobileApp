@@ -12,7 +12,7 @@ import tw from "twrnc";
 import * as API from "../data/remote/userApiCalls";
 import CourseItem from "./CourseItem";
 
-export default function TopCourses({ navigation }) {
+export default function TopCourses({ navigation }: any) {
   const [loading, setloading] = useState(false);
   const [fetchedData, setFetchedData] = useState();
   const [categoriesLoading, setCategoriesLoading] = useState(false);
