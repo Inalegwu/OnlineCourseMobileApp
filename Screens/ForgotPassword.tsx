@@ -7,12 +7,36 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import tw from "twrnc";
 import Feather from "@expo/vector-icons/Feather";
 import Input from "../Components/Input";
+import * as API from "../data/remote/userApiCalls";
 
-export default function ForgotPassword({ navigation }) {
+export default function ForgotPassword({ navigation }: any) {
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = (email: string) => {
+    setEmail(email);
+  };
+
+  const resetPassword = () => {
+    console.log("resetting password...");
+    API.forgotPassword(email)
+      .then((data: object) => {
+        console.log(data);
+        let message = data.data.message;
+        navigation.navigate("Login", {
+          previous_screen: "Forgot Password",
+          message: message,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <View style={tw`mt-10 p-4`}>
       <KeyboardAvoidingView
@@ -38,7 +62,10 @@ export default function ForgotPassword({ navigation }) {
             </Text>
             <Input
               placeholder="Email"
+              secureTextEntry={false}
+              autofocus={true}
               style={tw`p-5 mt-8 bg-gray-200 rounded-lg`}
+              submit={handleSubmit}
             />
             <TouchableOpacity
               style={tw`ml-2 mt-5`}
@@ -50,7 +77,7 @@ export default function ForgotPassword({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("OTP");
+                resetPassword();
               }}
               style={tw`p-5 bg-red-800 mt-8 items-center content-center rounded-lg`}
             >
