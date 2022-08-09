@@ -59,45 +59,49 @@ export default function RenderCourseDetails({ navigation, route }: any) {
       />
       <ScrollView contentContainerStyle={tw`p-4`}>
         <View style={tw`h-full`}>
-          <Text style={tw`font-bold text-gray-900 text-2xl`}>{data.title}</Text>
-          <Text style={tw`text-gray-600 font-bold mt-1`}>
-            {data.instructor_name}
-          </Text>
-          {console.log(data)}
-          <Text style={tw`text-gray-500 mt-2`}>{data.short_description}</Text>
-          <Text style={tw`font-bold text-gray-800 text-lg mt-3 mb-1`}>
-            Outcomes
-          </Text>
-          <View style={tw`mb-4`}>
-            {data.outcomes.map((item) => {
-              return <Text key={item}>{item}</Text>;
-            })}
-          </View>
-          <View style={tw`mb-10`}>
-            <Text style={tw`mb-2 font-bold text-gray-800 text-lg`}>
-              Progress
+          <>
+            <Text style={tw`font-bold text-gray-900 text-2xl`}>
+              {data.title}
             </Text>
-            <View style={tw`w-full bg-gray-300 rounded-full`}>
-              <View
-                style={tw`bg-red-900 w-${
-                  calc_width <= 80 ? calc_width : "full"
-                } p-1 rounded-full`}
-              ></View>
+            <Text style={tw`text-gray-600 font-bold mt-1`}>
+              {data.instructor_name}
+            </Text>
+            {console.log(data)}
+            <Text style={tw`text-gray-500 mt-2`}>{data.short_description}</Text>
+            <Text style={tw`font-bold text-gray-800 text-lg mt-3 mb-1`}>
+              Outcomes
+            </Text>
+            <View style={tw`mb-4`}>
+              {data.outcomes.map((item: any) => {
+                return <Text key={item}>{item}</Text>;
+              })}
             </View>
-            <Text style={tw`text-gray-500 mt-1`}>
-              {data.total_number_of_completed_lessons +
-                "/" +
-                data.total_number_of_lessons}
-            </Text>
-          </View>
-          <TouchableOpacity
-            style={tw`p-5 shadow-lg items-center content-center rounded-full bg-red-800 w-full`}
-            onPress={() => {
-              navigation.navigate("AttendCourse", { courseData: data });
-            }}
-          >
-            <Text style={tw`font-bold  text-white`}>Start Lesson</Text>
-          </TouchableOpacity>
+            <View style={tw`mb-10`}>
+              <Text style={tw`mb-2 font-bold text-gray-800 text-lg`}>
+                Progress
+              </Text>
+              <View style={tw`w-full bg-gray-300 rounded-full`}>
+                <View
+                  style={tw`bg-red-900 w-${
+                    calc_width <= 80 ? calc_width : "full"
+                  } p-1 rounded-full`}
+                ></View>
+              </View>
+              <Text style={tw`text-gray-500 mt-1`}>
+                {data.total_number_of_completed_lessons +
+                  "/" +
+                  data.total_number_of_lessons}
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={tw`p-5 shadow-lg items-center content-center rounded-full bg-red-800 w-full`}
+              onPress={() => {
+                navigation.navigate("AttendCourse", { courseData: data });
+              }}
+            >
+              <Text style={tw`font-bold  text-white`}>Start Lesson</Text>
+            </TouchableOpacity>
+          </>
         </View>
       </ScrollView>
     </>
