@@ -13,7 +13,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import BookmarkBtn from "../../../Components/BookmarkBtn";
 
-export default function RenderCourseDetails({ navigation, route }) {
+export default function RenderCourseDetails({ navigation, route }: any) {
   const [bookmarked, setBookmarked] = useState(false);
   const { data } = route.params;
   const setBookmark = () => {

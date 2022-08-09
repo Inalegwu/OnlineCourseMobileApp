@@ -18,17 +18,29 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import OffersComponent from "../../../Components/OffersComponent";
 import TopCourses from "../../../Components/TopCourses";
 import { NetworkContext } from "../../../Components/ContextProvider";
+import * as API from "../../../data/remote/userApiCalls";
 
-export default function RenderHome({ navigation, route }) {
+export default function RenderHome({ navigation, route }: any) {
   // TODO caching result of api request to prevent constant loading
   const [searchText, setSearchText] = useState();
-  const search = (text) => {
+  let items;
+  const search = (text: string) => {
     if (text != null) {
       console.log(text);
+      setSearchText(text);
     } else {
       console.log("null text");
     }
   };
+
+  API.fetchCourseBySearchString(searchText)
+    ?.then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
   const data = React.useContext(NetworkContext);
   return (
     <>
@@ -87,12 +99,24 @@ export default function RenderHome({ navigation, route }) {
             </View>
           </View>
           {/* search bar */}
-          <Input
-            style={tw`p-4 mt-5 rounded-xl bg-gray-200`}
-            placeholder="Search"
-            secureTextEntry={false}
-            onChangeText={search()}
-          />
+          <View style={tw`w-full justify-center mt-4 flex flex-row`}>
+            <Input
+              style={tw`p-4 rounded-xl bg-gray-200 w-70`}
+              placeholder="Search"
+              secureTextEntry={false}
+              submit={search}
+            />
+            <TouchableOpacity
+              style={tw`p-3 bg-red-800 rounded-lg items-center content-center w-15 ml-1`}
+            >
+              <FontAwesome
+                name="search"
+                style={tw`mt-2`}
+                size={20}
+                color="white"
+              />
+            </TouchableOpacity>
+          </View>
         </View>
         {/* Offers Component */}
         <OffersComponent />

@@ -13,9 +13,15 @@ import Feather from "@expo/vector-icons/Feather";
 import Input from "../Components/Input";
 import * as API from "../data/remote/userApiCalls";
 
+interface ResponseType {
+  status: boolean;
+  data: Object;
+  message: string;
+}
+
 export default function ForgotPassword({ navigation }: any) {
   const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = (email: string) => {
     setEmail(email);
@@ -23,18 +29,22 @@ export default function ForgotPassword({ navigation }: any) {
 
   const resetPassword = () => {
     console.log("resetting password...");
-    API.forgotPassword(email)
-      .then((data: object) => {
-        console.log(data);
-        let message = data.data.message;
-        navigation.navigate("Login", {
-          previous_screen: "Forgot Password",
-          message: message,
+    try {
+      API.forgotPassword(email)
+        .then((data: ResponseType) => {
+          console.log(data);
+          let message = data.message;
+          navigation.navigate("Login", {
+            previous_screen: "Forgot Password",
+            message: message,
+          });
+        })
+        .catch((error: Error) => {
+          console.log(error);
         });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    } catch (error: unknown) {
+      console.log(error);
+    }
   };
 
   return (

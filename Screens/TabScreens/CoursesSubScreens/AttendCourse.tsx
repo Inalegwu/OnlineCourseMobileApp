@@ -13,34 +13,32 @@ import { NetworkContext } from "../../../Components/ContextProvider";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-export default function AttendCourse({ navigation, route }) {
-  const [fetchedData, setFetchedData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+interface ResponseData {
+  status: boolean;
+  message?: string;
+  data?: Object;
+}
+
+export default function AttendCourse({ navigation, route }: any) {
+  const [fetchedData, setFetchedData] = useState<object>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { courseData } = route.params;
   const userData = React.useContext(NetworkContext);
 
-  // useEffect(() => {
-
-  // }, [fetchedData, setFetchedData, isLoading, setIsLoading]);
-  // ! useEffect makes data load from beggining of application launch
-  // ! this was the cause of the bottle  neck
-  API.fetchLessons(userData.token, "course", courseData.id)
-    .then((data) => {
-      console.log(data.data);
-      setFetchedData(data.data);
-      setIsLoading(false);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
-  const renderItem = ({ item }) => {
-    return (
-      <View style={tw`p-5 rounded-lg bg-gray-200 mt-2 mb-2`}>
-        <Text>{item.title}</Text>
-      </View>
-    );
-  };
+  try {
+    useEffect(() => {
+      API.fetchLessons(userData.token, "course", courseData.id)
+        .then((data: ResponseData) => {
+          setFetchedData(data.data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, [fetchedData, isLoading]);
+  } catch (error) {
+    console.log(error);
+  }
 
   return (
     <View style={tw`mt-8`}>

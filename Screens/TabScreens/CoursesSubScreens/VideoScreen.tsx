@@ -1,18 +1,40 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import { Video } from "expo-av";
+import React, { useState } from "react";
+import { ResizeMode, Video } from "expo-av";
 import tw from "twrnc";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import * as ScreenOrientation from "expo-screen-orientation";
 
 export default function VideoScreen({ navigation, route }: any) {
+  const [screenOrientation, setScreenOrientation] = useState<number>(
+    ScreenOrientation.OrientationLock.PORTRAIT_UP
+  );
   // pull data from the route parameters
   const { data } = route.params;
+
+  const rotateScreen = () => {
+    console.log(screenOrientation);
+  };
+
+  async function changeScreenOrientation() {
+    if (screenOrientation == ScreenOrientation.OrientationLock.PORTRAIT_UP) {
+      await ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT
+      );
+      setScreenOrientation(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
+    } else {
+      await ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP
+      );
+      setScreenOrientation(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+    }
+  }
+
   return (
     <View style={tw`h-full`}>
       <>
-        {console.log(data.video_url_for_mobile_application)}
-        <View style={tw`flex absolute  z-1 flex-row justify-between`}>
+        <View style={tw`flex absolute w-full  z-1 flex-row justify-between`}>
           <TouchableOpacity
             style={tw`p-8 top-10`}
             onPress={() => {
@@ -20,6 +42,14 @@ export default function VideoScreen({ navigation, route }: any) {
             }}
           >
             <FontAwesome name="arrow-left" size={23} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={tw`p-8 top-10 left--2`}
+            onPress={() => {
+              changeScreenOrientation();
+            }}
+          >
+            <FontAwesome name="rotate-right" size={23} color="white" />
           </TouchableOpacity>
         </View>
         <Video
@@ -29,7 +59,7 @@ export default function VideoScreen({ navigation, route }: any) {
           }}
           useNativeControls={true}
           style={tw`h-full w-full bg-black`}
-          resizeMode="contain"
+          resizeMode={ResizeMode.CONTAIN}
         />
       </>
     </View>

@@ -12,24 +12,31 @@ import tw from "twrnc";
 import * as API from "../data/remote/userApiCalls";
 import CourseItem from "./CourseItem";
 
+interface ResponseType {
+  status: Boolean;
+  data?: object;
+  message?: string;
+}
+
 export default function TopCourses({ navigation }: any) {
   const [loading, setloading] = useState(false);
-  const [fetchedData, setFetchedData] = useState();
-  const [categoriesLoading, setCategoriesLoading] = useState(false);
-  const [categories, setCategories] = useState();
-  const [isActive, setisActive] = useState();
-  // useEffect(() => {
+  const [fetchedData, setFetchedData] = useState<object>();
 
-  // }, [fetchedData, setFetchedData, loading, setloading]);
-
-  API.fetchTopCourses()
-    .then((data) => {
-      setFetchedData(data.data);
-      setloading(true);
-    })
-    .catch((error) => {
-      console.log(error.toString() + "unable to complete top courses call");
-    });
+  // try to fetch the currently top rated courses , returns NetworkError if fetching fails
+  try {
+    useEffect(() => {
+      API.fetchTopCourses()
+        .then((data: ResponseType) => {
+          setFetchedData(data.data);
+          setloading(true);
+        })
+        .catch((error) => {
+          console.log(error.toString() + "unable to complete top courses call");
+        });
+    }, [fetchedData, setFetchedData, loading, setloading]);
+  } catch (error: unknown) {
+    console.log(error);
+  }
 
   return (
     <View style={tw`p-5 mt-5 justify-start`}>
@@ -55,7 +62,7 @@ export default function TopCourses({ navigation }: any) {
             color="#8D161A"
           />
         ) : (
-          fetchedData.map((data) => {
+          fetchedData.map((data: any) => {
             return (
               <CourseItem navigation={navigation} key={data.id} data={data} />
             );

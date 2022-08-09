@@ -4,10 +4,10 @@ import tw from "twrnc";
 
 interface Props {
   placeholder: string;
-  secureTextEntry: boolean;
+  secureTextEntry?: boolean;
   style: Object;
-  autofocus: boolean;
-  submit?: void;
+  autofocus?: boolean;
+  submit(args: string): void;
 }
 
 export default function Input({

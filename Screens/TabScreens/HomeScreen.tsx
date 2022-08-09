@@ -11,6 +11,7 @@ import { NetworkContext } from "../../Components/ContextProvider";
 import React from "react";
 import tw, { useDeviceContext, useAppColorScheme } from "twrnc";
 import { StatusBar } from "expo-status-bar";
+import SearchResultsScreen from "./SubScreens/SearchResultsScreen";
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ export default function HomeScreen() {
           <Stack.Screen name="CourseDetails" component={CourseDetails} />
           <Stack.Screen name="BookmarkScreen" component={BookmarkScreen} />
           <Stack.Screen name="AccountDetails" component={AccountDetails} />
+          <Stack.Screen name="SearchResults" component={SearchResultsScreen} />
         </Stack.Navigator>
       </NetworkContext.Provider>
     </>

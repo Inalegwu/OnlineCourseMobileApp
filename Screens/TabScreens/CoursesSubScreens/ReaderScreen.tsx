@@ -5,7 +5,7 @@ import WebView from "react-native-webview";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-export default function ReaderScreen({ navigation, route }) {
+export default function ReaderScreen({ navigation, route }: any) {
   const { data } = route.params;
   return (
     <View>

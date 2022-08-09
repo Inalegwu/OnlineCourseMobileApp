@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import tw from "twrnc";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-export default function CourseItem({ data, navigation }) {
+export default function CourseItem({ data, navigation }: any) {
   const [bookMarked, setBookMarked] = useState(false);
   // toggle bookmarked option
   const toggleBookMarked = () => {

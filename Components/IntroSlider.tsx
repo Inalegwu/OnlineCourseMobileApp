@@ -22,9 +22,9 @@ const slides = [
   },
 ];
 
-export default function IntroSlider(props) {
+export default function IntroSlider(props: any) {
   // render pages of the intro slider
-  const _renderItem = ({ item }) => {
+  const _renderItem = ({ item }: any) => {
     return (
       <View style={tw`p-5 items-center text-center`}>
         <Text style={tw`font-extrabold text-xl`}>{item.title}</Text>
@@ -38,7 +38,7 @@ export default function IntroSlider(props) {
       </View>
     );
   };
-  const keyExtractor = (item) => item.key;
+  const keyExtractor = (item: any) => item.key;
   //   render the next btn
   const _renderNextBtn = () => {
     return (
@@ -70,7 +70,7 @@ export default function IntroSlider(props) {
 
   return (
     <>
-      <StatusBar style="dark" backgroundColor="white" />
+      <StatusBar style="dark-content" backgroundColor="white" />
       <AppIntroSlider
         renderItem={_renderItem}
         data={slides}

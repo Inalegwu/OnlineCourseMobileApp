@@ -17,19 +17,22 @@ import Input from "../Components/Input";
 import * as API from "../data/remote/userApiCalls";
 import { NetworkContext } from "../Components/ContextProvider";
 
-export default function Login({ navigation, route }) {
-  const [loading, setLoading] = useState(false);
-  const [fetchedEmail, setEmail] = useState();
-  const [fetchedPassword, setPassword] = useState();
-  const [isVisible, setIsVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+interface APITypes {
+  fetchedEmail: string;
+  fetchedPassword: string;
+}
+
+export default function Login({ navigation, route }: any) {
+  const [fetchedEmail, setEmail] = useState<string>();
+  const [fetchedPassword, setPassword] = useState<string>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const data = React.useContext(NetworkContext);
-  const { previous_screen, previous_screenData } = route.params;
-  let persistData;
-  const submitPassword = (password: any) => {
+  const { previousScreen, previousScreenData } = route.params;
+
+  const submitPassword: void = (password: string) => {
     setPassword(password);
   };
-  const submitEmail = (email: any) => {
+  const submitEmail: void = (email: string) => {
     setEmail(email);
   };
 
@@ -38,29 +41,36 @@ export default function Login({ navigation, route }) {
     if (fetchedEmail === undefined && fetchedPassword === undefined) {
       alert("Cant Login without an Email or Password");
     } else {
-      API.login(fetchedEmail, fetchedPassword)
-        .then(setIsLoading(true))
-        .then((data) => {
-          if (data.data.validity == 1) {
-            console.log(data.data);
-            console.log("Setting token...");
-            navigation.navigate("Home", { data: data.data });
-            setIsLoading(false);
-          } else {
-            console.log(data.data);
-            alert("Invalid Username or Password");
-          }
-        })
-        .catch((error) => {
-          alert(error);
-        });
+      try {
+        API.login(fetchedEmail, fetchedPassword)
+          .then(setIsLoading(true))
+          .then((data) => {
+            if (data.data.validity == 1) {
+              console.log(data.data);
+              console.log("Setting token...");
+              navigation.navigate("Home", { data: data.data });
+              setIsLoading(false);
+            } else {
+              console.log(data.data);
+              alert("Invalid Username or Password");
+            }
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      } catch (error: unknown) {
+        console.log(error);
+      }
     }
   };
   return (
     <>
       <NetworkContext.Provider value={data}>
         <>
-          {console.log(previous_screen, previous_screenData)}
+          {console.log(
+            "Previous Screen: " + previousScreen,
+            "Data : " + previousScreenData
+          )}
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
@@ -95,7 +105,7 @@ export default function Login({ navigation, route }) {
                   <Input
                     style={tw`p-4 bg-gray-200 rounded-xl`}
                     placeholder="Email"
-                    autoFocus={true}
+                    autofocus={true}
                     submit={submitEmail}
                   />
                   <Input

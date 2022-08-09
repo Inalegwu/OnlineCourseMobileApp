@@ -18,46 +18,59 @@ import * as ImagePicker from "expo-image-picker";
 import Feather from "@expo/vector-icons/Feather";
 import * as API from "../data/remote/userApiCalls";
 
-export default function CreateAccount({ navigation }) {
-  const [image, setImage] = useState("../assets/images/avatar.png");
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+interface ResponseType {
+  status: Boolean;
+  data: Object;
+  message: String;
+}
 
-  const submitFirstName = (firstName) => {
+export default function CreateAccount({ navigation }: any) {
+  const [image, setImage] = useState("../assets/images/avatar.png");
+  const [firstName, setFirstName] = useState<string>();
+  const [lastName, setLastName] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const submitFirstName = (firstName: string) => {
     setFirstName(firstName);
   };
-  const submitLastName = (lastName) => {
+  const submitLastName = (lastName: string) => {
     setLastName(lastName);
   };
-  const sumbitEmail = (email) => {
+  const sumbitEmail = (email: string) => {
     setEmail(email);
   };
-  const submitPassword = (password) => {
+  const submitPassword = (password: string) => {
     setPassword(password);
   };
 
   const createAccount = () => {
     console.log("Creating Account...");
     if (
-      (email != null, firstName != null, lastName != null, password != null)
+      email != null &&
+      firstName != null &&
+      lastName != null &&
+      password != null
     ) {
-      API.signUp(firstName, lastName, email, password)
-        .then(setIsLoading(true))
-        .then((data) => {
-          console.log(data);
-          navigation.navigate("Login", {
-            data: data,
-            previous_screen: "CreateAccount",
+      try {
+        API.signUp(firstName, lastName, email, password)
+          .then((data: ResponseType) => {
+            setIsLoading(true);
+            console.log(data);
+            navigation.navigate("Login", {
+              data: data,
+              previous_screen: "CreateAccount",
+            });
+          })
+          .catch((error: string) => {
+            console.log(error + " " + "Can't Create Account");
           });
-        })
-        .catch((error) => {
-          console.log(error + " " + "Can't Create Account");
-        });
+      } catch (error: unknown) {
+        console.log(error);
+      }
     } else {
-      Alert.alert("Error", "Please Fill All Fields");
+      Alert.alert("Error", "Please Fill In All Fields To Create An Account");
     }
   };
 
@@ -76,6 +89,8 @@ export default function CreateAccount({ navigation }) {
       setImage(result.uri);
     }
   };
+
+  //@implement take image functionality
 
   return (
     <KeyboardAvoidingView

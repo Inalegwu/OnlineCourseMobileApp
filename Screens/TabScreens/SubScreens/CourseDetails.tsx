@@ -15,12 +15,20 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { NetworkContext } from "../../../Components/ContextProvider";
 
-export default function CourseDetails({ route, navigation }) {
-  const { data } = route.params;
-  const [isEnrolled, setIsEnrolled] = useState(false);
+interface ResponseData {
+  status: boolean;
+  message?: string;
+  data?: object;
+}
+
+export default function CourseDetails({ route, navigation }: any) {
+  const { data }: any = route.params;
+  const [isEnrolled, setIsEnrolled] = useState<boolean>(false);
   const shareData = async () => {
     try {
-      await Share.share({ message: data.shareable_link });
+      await Share.share({
+        message: `${data.title} is a great course provided by E-Limi-Education, Attend Here ${data.shareable_link}`,
+      });
     } catch (error) {
       alert(error);
     }
@@ -34,10 +42,10 @@ export default function CourseDetails({ route, navigation }) {
     );
   };
 
-  const checkEnrollment = (courseData, userData) => {
+  const checkEnrollment = (courseData: any, userData: any) => {
     console.log("Fetching enrolled courses...");
     API.fetchMyCourse(userData.token)
-      .then((data) => {
+      .then((data: ResponseData) => {
         const enrollementData = data.data;
         console.log(enrollementData);
         for (let index = 0; index < enrollementData.length; index++) {
