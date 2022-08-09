@@ -14,6 +14,7 @@ import * as API from "../../../data/remote/userApiCalls";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { NetworkContext } from "../../../Components/ContextProvider";
+import BookmarkBtn from "../../../Components/BookmarkBtn";
 
 interface ResponseData {
   status: boolean;
@@ -24,6 +25,7 @@ interface ResponseData {
 export default function CourseDetails({ route, navigation }: any) {
   const { data }: any = route.params;
   const [isEnrolled, setIsEnrolled] = useState<boolean>(false);
+  const [bookmarked, setBookmared] = useState<boolean>(false);
   const shareData = async () => {
     try {
       await Share.share({
@@ -35,6 +37,14 @@ export default function CourseDetails({ route, navigation }: any) {
   };
   // !read only
   const userData = React.useContext(NetworkContext);
+
+  const addToBookmarked = () => {
+    if (bookmarked === false) {
+      setBookmared(true);
+    } else {
+      setBookmared(false);
+    }
+  };
 
   const addToCart = () => {
     console.log(
@@ -96,6 +106,12 @@ export default function CourseDetails({ route, navigation }: any) {
             },
           ]}
         />
+        <BookmarkBtn
+          size={18}
+          onPress={addToBookmarked}
+          style={tw`p-5 bg-gray-200 w-15 top-88 left-81 rounded-full shadow-lg items-center content-center absolute z-10`}
+          iconName={bookmarked == false ? "bookmark-outline" : "bookmark"}
+        />
         <View
           style={tw`mt-15 ml-6 mr-6 flex absolute flex-row justify-between`}
         >
@@ -119,13 +135,6 @@ export default function CourseDetails({ route, navigation }: any) {
           <Text style={tw`text-3xl w-85 ml-2 text-black font-bold`}>
             {data.title}
           </Text>
-          <TouchableOpacity style={tw`p-2 w-20`}>
-            <Ionicons
-              name="md-bookmark-outline"
-              style={tw`text-red-800`}
-              size={20}
-            />
-          </TouchableOpacity>
         </View>
         {/* Quick Info */}
         <View style={tw`ml-4 mr-4`}>
