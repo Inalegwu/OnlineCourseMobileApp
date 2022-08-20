@@ -55,7 +55,7 @@ export default function CreateAccount({ navigation }: any) {
     ) {
       try {
         API.signUp(firstName, lastName, email, password)
-          .then((data: ResponseType) => {
+          ?.then((data: ResponseType) => {
             setIsLoading(true);
             console.log(data);
             navigation.navigate("Login", {

@@ -1349,36 +1349,10 @@
     xcode "^3.0.1"
     xml2js "0.4.23"
 
-"@expo/config-plugins@~5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-5.0.0.tgz#19f699aafa5809756b9be055189a14842f8da7ae"
-  integrity sha512-Bgjgv64f/XqpXXKPAoGhc5dbmuJB8eOBkhV6FMI/RMP06HfL7EQvXgcBBoJThLAZVyd29XikFgaCvABt/NavxQ==
-  dependencies:
-    "@expo/config-types" "^46.0.0"
-    "@expo/json-file" "8.2.36"
-    "@expo/plist" "0.0.18"
-    "@expo/sdk-runtime-versions" "^1.0.0"
-    "@react-native/normalize-color" "^2.0.0"
-    chalk "^4.1.2"
-    debug "^4.3.1"
-    find-up "~5.0.0"
-    getenv "^1.0.0"
-    glob "7.1.6"
-    resolve-from "^5.0.0"
-    semver "^7.3.5"
-    slash "^3.0.0"
-    xcode "^3.0.1"
-    xml2js "0.4.23"
-
 "@expo/config-types@^45.0.0":
   version "45.0.0"
   resolved "https://registry.npmjs.org/@expo/config-types/-/config-types-45.0.0.tgz"
   integrity sha512-/QGhhLWyaGautgEyU50UJr5YqKJix5t77ePTwreOVAhmZH+ff3nrrtYTTnccx+qF08ZNQmfAyYMCD3rQfzpiJA==
-
-"@expo/config-types@^46.0.0":
-  version "46.0.1"
-  resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-46.0.1.tgz#ba5d6197222039de13aefdf0171d24b027781cd0"
-  integrity sha512-LQWGDagQ0YXGSJyLomNDZrYXj/cUP+wczs9y2M8MB9UDoSU6dbLRMiSX0FMhhKKdxBK0p92VQxZyqOzGpIYfSw==
 
 "@expo/config@6.0.24", "@expo/config@^6.0.14", "@expo/config@~6.0.23":
   version "6.0.24"
@@ -3595,12 +3569,12 @@ expo-modules-core@0.9.2:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
-expo-screen-orientation@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/expo-screen-orientation/-/expo-screen-orientation-4.3.0.tgz#8504e10ae978c44c31fe891d1c0e058dadae4eba"
-  integrity sha512-jMLjkhft5aJSkdoKjb1HiLlf73gpsfI54L//uPvPuuwsPq3FMHwAnkDesY8XIZdZqw+exrK/SMbDAEryMJ45kg==
+expo-screen-orientation@~4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/expo-screen-orientation/-/expo-screen-orientation-4.2.0.tgz#e58da1056e01246a0e55f0c6965ae9b61926cb57"
+  integrity sha512-uKWu2sKDMjicDTc6gycAu3NOTNIBMXWBCxkvvYAgLKaYXDp4YN7d6yPQ0+U2z4w+0mFngJCgksxXA7/hHSZkwQ==
   dependencies:
-    "@expo/config-plugins" "~5.0.0"
+    "@expo/config-plugins" "^4.0.14"
 
 expo-splash-screen@~0.15.0:
   version "0.15.1"
@@ -6191,10 +6165,10 @@ react-native-web@0.17.7:
     normalize-css-color "^1.0.2"
     prop-types "^15.6.0"
 
-react-native-webview@^11.22.7:
-  version "11.22.7"
-  resolved "https://registry.npmjs.org/react-native-webview/-/react-native-webview-11.22.7.tgz"
-  integrity sha512-IYMElB4fFS6S8LbhivAQfAlW95HorqCK4T3mFKmWsV24iPVTfYoaiA1TNzkRnjw2mMgXDk/QnMeH9IbjBVs1Ag==
+react-native-webview@11.18.1:
+  version "11.18.1"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.18.1.tgz#0a1893abd391c8f0e7d4c5874bfa737ca6311225"
+  integrity sha512-1VoVmkbsHJ44WA+frMhNfua64t0u2jq80h25sUWrKJRiYrO0XIsKBnJcqrzuOH1ZAT/zDHTqBB5OU+bxEHLJmQ==
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"

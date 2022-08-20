@@ -26,7 +26,7 @@ export default function TopCourses({ navigation }: any) {
   try {
     useEffect(() => {
       API.fetchTopCourses()
-        .then((data: ResponseType) => {
+        ?.then((data: ResponseType) => {
           setFetchedData(data.data);
           setloading(true);
         })
@@ -62,7 +62,7 @@ export default function TopCourses({ navigation }: any) {
             color="#8D161A"
           />
         ) : (
-          fetchedData.map((data: any) => {
+          fetchedData?.map((data: any) => {
             return (
               <CourseItem navigation={navigation} key={data.id} data={data} />
             );

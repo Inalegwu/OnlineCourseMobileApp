@@ -19,7 +19,7 @@ const arcToken =
 
 // apiService.filterCourse().then(data => console.log(data))
 
-// apiService.fetchCourseBySearchString("Figma").then(data => console.log(data))
+apiService.fetchCourseBySearchString("Figma").then(data => console.log(data))
 
 // apiService.fetchAllSection(arcToken, "19").then(data => console.log(data))
 
@@ -64,9 +64,9 @@ const arcToken =
 
 // apiService.toggleWishListItem(arcToken).then(data => console.log(data))
 
-apiService
-  .fetchLessons(arcToken, "course", "7")
-  .then((data) => console.log(data));
+// apiService
+//   .fetchLessons(arcToken, "course", "7")
+//   .then((data) => console.log(data));
 
 // apiService.fetchLessonDetails(arcToken, "334").then(data => console.log(data))
 

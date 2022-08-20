@@ -7,9 +7,7 @@ import {
   View,
   Image,
   TouchableOpacity,
-  KeyboardAvoidingView,
   ScrollView,
-  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import tw, { useDeviceContext, useAppColorScheme } from "twrnc";
@@ -108,6 +106,12 @@ export default function RenderHome({ navigation, route }: any) {
             />
             <TouchableOpacity
               style={tw`p-3 bg-red-800 rounded-lg items-center content-center w-15 ml-1`}
+              onPress={() => {
+                navigation.navigate("SearchResults", {
+                  PreviousScreen: "HomeScreen",
+                  SearchString: searchText,
+                });
+              }}
             >
               <FontAwesome
                 name="search"

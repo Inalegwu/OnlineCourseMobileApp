@@ -1,3 +1,7 @@
+// author : Ikwue Inalegwu
+// Email:ikwueinalegwu@gmail.com
+// phone : (+234) 070 8096 8858
+// Company : Cstemp Edutech
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { ResizeMode, Video } from "expo-av";
@@ -12,10 +16,6 @@ export default function VideoScreen({ navigation, route }: any) {
   );
   // pull data from the route parameters
   const { data } = route.params;
-
-  const rotateScreen = () => {
-    console.log(screenOrientation);
-  };
 
   async function changeScreenOrientation() {
     if (screenOrientation == ScreenOrientation.OrientationLock.PORTRAIT_UP) {

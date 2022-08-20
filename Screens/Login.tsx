@@ -1,3 +1,7 @@
+// author : Ikwue Inalegwu
+// Email:ikwueinalegwu@gmail.com
+// phone : (+234) 070 8096 8858
+// Company : Cstemp Edutech
 import {
   StyleSheet,
   Text,
@@ -16,24 +20,37 @@ import Feather from "@expo/vector-icons/Feather";
 import Input from "../Components/Input";
 import * as API from "../data/remote/userApiCalls";
 import { NetworkContext } from "../Components/ContextProvider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface APITypes {
   fetchedEmail: string;
   fetchedPassword: string;
+}
+interface ResponseType {
+  status?: boolean;
+  message?: string;
+  data: Object;
 }
 
 export default function Login({ navigation, route }: any) {
   const [fetchedEmail, setEmail] = useState<string>();
   const [fetchedPassword, setPassword] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [storedToken, setStoredToken] = useState<string>();
   const data = React.useContext(NetworkContext);
   const { previousScreen, previousScreenData } = route.params;
 
-  const submitPassword: void = (password: string) => {
+  const submitPassword = (password: string) => {
     setPassword(password);
   };
-  const submitEmail: void = (email: string) => {
+  const submitEmail = (email: string) => {
     setEmail(email);
+  };
+
+  // ! TODO implement async storage to persist the users logged in state
+  const fetchAsyncToken = () => {
+    let storedToken = AsyncStorage.getItem("token").toString();
+    setStoredToken(storedToken);
   };
 
   const authenticate = () => {
@@ -41,26 +58,23 @@ export default function Login({ navigation, route }: any) {
     if (fetchedEmail === undefined && fetchedPassword === undefined) {
       alert("Cant Login without an Email or Password");
     } else {
-      try {
-        API.login(fetchedEmail, fetchedPassword)
-          .then(setIsLoading(true))
-          .then((data) => {
-            if (data.data.validity == 1) {
-              console.log(data.data);
-              console.log("Setting token...");
-              navigation.navigate("Home", { data: data.data });
-              setIsLoading(false);
-            } else {
-              console.log(data.data);
-              alert("Invalid Username or Password");
-            }
-          })
-          .catch((error) => {
-            alert(error);
-          });
-      } catch (error: unknown) {
-        console.log(error);
-      }
+      API.login(fetchedEmail, fetchedPassword)
+        ?.then((data) => {
+          setIsLoading(true);
+          if (data.data.validity == 1) {
+            console.log(data.data);
+            console.log("Setting token...");
+            AsyncStorage.setItem("token", data.data.token);
+            navigation.navigate("Home", { data: data.data });
+            setIsLoading(false);
+          } else {
+            console.log(data.data);
+            alert("Invalid Username or Password");
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
     }
   };
   return (

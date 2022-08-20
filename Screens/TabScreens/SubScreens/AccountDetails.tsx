@@ -1,3 +1,7 @@
+// author : Ikwue Inalegwu
+// Email:ikwueinalegwu@gmail.com
+// phone : (+234) 070 8096 8858
+// Company : Cstemp Edutech
 import {
   StyleSheet,
   Text,
@@ -14,9 +18,16 @@ import Input from "../../../Components/Input";
 import * as ImagePicker from "expo-image-picker";
 import * as API from "../../../data/remote/userApiCalls";
 
-export default function AccountDetails({ navigation }) {
-  const data = React.useContext(NetworkContext);
+interface ResponseData {
+  status: Boolean;
+  message?: string;
+  data?: Object;
+}
+
+export default function AccountDetails({ navigation }: any) {
+  let data: any = React.useContext(NetworkContext);
   const [image, setImage] = useState("../../../assets/images/avatar.png");
+  const [firstName, setFirstName] = useState<string>("");
   const [email, setEmail] = useState("");
   // select image from users image library
   //TODO take image
@@ -34,29 +45,24 @@ export default function AccountDetails({ navigation }) {
   };
 
   const logout = () => {
-    data.token = "";
+    data = {};
     navigation.navigate("Login", {
       previousScreen: "AccountDetails",
+      data: data,
     });
   };
 
   // submit functions for input fields
 
   // update user info function
-
-  const updateUserInfo = () => {
-    if (email == "" || firstName == "") {
-      alert("Fill In Fields");
-    } else {
-      console.log("Updating User Info...");
-      API.updateUserData(data.token)
-        .then((data) => {
-          console.log(data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+  const updateAccountInfo = () => {
+    API.updateUserData(data.token)
+      ?.then((data: ResponseData) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -92,41 +98,22 @@ export default function AccountDetails({ navigation }) {
             </Text>
           </View>
         </View>
+        {/* User Details Container */}
         <View style={tw`p-1 mt-23`}>
-          {/* <Text
-            style={tw`text-left mt-5 text-xl left-2 font-bold text-gray-800`}
-          >
-            Edit Details
-          </Text>
-          <Input
-            style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
-            placeholder="First Name"
-          />
-          <Input
-            style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
-            placeholder="Last Name"
-          />
-          <Input
-            style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
-            placeholder="Email"
-          />
-          <Input
-            style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
-            placeholder="LinkedIn"
-          />
-          <Input
-            style={tw`p-4 mt-3 bg-gray-200 rounded-xl`}
-            placeholder="Twitter"
-          /> */}
+          {/* Input fields to fill in user information */}
+          <View></View>
+          {/* Update Account Button */}
           <View style={tw`mt-3 p-3`}>
-            {/* <TouchableOpacity
-              style={tw`p-3 mt-3 bg-green-900 mt-3 items-center content-center w-full rounded-lg`}
-              onPress={() => {
-                console.log("dont change anything bozo");
-              }}
+            <TouchableOpacity
+              style={tw`p-3 mt-3 bg-green-300 items-center content-center w-full rounded-lg`}
             >
-              <Text style={tw`font-bold text-white text-lg`}>Update Info</Text>
-            </TouchableOpacity> */}
+              <Text style={tw`font-bold text-white text-lg`}>
+                Update Account
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {/* Logout Button */}
+          <View style={tw`mt-3 p-3`}>
             <TouchableOpacity
               style={tw`p-3 mt-3 bg-red-700 items-center content-center w-full rounded-lg`}
               onPress={logout}

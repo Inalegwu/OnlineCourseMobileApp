@@ -31,7 +31,7 @@ export default function ForgotPassword({ navigation }: any) {
     console.log("resetting password...");
     try {
       API.forgotPassword(email)
-        .then((data: ResponseType) => {
+        ?.then((data: ResponseType) => {
           console.log(data);
           let message = data.message;
           navigation.navigate("Login", {

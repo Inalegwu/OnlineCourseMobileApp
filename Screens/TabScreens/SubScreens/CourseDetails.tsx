@@ -22,6 +22,9 @@ interface ResponseData {
   data?: object;
 }
 
+// defining a data type to be recognised by the userData variable
+interface UserDataType {}
+
 export default function CourseDetails({ route, navigation }: any) {
   const { data }: any = route.params;
   const [isEnrolled, setIsEnrolled] = useState<boolean>(false);
@@ -35,8 +38,9 @@ export default function CourseDetails({ route, navigation }: any) {
       alert(error);
     }
   };
+
   // !read only
-  const userData = React.useContext(NetworkContext);
+  const userData: Object = React.useContext(NetworkContext);
 
   const addToBookmarked = () => {
     if (bookmarked === false) {
@@ -55,11 +59,13 @@ export default function CourseDetails({ route, navigation }: any) {
   const checkEnrollment = (courseData: any, userData: any) => {
     console.log("Fetching enrolled courses...");
     API.fetchMyCourse(userData.token)
-      .then((data: ResponseData) => {
-        const enrollementData = data.data;
+      ?.then((data: ResponseData | Object) => {
+        // enrollment data is an array of objects which is the
+        // list of courses that the current logged in user is subscribed to
+        const enrollementData: Array<Object> = data.data;
         console.log(enrollementData);
-        for (let index = 0; index < enrollementData.length; index++) {
-          const element = enrollementData[index];
+        for (let index = 0; index < enrollementData?.length; index++) {
+          const element: any = enrollementData[index];
           if ((element.id = courseData.id)) {
             console.log("matching id detected");
             setIsEnrolled(true);
@@ -74,11 +80,14 @@ export default function CourseDetails({ route, navigation }: any) {
       });
   };
 
+  // add logic to check whether a course is paid or free
+  // if a course is paid , navigate the user to the payment screen
+  // else just enrol..
   const enrol = () => {
     console.log("Enrolling...");
     useEffect(() => {
       API.enrol(userData.token, data.id)
-        .then((data) => {
+        ?.then((data) => {
           console.log(data);
           setIsEnrolled(true);
         })
@@ -91,7 +100,7 @@ export default function CourseDetails({ route, navigation }: any) {
   return (
     <NetworkContext.Provider value={userData}>
       <>
-        <StatusBar style="light" />
+        <StatusBar barStyle={"light-content"} />
         {/* Top View */}
         {checkEnrollment(data, userData)}
         <View>

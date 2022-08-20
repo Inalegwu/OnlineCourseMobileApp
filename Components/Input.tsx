@@ -7,7 +7,7 @@ interface Props {
   secureTextEntry?: boolean;
   style: Object;
   autofocus?: boolean;
-  submit(args: string): void;
+  submit(args: string): string;
 }
 
 export default function Input({
