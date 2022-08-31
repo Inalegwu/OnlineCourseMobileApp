@@ -7,7 +7,7 @@ const arcToken =
 
 // apiService.fetchTopCourses().then(data => console.log(data))
 
-// apiService.fetchCategories().then(data => console.log(data))
+apiService.fetchCategories().then((data) => console.log(data));
 
 // apiService.fetchSubCategories().then(data => console.log(data))
 
@@ -19,7 +19,7 @@ const arcToken =
 
 // apiService.filterCourse().then(data => console.log(data))
 
-apiService.fetchCourseBySearchString("Figma").then(data => console.log(data))
+//apiService.fetchCourseBySearchString("Figma").then(data => console.log(data))
 
 // apiService.fetchAllSection(arcToken, "19").then(data => console.log(data))
 

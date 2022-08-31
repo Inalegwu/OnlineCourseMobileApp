@@ -13,23 +13,17 @@ import {
   Platform,
   ActivityIndicator,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import tw from "twrnc";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Feather from "@expo/vector-icons/Feather";
 import Input from "../Components/Input";
-import * as API from "../data/remote/userApiCalls";
+import { login } from "../data/remote/userApiCalls";
 import { NetworkContext } from "../Components/ContextProvider";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface APITypes {
   fetchedEmail: string;
   fetchedPassword: string;
-}
-interface ResponseType {
-  status?: boolean;
-  message?: string;
-  data: Object;
 }
 
 export default function Login({ navigation, route }: any) {
@@ -38,7 +32,7 @@ export default function Login({ navigation, route }: any) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [storedToken, setStoredToken] = useState<string>();
   const data = React.useContext(NetworkContext);
-  const { previousScreen, previousScreenData } = route.params;
+  const { previous_screen, previous_screen_data, message } = route.params;
 
   const submitPassword = (password: string) => {
     setPassword(password);
@@ -48,23 +42,18 @@ export default function Login({ navigation, route }: any) {
   };
 
   // ! TODO implement async storage to persist the users logged in state
-  const fetchAsyncToken = () => {
-    let storedToken = AsyncStorage.getItem("token").toString();
-    setStoredToken(storedToken);
-  };
 
   const authenticate = () => {
     console.log("Authenticating...");
     if (fetchedEmail === undefined && fetchedPassword === undefined) {
       alert("Cant Login without an Email or Password");
     } else {
-      API.login(fetchedEmail, fetchedPassword)
+      login(fetchedEmail, fetchedPassword)
         ?.then((data) => {
           setIsLoading(true);
           if (data.data.validity == 1) {
             console.log(data.data);
             console.log("Setting token...");
-            AsyncStorage.setItem("token", data.data.token);
             navigation.navigate("Home", { data: data.data });
             setIsLoading(false);
           } else {
@@ -74,6 +63,7 @@ export default function Login({ navigation, route }: any) {
         })
         .catch((error) => {
           alert(error);
+          setIsLoading(true);
         });
     }
   };
@@ -82,8 +72,8 @@ export default function Login({ navigation, route }: any) {
       <NetworkContext.Provider value={data}>
         <>
           {console.log(
-            "Previous Screen: " + previousScreen,
-            "Data : " + previousScreenData
+            "Previous Screen: " + previous_screen,
+            "Data : " + previous_screen_data
           )}
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}

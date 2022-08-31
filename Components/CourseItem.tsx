@@ -3,13 +3,16 @@ import React, { useState } from "react";
 import tw from "twrnc";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-export default function CourseItem({ data, navigation }: any) {
+export default function CourseItem({ data, navigation, bookmarks }: any) {
   const [bookMarked, setBookMarked] = useState(false);
+  let bookmarksLists = bookmarks;
   // toggle bookmarked option
   const toggleBookMarked = () => {
     if (bookMarked === false) {
+      bookmarksLists.push(data);
       setBookMarked(true);
     } else {
+      bookmarksLists.pop();
       setBookMarked(false);
     }
   };

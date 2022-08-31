@@ -2,21 +2,14 @@
 // Email:ikwueinalegwu@gmail.com
 // phone : (+234) 070 8096 8858
 // Company : Cstemp Edutech
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
 import React, { useState } from "react";
 import tw from "twrnc";
 import { NetworkContext } from "../../../Components/ContextProvider";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Input from "../../../Components/Input";
 import * as ImagePicker from "expo-image-picker";
-import * as API from "../../../data/remote/userApiCalls";
+import { updateUserData } from "../../../data/remote/userApiCalls";
 
 interface ResponseData {
   status: Boolean;
@@ -26,14 +19,17 @@ interface ResponseData {
 
 export default function AccountDetails({ navigation }: any) {
   let data: any = React.useContext(NetworkContext);
-  const [image, setImage] = useState("../../../assets/images/avatar.png");
+  const [image, setImage] = useState<string>(
+    "../../../assets/images/avatar.png"
+  );
+  const [takenImage, setTakenImage] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState<string>("");
   // select image from users image library
   //TODO take image
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
@@ -41,6 +37,18 @@ export default function AccountDetails({ navigation }: any) {
     console.log(result);
     if (!result.cancelled) {
       setImage(result.uri);
+    }
+  };
+  const takeImage = async () => {
+    let image = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.6,
+    });
+    console.log(image);
+    if (!image.cancelled) {
+      setTakenImage(image.uri);
     }
   };
 
@@ -53,10 +61,16 @@ export default function AccountDetails({ navigation }: any) {
   };
 
   // submit functions for input fields
+  function submitEmail(email: string): void {
+    setEmail(email);
+  }
+  function submitFirstName(firstName: string): void {
+    setFirstName(firstName);
+  }
 
   // update user info function
   const updateAccountInfo = () => {
-    API.updateUserData(data.token)
+    updateUserData(data.token)
       ?.then((data: ResponseData) => {
         console.log(data);
       })
@@ -126,5 +140,3 @@ export default function AccountDetails({ navigation }: any) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({});

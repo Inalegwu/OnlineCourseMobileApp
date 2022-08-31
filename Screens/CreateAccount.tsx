@@ -16,7 +16,7 @@ import Input from "../Components/Input";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import * as ImagePicker from "expo-image-picker";
 import Feather from "@expo/vector-icons/Feather";
-import * as API from "../data/remote/userApiCalls";
+import { signUp } from "../data/remote/userApiCalls";
 
 interface ResponseType {
   status: Boolean;
@@ -24,14 +24,13 @@ interface ResponseType {
   message: String;
 }
 
-export default function CreateAccount({ navigation }: any) {
+export default function CreateAccount({ navigation, route }: any) {
   const [image, setImage] = useState("../assets/images/avatar.png");
   const [firstName, setFirstName] = useState<string>();
   const [lastName, setLastName] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const submitFirstName = (firstName: string) => {
     setFirstName(firstName);
   };
@@ -54,7 +53,7 @@ export default function CreateAccount({ navigation }: any) {
       password != null
     ) {
       try {
-        API.signUp(firstName, lastName, email, password)
+        signUp(firstName, lastName, email, password)
           ?.then((data: ResponseType) => {
             setIsLoading(true);
             console.log(data);

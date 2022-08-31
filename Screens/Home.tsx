@@ -16,7 +16,7 @@ import { NetworkContext } from "../Components/ContextProvider";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-export default function Home({ navigation, route }) {
+export default function Home({ navigation, route }: any) {
   const color = "#8D161A";
   const { data } = route.params;
   console.log(data);

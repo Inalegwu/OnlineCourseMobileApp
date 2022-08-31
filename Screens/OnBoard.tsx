@@ -3,7 +3,7 @@ import React from "react";
 import tw from "twrnc";
 import { FontAwesome } from "@expo/vector-icons";
 
-export default function OnBoard({ navigation }) {
+export default function OnBoard({ navigation }: any) {
   return (
     <View style={tw`p-5 m-5 mt-6 content-center items-center`}>
       <Image
@@ -13,26 +13,11 @@ export default function OnBoard({ navigation }) {
       <Text style={tw`w-80 font-extrabold text-3xl`}>
         Welcome to the E-Limi Learning Platform
       </Text>
-      {/* <View style={tw`w-90 mt-5 m-3`}>
-        <View style={tw`p-8 w-90 rounded-2xl mt-2 flex flex-row bg-gray-200`}>
-          <View style={tw`mr-5 p-2`}>
-            <FontAwesome name="google" />
-          </View>
-          <Text style={tw`text-base mt-1 font-bold`}>Login With Google</Text>
-        </View>
-        <View style={tw`p-8 w-90 rounded-2xl mt-2 flex flex-row bg-gray-200`}>
-          <View style={tw`mr-5 p-2`}>
-            <FontAwesome name="facebook" />
-          </View>
-          <Text style={tw`text-base mt-1 font-bold`}>Login With Facebook</Text>
-        </View>
-      </View> */}
-      {/* <Text style={tw`text-base font-bold mt-3`}>or</Text> */}
       <View style={tw`mt-7`}>
         <TouchableOpacity
           style={tw`p-5 w-85 rounded-2xl bg-red-800 items-center`}
           onPress={() => {
-            navigation.navigate("Login", { previous_screen: "OnBoard" });
+            navigation.navigate("Login", { previous_screen: "OnBoard Screen" });
           }}
         >
           <Text style={[tw`font-bold text-lg`, { color: "white" }]}>
@@ -41,10 +26,13 @@ export default function OnBoard({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={tw`flex flex-row content-center p-3 mt-3 items-center`}>
-        <Text>Don't have and account ? </Text>
+        <Text>Don't Have An Account ? </Text>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("CreateAccount");
+            navigation.navigate("CreateAccount", {
+              previous_screen: "Onboard",
+              data: {},
+            });
           }}
         >
           <Text style={tw`text-red-800 font-bold`}>Create Account</Text>

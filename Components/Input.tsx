@@ -1,13 +1,11 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import React, { useState } from "react";
-import tw from "twrnc";
+import { TextInput } from "react-native";
 
 interface Props {
   placeholder: string;
   secureTextEntry?: boolean;
   style: Object;
   autofocus?: boolean;
-  submit(args: string): string;
+  submit(args: string): void;
 }
 
 export default function Input({
@@ -32,5 +30,3 @@ export default function Input({
     />
   );
 }
-
-const styles = StyleSheet.create({});

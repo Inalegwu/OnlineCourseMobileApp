@@ -1,8 +1,8 @@
 import {
+  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import tw from "twrnc";
 import Feather from "@expo/vector-icons/Feather";
 import Input from "../Components/Input";
-import * as API from "../data/remote/userApiCalls";
+import { forgotPassword } from "../data/remote/userApiCalls";
 
 interface ResponseType {
   status: boolean;
@@ -27,11 +27,14 @@ export default function ForgotPassword({ navigation }: any) {
     setEmail(email);
   };
 
-  const resetPassword = () => {
+  const resetPassword = (): void => {
     console.log("resetting password...");
     try {
-      API.forgotPassword(email)
-        ?.then((data: ResponseType) => {
+      forgotPassword(email)
+        ?.then(() => {
+          setIsLoading(true);
+        })
+        .then((data: ResponseType) => {
           console.log(data);
           let message = data.message;
           navigation.navigate("Login", {
@@ -91,7 +94,15 @@ export default function ForgotPassword({ navigation }: any) {
               }}
               style={tw`p-5 bg-red-800 mt-8 items-center content-center rounded-lg`}
             >
-              <Text style={tw`font-bold text-white`}>Recover</Text>
+              {isLoading === false ? (
+                <Text style={tw`font-bold text-white`}>Recover</Text>
+              ) : (
+                <ActivityIndicator
+                  style={tw`text-center left-2 mt-4`}
+                  size="large"
+                  color="#8D161A"
+                />
+              )}
             </TouchableOpacity>
           </View>
         </ScrollView>

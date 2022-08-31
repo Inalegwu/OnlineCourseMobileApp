@@ -9,29 +9,32 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import tw from "twrnc";
-import * as API from "../data/remote/userApiCalls";
+import { fetchTopCourses } from "../data/remote/userApiCalls";
 import CourseItem from "./CourseItem";
 
 interface ResponseType {
   status: Boolean;
-  data?: object;
+  data?: object[];
   message?: string;
 }
 
-export default function TopCourses({ navigation }: any) {
-  const [loading, setloading] = useState(false);
-  const [fetchedData, setFetchedData] = useState<object>();
-
+export default function TopCourses({ navigation, Bookmarks }: any) {
+  const [loading, setloading] = useState(true);
+  const [fetchedData, setFetchedData] = useState<Object[]>();
+  let bookmarkLists = Bookmarks;
   // try to fetch the currently top rated courses , returns NetworkError if fetching fails
+
   try {
     useEffect(() => {
-      API.fetchTopCourses()
+      fetchTopCourses()
         ?.then((data: ResponseType) => {
           setFetchedData(data.data);
-          setloading(true);
+          setloading(false);
         })
         .catch((error) => {
-          console.log(error.toString() + "unable to complete top courses call");
+          console.log(
+            error.toString() + ": unable to complete top courses call"
+          );
         });
     }, [fetchedData, setFetchedData, loading, setloading]);
   } catch (error: unknown) {
@@ -55,7 +58,7 @@ export default function TopCourses({ navigation }: any) {
         indicatorStyle="white"
         contentContainerStyle={{ marginTop: 5 }}
       >
-        {loading === false ? (
+        {loading === true ? (
           <ActivityIndicator
             style={tw`text-center left-2 mt-4`}
             size="large"
@@ -64,7 +67,12 @@ export default function TopCourses({ navigation }: any) {
         ) : (
           fetchedData?.map((data: any) => {
             return (
-              <CourseItem navigation={navigation} key={data.id} data={data} />
+              <CourseItem
+                bookmarks={bookmarkLists}
+                navigation={navigation}
+                key={data.id}
+                data={data}
+              />
             );
           })
         )}

@@ -21,7 +21,7 @@ import * as API from "../../../data/remote/userApiCalls";
 export default function RenderHome({ navigation, route }: any) {
   // TODO caching result of api request to prevent constant loading
   const [searchText, setSearchText] = useState();
-  let items;
+  let bookmarks: Array<Object>;
   const search = (text: string) => {
     if (text != null) {
       console.log(text);
@@ -125,7 +125,8 @@ export default function RenderHome({ navigation, route }: any) {
         {/* Offers Component */}
         <OffersComponent />
         {/* Top Courses Component */}
-        <TopCourses navigation={navigation} />
+        <TopCourses Bookmarks={bookmarks} navigation={navigation} />
+        {console.log(bookmarks)}
       </ScrollView>
     </>
   );

@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import tw from "twrnc";
-import * as API from "../../../data/remote/userApiCalls";
+import { fetchLessons } from "../../../data/remote/userApiCalls";
 import { NetworkContext } from "../../../Components/ContextProvider";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -27,8 +27,8 @@ export default function AttendCourse({ navigation, route }: any) {
 
   try {
     useEffect(() => {
-      API.fetchLessons(userData.token, "course", courseData.id)
-        .then((data: ResponseData) => {
+      fetchLessons(userData.token, "course", courseData.id)
+        ?.then((data: ResponseData) => {
           setFetchedData(data.data);
           setIsLoading(false);
         })
