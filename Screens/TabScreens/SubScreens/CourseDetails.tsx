@@ -91,7 +91,6 @@ export default function CourseDetails({ route, navigation }: any) {
   const enrol = () => {
     console.log("Enrolling...");
     if (data.is_free_course == null) {
-      console.log(data);
       setVisible(true);
     } else {
       // useEffect(() => {
