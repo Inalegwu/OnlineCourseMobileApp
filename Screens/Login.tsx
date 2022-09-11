@@ -49,7 +49,7 @@ export default function Login({ navigation, route }: any) {
       alert("Cant Login without an Email or Password");
     } else {
       login(fetchedEmail, fetchedPassword)
-        ?.then((data) => {
+        ?.then((data: any) => {
           setIsLoading(true);
           if (data.data.validity == 1) {
             console.log(data.data);

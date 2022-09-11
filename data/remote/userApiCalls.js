@@ -2,7 +2,7 @@
 
 const axios = require("axios").default;
 
-const API_BASE_URI = "https://andios.e-limi.africa/api";
+const API_BASE_URI = "https://iosand.e-limi.africa/api";
 
 async function apiCall(config) {
   try {
@@ -172,15 +172,14 @@ module.exports = {
   },
 
   // Update user password
-  // updatePassword: (token, newPassword)=> {
-  //     if(token && newPassword)
-  //     return apiCall({
-  //         url: "/update_password",
-  //         headers: { Auth: token },
-  //         data: `lesson_id=${lessonID}`
-  //     })
-  // },
-  
+  updatePassword: (token, newPassword) => {
+    if (token && newPassword)
+      return apiCall({
+        url: "/update_password",
+        headers: { Auth: token },
+        data: `lesson_id=${lessonID}`,
+      });
+  },
   // Get User Info
   fetchUserInfo: (token) => {
     if (token)
@@ -377,6 +376,7 @@ module.exports = {
 
   // RewriteCond %{HTTPS} off
   // RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
   // course_purchase_post
   // course_purchase      Crud_Model.php
 
@@ -398,17 +398,11 @@ module.exports = {
     });
   },
 
-  // enrol_to_free_course     Crud_Model.php
-
   /**  TODO API  **/
-
-  //  is_purchased
 
   // certificate_addon_get
 
-  // get_quiz_questions  CRUD_Model.php
+  // get_quiz_questions  Crud_Model.php
 
   // get_quiz_question_by_id   Crud_Model.php
-
-  // add_user  User_Model
 };

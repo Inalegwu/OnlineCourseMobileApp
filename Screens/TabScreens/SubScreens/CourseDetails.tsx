@@ -8,18 +8,20 @@ import {
   TouchableOpacity,
   Share,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import tw from "twrnc";
 import * as API from "../../../data/remote/userApiCalls";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { NetworkContext } from "../../../Components/ContextProvider";
 import BookmarkBtn from "../../../Components/BookmarkBtn";
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import Input from "../../../Components/Input";
 
 interface ResponseData {
   status: boolean;
   message?: string;
-  data?: object;
+  data?: object[];
 }
 
 // defining a data type to be recognised by the userData variable
@@ -29,6 +31,10 @@ export default function CourseDetails({ route, navigation }: any) {
   const { data }: any = route.params;
   const [isEnrolled, setIsEnrolled] = useState<boolean>(false);
   const [bookmarked, setBookmared] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [message, setMessage] = useState<string | undefined>("");
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = useMemo(() => ["25%", "100%"], []);
   const shareData = async () => {
     try {
       await Share.share({
@@ -63,7 +69,6 @@ export default function CourseDetails({ route, navigation }: any) {
         // enrollment data is an array of objects which is the
         // list of courses that the current logged in user is subscribed to
         const enrollementData: Array<Object> = data.data;
-        console.log(enrollementData);
         for (let index = 0; index < enrollementData?.length; index++) {
           const element: any = enrollementData[index];
           if ((element.id = courseData.id)) {
@@ -85,16 +90,38 @@ export default function CourseDetails({ route, navigation }: any) {
   // else just enrol..
   const enrol = () => {
     console.log("Enrolling...");
-    useEffect(() => {
+    if (data.is_free_course == null) {
+      console.log(data);
+      setVisible(true);
+    } else {
+      // useEffect(() => {
+      //   API.enrol(userData.token, data.id)
+      //     ?.then((data) => {
+      //       console.log(data);
+      //       setIsEnrolled(true);
+      //     })
+      //     .catch((error) => {
+      //       console.log(error);
+      //     });
+      // }, [setIsEnrolled, isEnrolled]);
       API.enrol(userData.token, data.id)
-        ?.then((data) => {
-          console.log(data);
+        ?.then((data: ResponseData) => {
+          setMessage(data.message);
+          console.log(message);
           setIsEnrolled(true);
         })
         .catch((error) => {
           console.log(error);
         });
-    }, [setIsEnrolled, isEnrolled]);
+    }
+  };
+
+  const closeModal = () => {
+    setVisible(false);
+  };
+
+  const submitCardNumber = (number: Number) => {
+    console.log(number);
   };
 
   return (
@@ -102,7 +129,6 @@ export default function CourseDetails({ route, navigation }: any) {
       <>
         <StatusBar barStyle={"light-content"} />
         {/* Top View */}
-        {checkEnrollment(data, userData)}
         <View>
           <Image
             source={{ uri: route.params.data.thumbnail }}
@@ -211,12 +237,61 @@ export default function CourseDetails({ route, navigation }: any) {
                   ? tw`p-4 mt-4 mb-7 items-center content-center rounded-full bg-red-800`
                   : tw`p-4 mt-4 mb-7 items-center content-center rounded-full bg-gray-300`
               }
-              onPress={enrol()}
+              onPress={enrol}
             >
               <Text style={tw`font-bold text-white text-lg`}>
                 {isEnrolled === false ? `Enroll - ${data.price}` : "Enrolled"}
               </Text>
             </TouchableOpacity>
+            {visible === true ? (
+              <BottomSheet
+                snapPoints={snapPoints}
+                ref={bottomSheetRef}
+                detached={false}
+                style={tw`p-2 mb-30 w-full mb-10 z-100`}
+              >
+                <BottomSheetScrollView
+                  contentContainerStyle={tw`p-3 justify-center items-center`}
+                >
+                  <View style={tw``}>
+                    <View style={tw`w-90 flex flex-row p-4 justify-between`}>
+                      <Text style={tw`font-bold text-lg mt-2`}>
+                        Pay For Course
+                      </Text>
+                      <TouchableOpacity style={tw`p-2`} onPress={closeModal}>
+                        <FontAwesome name="close" size={25} />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={tw`p-3`}>
+                      <Input
+                        placeholder="Card Number"
+                        style={tw`p-3 bg-gray-200 rounded-lg text-red`}
+                        submit={submitCardNumber}
+                      />
+                      <View style={tw`flex flex-row justify-between`}>
+                        <Input
+                          placeholder="CVV"
+                          style={tw`p-3 bg-gray-100 text-center rounded-lg w-20 mt-2`}
+                        />
+                        <Input
+                          placeholder="Expiry Date"
+                          style={tw`p-3 bg-gray-100 rounded-lg w-63 mt-2`}
+                        />
+                      </View>
+                      <TouchableOpacity
+                        style={tw`p-4 bg-red-800 rounded-lg mt-5 text-center`}
+                      >
+                        <Text style={tw`text-center text-white font-bold`}>
+                          Pay Now
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </BottomSheetScrollView>
+              </BottomSheet>
+            ) : (
+              <View></View>
+            )}
           </View>
         </ScrollView>
       </>

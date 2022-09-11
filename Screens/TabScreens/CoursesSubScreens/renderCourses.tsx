@@ -44,7 +44,7 @@ export default function RenderCourses({ navigation }: any) {
 
   return (
     <>
-      <View style={tw`mt-10 ml-5 mr-5`}>
+      <View style={tw`mt-10 ml-5 mr-5 pb-40`}>
         <Text
           style={tw`mt-4 ml-1 w-full mb-3 text-center font-bold text-2xl text-gray-800`}
         >

@@ -99,27 +99,11 @@ export default function RenderHome({ navigation, route }: any) {
           {/* search bar */}
           <View style={tw`w-full justify-center mt-4 flex flex-row`}>
             <Input
-              style={tw`p-4 rounded-xl bg-gray-200 w-70`}
+              style={tw`p-4 rounded-xl bg-gray-200 w-90`}
               placeholder="Search"
               secureTextEntry={false}
               submit={search}
             />
-            <TouchableOpacity
-              style={tw`p-3 bg-red-800 rounded-lg items-center content-center w-15 ml-1`}
-              onPress={() => {
-                navigation.navigate("SearchResults", {
-                  PreviousScreen: "HomeScreen",
-                  SearchString: searchText,
-                });
-              }}
-            >
-              <FontAwesome
-                name="search"
-                style={tw`mt-2`}
-                size={20}
-                color="white"
-              />
-            </TouchableOpacity>
           </View>
         </View>
         {/* Offers Component */}
