@@ -16,9 +16,10 @@ import { NetworkContext } from "../Components/ContextProvider";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-export default function Home({ navigation, route }: any) {
+export default function Home({ navigation, route, hasLoggedIn }: any) {
   const color = "#8D161A";
   const { data } = route.params;
+  let hasLoggedInPreviously = hasLoggedIn;
   console.log(data);
   return (
     <NetworkContext.Provider value={data}>

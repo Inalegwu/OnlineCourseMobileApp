@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import tw, { useDeviceContext, useAppColorScheme } from "twrnc";
@@ -17,36 +18,32 @@ import OffersComponent from "../../../Components/OffersComponent";
 import TopCourses from "../../../Components/TopCourses";
 import { NetworkContext } from "../../../Components/ContextProvider";
 import * as API from "../../../data/remote/userApiCalls";
+import AllCourses from "../../../Components/AllCourses";
+import CourseItem from "../../../Components/CourseItem";
 
 export default function RenderHome({ navigation, route }: any) {
   // TODO caching result of api request to prevent constant loading
   const [searchText, setSearchText] = useState();
+  const [visible, setVisible] = useState<boolean>(false);
+  const [searchData, setSearchData] = useState<Object | undefined>();
   let bookmarks: Array<Object>;
   const search = (text: string) => {
-    if (text != null) {
-      console.log(text);
-      setSearchText(text);
-    } else {
-      console.log("null text");
-    }
+    setVisible(true);
+    API.fetchCourseBySearchString(text)
+      ?.then((data) => {
+        setSearchData(data.data);
+        console.log(data);
+        console.log("Set Search Data Successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-
-  API.fetchCourseBySearchString(searchText)
-    ?.then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
 
   const data = React.useContext(NetworkContext);
   return (
     <>
-      <ScrollView
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={tw`bg-gray-100 dark:bg-gray-900`}
-      >
+      <View style={tw`bg-gray-100 dark:bg-gray-900`}>
         <View style={[tw`p-6`]}>
           {/* navbar */}
           <View style={tw`mt-10 flex flex-row justify-between`}>
@@ -97,21 +94,64 @@ export default function RenderHome({ navigation, route }: any) {
             </View>
           </View>
           {/* search bar */}
-          <View style={tw`w-full justify-center mt-4 flex flex-row`}>
+          <View style={tw`w-full justify-center mt-4`}>
             <Input
               style={tw`p-4 rounded-xl bg-gray-200 w-90`}
               placeholder="Search"
               secureTextEntry={false}
               submit={search}
             />
+            {visible === true ? (
+              <ScrollView
+                contentContainerStyle={[
+                  tw`h-90 bg-gray-200 mt-2 rounded-lg pb-10`,
+                  { flexGrow: 1 },
+                ]}
+              >
+                {/* close btn */}
+                <TouchableOpacity
+                  style={tw`p-3 m-2 h-10 w-10 items-center justify-center rounded-full`}
+                  onPress={() => {
+                    setVisible(false);
+                  }}
+                >
+                  <FontAwesome name="close" size={15} />
+                </TouchableOpacity>
+                {/* return items */}
+                {searchData?.map((item: any) => {
+                  return (
+                    <TouchableOpacity
+                      key={item.id}
+                      onPress={() => {
+                        navigation.navigate("CourseDetails", { data: item });
+                      }}
+                      style={tw`flex p-1 m-1 flex-row`}
+                    >
+                      <Image
+                        source={{ uri: item.thumbnail }}
+                        style={tw`h-15 w-15 rounded-full`}
+                      />
+                      <View style={tw`ml-2 mt--1`}>
+                        <Text style={tw`font-bold`}>{item.title}</Text>
+                        <Text style={tw`text-gray-400`}>
+                          {item.short_description.slice(0, 40) + "..."}
+                        </Text>
+                        <Text style={tw`text-gray-400`}>{item.price}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                })}
+              </ScrollView>
+            ) : (
+              <View></View>
+            )}
           </View>
         </View>
         {/* Offers Component */}
-        <OffersComponent />
+        {/* <AllCourses /> */}
         {/* Top Courses Component */}
-        <TopCourses Bookmarks={bookmarks} navigation={navigation} />
-        {console.log(bookmarks)}
-      </ScrollView>
+        <TopCourses navigation={navigation} />
+      </View>
     </>
   );
 }

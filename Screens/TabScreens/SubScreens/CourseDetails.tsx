@@ -24,7 +24,7 @@ interface ResponseData {
   data?: object[];
 }
 
-// defining a data type to be recognised by the userData variable
+//TODO defining a data type to be recognised by the userData variable
 interface UserDataType {}
 
 export default function CourseDetails({ route, navigation }: any) {
@@ -46,7 +46,7 @@ export default function CourseDetails({ route, navigation }: any) {
   };
 
   // !read only
-  const userData: Object = React.useContext(NetworkContext);
+  const userData: Object | any = React.useContext(NetworkContext);
 
   const addToBookmarked = () => {
     if (bookmarked === false) {
@@ -63,9 +63,9 @@ export default function CourseDetails({ route, navigation }: any) {
   };
 
   const checkEnrollment = (courseData: any, userData: any) => {
-    console.log("Fetching enrolled courses...");
+    console.log("Checking Enrollment...");
     API.fetchMyCourse(userData.token)
-      ?.then((data: ResponseData | Object) => {
+      ?.then((data: ResponseData | any) => {
         // enrollment data is an array of objects which is the
         // list of courses that the current logged in user is subscribed to
         const enrollementData: Array<Object> = data.data;
@@ -122,11 +122,18 @@ export default function CourseDetails({ route, navigation }: any) {
   const submitCardNumber = (number: Number) => {
     console.log(number);
   };
+  const submitCVV = (nubmer: Number) => {
+    console.log(nubmer);
+  };
+  const submitExpDate = (number: Number) => {
+    console.log(number);
+  };
 
   return (
     <NetworkContext.Provider value={userData}>
       <>
         <StatusBar barStyle={"light-content"} />
+        {checkEnrollment(data, userData)}
         {/* Top View */}
         <View>
           <Image
@@ -264,17 +271,19 @@ export default function CourseDetails({ route, navigation }: any) {
                     <View style={tw`p-3`}>
                       <Input
                         placeholder="Card Number"
-                        style={tw`p-3 bg-gray-200 rounded-lg text-red`}
+                        style={tw`p-3 bg-gray-100 rounded-lg text-red`}
                         submit={submitCardNumber}
                       />
                       <View style={tw`flex flex-row justify-between`}>
                         <Input
                           placeholder="CVV"
                           style={tw`p-3 bg-gray-100 text-center rounded-lg w-20 mt-2`}
+                          submit={submitCVV}
                         />
                         <Input
                           placeholder="Expiry Date"
                           style={tw`p-3 bg-gray-100 rounded-lg w-63 mt-2`}
+                          submit={submitExpDate}
                         />
                       </View>
                       <TouchableOpacity

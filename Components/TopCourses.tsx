@@ -31,7 +31,7 @@ export default function TopCourses({ navigation, Bookmarks }: any) {
           setFetchedData(data.data);
           setloading(false);
         })
-        .catch((error) => {
+        .catch((error: unknown) => {
           console.log(
             error.toString() + ": unable to complete top courses call"
           );
@@ -42,7 +42,7 @@ export default function TopCourses({ navigation, Bookmarks }: any) {
   }
 
   return (
-    <View style={tw`p-5 mt-5 justify-start`}>
+    <View style={tw`p-5 justify-start`}>
       {/* Details Buttons */}
       <View style={tw`flex flex-row justify-around`}>
         <Text style={tw`text-red-800 font-bold ml-4`}>Top Courses</Text>
@@ -56,7 +56,11 @@ export default function TopCourses({ navigation, Bookmarks }: any) {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         indicatorStyle="white"
-        contentContainerStyle={{ marginTop: 5 }}
+        contentContainerStyle={{
+          marginTop: 5,
+          marginBottom: 10,
+          paddingBottom: 450,
+        }}
       >
         {loading === true ? (
           <ActivityIndicator

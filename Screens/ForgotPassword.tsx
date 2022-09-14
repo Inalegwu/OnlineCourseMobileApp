@@ -39,7 +39,7 @@ export default function ForgotPassword({ navigation }: any) {
           let message = data.message;
           navigation.navigate("Login", {
             previous_screen: "Forgot Password",
-            message: message,
+            message: data.message,
           });
         })
         .catch((error: Error) => {

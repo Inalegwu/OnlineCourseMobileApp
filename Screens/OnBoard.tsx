@@ -10,7 +10,7 @@ export default function OnBoard({ navigation }: any) {
         style={[tw`h-140 w-100`, { resizeMode: "contain" }]}
         source={require("../assets/images/3.png")}
       />
-      <Text style={tw`w-80 font-extrabold text-3xl`}>
+      <Text style={[tw`w-80 font-extrabold text-3xl`]}>
         Welcome to the E-Limi Learning Platform
       </Text>
       <View style={tw`mt-7`}>

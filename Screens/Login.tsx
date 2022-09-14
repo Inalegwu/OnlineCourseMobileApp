@@ -12,6 +12,7 @@ import {
   Image,
   Platform,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import tw from "twrnc";
@@ -31,8 +32,14 @@ export default function Login({ navigation, route }: any) {
   const [fetchedPassword, setPassword] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [storedToken, setStoredToken] = useState<string>();
+  const [returnMessage, setReturnMessage] = useState<string>("");
   const data = React.useContext(NetworkContext);
-  const { previous_screen, previous_screen_data, message } = route.params;
+  const { previous_screen, previous_data, message } = route.params;
+
+  if (previous_screen == "Forgot Password") {
+    setReturnMessage(message);
+  } else {
+  }
 
   const submitPassword = (password: string) => {
     setPassword(password);
@@ -46,10 +53,11 @@ export default function Login({ navigation, route }: any) {
   const authenticate = () => {
     console.log("Authenticating...");
     if (fetchedEmail === undefined && fetchedPassword === undefined) {
-      alert("Cant Login without an Email or Password");
+      Alert.alert("Login Error", "Can't Login Without an Email or Password");
     } else {
       login(fetchedEmail, fetchedPassword)
         ?.then((data: any) => {
+          console.log(data);
           setIsLoading(true);
           if (data.data.validity == 1) {
             console.log(data.data);
@@ -61,7 +69,7 @@ export default function Login({ navigation, route }: any) {
             alert("Invalid Username or Password");
           }
         })
-        .catch((error) => {
+        .catch((error: unknown) => {
           alert(error);
           setIsLoading(true);
         });
@@ -73,12 +81,17 @@ export default function Login({ navigation, route }: any) {
         <>
           {console.log(
             "Previous Screen: " + previous_screen,
-            "Data : " + previous_screen_data
+            "Data : " + previous_data
           )}
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
             <>
+              {previous_screen == "Forgot Password" ? (
+                alert(returnMessage)
+              ) : (
+                <View></View>
+              )}
               <ScrollView>
                 <View style={tw`p-9`}>
                   <View style={tw`mt-1 w-100`}>
@@ -97,7 +110,7 @@ export default function Login({ navigation, route }: any) {
                   </View>
                   <View>
                     <Image
-                      style={[tw`h-40 w-80 mt-3`, styles.image]}
+                      style={[tw`h-65 w-80 mt-3`, styles.image]}
                       source={require("../assets/images/3.png")}
                     />
                   </View>
@@ -121,7 +134,9 @@ export default function Login({ navigation, route }: any) {
                   <TouchableOpacity
                     style={tw`p-3`}
                     onPress={() => {
-                      navigation.navigate("ForgotPassword");
+                      navigation.navigate("ForgotPassword", {
+                        previous_screen: "Login",
+                      });
                     }}
                   >
                     <Text style={tw`text-red-800 mt-1`}>Forgot Password ?</Text>
@@ -139,21 +154,6 @@ export default function Login({ navigation, route }: any) {
                         Login
                       </Text>
                     )}
-                  </TouchableOpacity>
-                </View>
-                {/* Login With Container */}
-                <View
-                  style={tw`flex items-center content-center justify-evenly w-full flex-row p-2 ml-4 mr-4`}
-                >
-                  <TouchableOpacity
-                    style={tw`p-3 h-15 w-15 items-center content-center shadow-md rounded-full bg-gray-200`}
-                  >
-                    <FontAwesome name="google" size={20} style={tw`mt-2`} />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={tw`p-3 h-15 w-15 shadow-md items-center content-center rounded-full bg-gray-200`}
-                  >
-                    <FontAwesome name="facebook" size={20} style={tw`mt-2`} />
                   </TouchableOpacity>
                 </View>
                 {/* Gutter */}

@@ -5,7 +5,7 @@ interface Props {
   secureTextEntry?: boolean;
   style: Object;
   autofocus?: boolean;
-  submit(args: string): void;
+  submit(args: any): void;
 }
 
 export default function Input({
@@ -23,7 +23,10 @@ export default function Input({
       placeholder={placeholder}
       autoFocus={autofocus}
       enablesReturnKeyAutomatically={true}
-      onChange={({ nativeEvent }) => {
+      onChange={({ nativeEvent }: any) => {
+        submit(nativeEvent.text);
+      }}
+      onSubmitEditing={({ nativeEvent }) => {
         submit(nativeEvent.text);
       }}
       autoCapitalize="none"

@@ -62,7 +62,7 @@ export default function CreateAccount({ navigation, route }: any) {
               previous_screen: "CreateAccount",
             });
           })
-          .catch((error: string) => {
+          .catch((error: unknown) => {
             console.log(error + " " + "Can't Create Account");
           });
       } catch (error: unknown) {
