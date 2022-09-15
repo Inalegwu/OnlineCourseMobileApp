@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Share,
 } from "react-native";
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import tw from "twrnc";
 import * as API from "../../../data/remote/userApiCalls";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -30,7 +30,7 @@ interface UserDataType {}
 export default function CourseDetails({ route, navigation }: any) {
   const { data }: any = route.params;
   const [isEnrolled, setIsEnrolled] = useState<boolean>(false);
-  const [bookmarked, setBookmared] = useState<boolean>(false);
+  const [addedToCart, setAddedToCart] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
   const [message, setMessage] = useState<string | undefined>("");
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -38,7 +38,7 @@ export default function CourseDetails({ route, navigation }: any) {
   const shareData = async () => {
     try {
       await Share.share({
-        message: `${data.title} is a great course provided by E-Limi-Education, Attend Here ${data.shareable_link}`,
+        message: `${data.title} is a great course provided by E-Limi-Education and C-Stemp EduTech, With Outcomes Such as ${data.outcomes}. Attend Here ${data.shareable_link}`,
       });
     } catch (error) {
       alert(error);
@@ -46,20 +46,34 @@ export default function CourseDetails({ route, navigation }: any) {
   };
 
   // !read only
-  const userData: Object | any = React.useContext(NetworkContext);
-
-  const addToBookmarked = () => {
-    if (bookmarked === false) {
-      setBookmared(true);
-    } else {
-      setBookmared(false);
-    }
-  };
+  const userData: Object | undefined = React.useContext(NetworkContext);
 
   const addToCart = () => {
-    console.log(
-      "adding" + " " + data.title + " " + "at" + data.price + " " + "To cart..."
-    );
+    if (addedToCart === true) {
+      setAddedToCart(false);
+      console.log(
+        "Removing" +
+          " " +
+          data.title +
+          " " +
+          "at " +
+          data.price +
+          " " +
+          "From cart..."
+      );
+    } else {
+      setAddedToCart(true);
+      console.log(
+        "Adding" +
+          " " +
+          data.title +
+          " " +
+          "at " +
+          data.price +
+          " " +
+          "To cart..."
+      );
+    }
   };
 
   const checkEnrollment = (courseData: any, userData: any) => {
@@ -85,24 +99,12 @@ export default function CourseDetails({ route, navigation }: any) {
       });
   };
 
-  // add logic to check whether a course is paid or free
-  // if a course is paid , navigate the user to the payment screen
-  // else just enrol..
+  // check enrollment for the currently selected course
   const enrol = () => {
     console.log("Enrolling...");
     if (data.is_free_course == null) {
       setVisible(true);
     } else {
-      // useEffect(() => {
-      //   API.enrol(userData.token, data.id)
-      //     ?.then((data) => {
-      //       console.log(data);
-      //       setIsEnrolled(true);
-      //     })
-      //     .catch((error) => {
-      //       console.log(error);
-      //     });
-      // }, [setIsEnrolled, isEnrolled]);
       API.enrol(userData.token, data.id)
         ?.then((data: ResponseData) => {
           setMessage(data.message);
@@ -149,10 +151,10 @@ export default function CourseDetails({ route, navigation }: any) {
             ]}
           />
           <BookmarkBtn
-            size={18}
-            onPress={addToBookmarked}
+            size={20}
+            onPress={addToCart}
             style={tw`p-5 bg-gray-200 w-15 top-88 left-81 rounded-full shadow-lg items-center content-center absolute z-10`}
-            iconName={bookmarked == false ? "bookmark-outline" : "bookmark"}
+            iconName={addedToCart === false ? "cart-outline" : "cart"}
           />
           <View
             style={tw`mt-15 ml-6 mr-6 flex absolute flex-row justify-between`}

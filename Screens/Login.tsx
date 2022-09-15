@@ -32,14 +32,8 @@ export default function Login({ navigation, route }: any) {
   const [fetchedPassword, setPassword] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [storedToken, setStoredToken] = useState<string>();
-  const [returnMessage, setReturnMessage] = useState<string>("");
   const data = React.useContext(NetworkContext);
   const { previous_screen, previous_data, message } = route.params;
-
-  if (previous_screen == "Forgot Password") {
-    setReturnMessage(message);
-  } else {
-  }
 
   const submitPassword = (password: string) => {
     setPassword(password);
@@ -87,11 +81,6 @@ export default function Login({ navigation, route }: any) {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
             <>
-              {previous_screen == "Forgot Password" ? (
-                alert(returnMessage)
-              ) : (
-                <View></View>
-              )}
               <ScrollView>
                 <View style={tw`p-9`}>
                   <View style={tw`mt-1 w-100`}>

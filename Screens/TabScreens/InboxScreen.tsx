@@ -3,7 +3,7 @@ import React from "react";
 import tw from "twrnc";
 import { NetworkContext } from "../../Components/ContextProvider";
 import { createStackNavigator } from "@react-navigation/stack";
-import renderInbox from "./InboxSubScreens/renderInbox";
+import RenderInbox from "./InboxSubScreens/RenderInbox";
 import MessageDetails from "./InboxSubScreens/MessageDetails";
 
 const Stack = createStackNavigator();
@@ -13,7 +13,7 @@ export default function InboxScreen() {
   return (
     <NetworkContext.Provider value={data}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="InboxScreen" component={renderInbox} />
+        <Stack.Screen name="InboxScreen" component={RenderInbox} />
         <Stack.Screen name="MessageDetails" component={MessageDetails} />
       </Stack.Navigator>
     </NetworkContext.Provider>

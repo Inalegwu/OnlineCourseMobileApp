@@ -61,7 +61,9 @@ export default function ForgotPassword({ navigation }: any) {
             <TouchableOpacity
               style={tw`m-1`}
               onPress={() => {
-                navigation.navigate("Login");
+                navigation.navigate("Login", {
+                  previous_screen: "Forgot Password",
+                });
               }}
             >
               <Feather name="arrow-left" size={25} style={tw`text-red-800`} />
