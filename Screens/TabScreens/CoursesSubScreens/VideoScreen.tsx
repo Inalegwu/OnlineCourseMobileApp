@@ -54,7 +54,8 @@ export default function VideoScreen({ navigation, route }: any) {
         </View>
         <Video
           source={{
-            uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+            // uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+            uri: "https://youtu.be/wao1xCQ7dtw",
             // uri: data.video_url_for_mobile_application,
           }}
           useNativeControls={true}
