@@ -9,6 +9,7 @@ import { NetworkContext } from "../../../Components/ContextProvider";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Input from "../../../Components/Input";
 import * as ImagePicker from "expo-image-picker";
+import * as API from "../../../data/remote/userApiCalls";
 import { updateUserData } from "../../../data/remote/userApiCalls";
 
 interface ResponseData {
@@ -96,7 +97,7 @@ export default function AccountDetails({ navigation }: any) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={tw`w-full pb-100`}
       >
-        <View style={tw`w-full h-40 mt-20 items-center content-center`}>
+        <View style={tw`w-full h-40 mt-5 items-center content-center`}>
           <Image
             source={{
               uri: "https://e-limi.africa/uploads/user_image/placeholder.png",
@@ -115,11 +116,20 @@ export default function AccountDetails({ navigation }: any) {
         {/* User Details Container */}
         <View style={tw`p-1 mt-23`}>
           {/* Input fields to fill in user information */}
-          <View></View>
+          <View style={tw`p-3`}>
+            <Input
+              placeholder="Email"
+              style={tw`bg-gray-200 mt-2 p-4 rounded-lg`}
+            />
+            <Input
+              placeholder="Password"
+              style={tw`bg-gray-200 p-4 mt-4 rounded-lg`}
+            />
+          </View>
           {/* Update Account Button */}
-          <View style={tw`mt-3 p-3`}>
+          <View style={tw`p-3`}>
             <TouchableOpacity
-              style={tw`p-3 mt-3 bg-green-300 items-center content-center w-full rounded-lg`}
+              style={tw`p-3 mt-3 bg-green-600 items-center content-center w-full rounded-lg`}
             >
               <Text style={tw`font-bold text-white text-lg`}>
                 Update Account
@@ -127,9 +137,9 @@ export default function AccountDetails({ navigation }: any) {
             </TouchableOpacity>
           </View>
           {/* Logout Button */}
-          <View style={tw`mt-3 p-3`}>
+          <View style={tw`p-3`}>
             <TouchableOpacity
-              style={tw`p-3 mt-3 bg-red-700 items-center content-center w-full rounded-lg`}
+              style={tw`p-3 bg-red-800 items-center content-center w-full rounded-lg`}
               onPress={logout}
             >
               <Text style={tw`font-bold text-white text-lg`}>Logout</Text>

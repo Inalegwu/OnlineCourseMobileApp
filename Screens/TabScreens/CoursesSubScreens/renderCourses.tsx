@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
 import { NetworkContext } from "../../../Components/ContextProvider";
-import { fetchMyCourse } from "../../../data/remote/userApiCalls";
+import * as API from "../../../data/remote/userApiCalls";
 import { ScrollView } from "react-native-gesture-handler";
 import Input from "../../../Components/Input";
 
@@ -21,14 +21,15 @@ import Input from "../../../Components/Input";
 // };
 
 export default function RenderCourses({ navigation }: any) {
-  const data: any = React.useContext(NetworkContext);
-  const [myCourses, setMyCourses] = useState<Object[]>();
+  const userData: any = React.useContext(NetworkContext);
+  const [myCourses, setMyCourses] = useState<Array<Object>>();
   const [loading, setLoading] = useState<boolean>(false);
   const [hasFetched, setHasFetched] = useState<boolean>(false);
 
-  if (myCourses === undefined) {
-    fetchMyCourse(data.token)
+  useEffect(() => {
+    API.fetchMyCourse(userData.token)
       ?.then((data) => {
+        console.log(data.data);
         setMyCourses(data.data);
         setLoading(true);
         setHasFetched(true);
@@ -36,8 +37,7 @@ export default function RenderCourses({ navigation }: any) {
       .catch((error) => {
         alert(error);
       });
-  }
-
+  }, [myCourses, setMyCourses]);
   const search = (text: string): void => {
     console.log(text);
   };
@@ -63,34 +63,9 @@ export default function RenderCourses({ navigation }: any) {
               color="#8D161A"
             />
           ) : (
-            myCourses?.map((data: any) => {
-              if (data === null) {
-                return <Text>You Currently Don't Have Any Courses</Text>;
-              } else {
-                return (
-                  <TouchableOpacity
-                    key={data.id}
-                    style={tw`p-6 mt-5 bg-gray-200 rounded-lg flex flex-row`}
-                    onPress={() => {
-                      navigation.navigate("CourseDetails", { data: data });
-                    }}
-                  >
-                    <View>
-                      <Image
-                        style={tw`h-18 w-18 rounded-lg mt-1`}
-                        source={{ uri: data.thumbnail }}
-                      />
-                    </View>
-                    <View style={tw`w-60 ml-3`}>
-                      <Text style={tw`font-bold text-lg text-gray-800`}>
-                        {data.title}
-                      </Text>
-                      <Text>{data.short_description.slice(0, 54) + "..."}</Text>
-                    </View>
-                  </TouchableOpacity>
-                );
-              }
-            })
+            <View>
+              <Text>Courses found successfully</Text>
+            </View>
           )}
         </ScrollView>
       </View>

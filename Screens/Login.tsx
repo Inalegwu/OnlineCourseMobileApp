@@ -31,7 +31,6 @@ export default function Login({ navigation, route }: any) {
   const [fetchedEmail, setEmail] = useState<string>();
   const [fetchedPassword, setPassword] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [storedToken, setStoredToken] = useState<string>();
   const data = React.useContext(NetworkContext);
   const { previous_screen, previous_data, message } = route.params;
 
@@ -51,11 +50,9 @@ export default function Login({ navigation, route }: any) {
     } else {
       login(fetchedEmail, fetchedPassword)
         ?.then((data: any) => {
-          console.log(data);
           setIsLoading(true);
           if (data.data.validity == 1) {
             console.log(data.data);
-            console.log("Setting token...");
             navigation.navigate("Home", { data: data.data });
             setIsLoading(false);
           } else {
@@ -85,29 +82,27 @@ export default function Login({ navigation, route }: any) {
                 <View style={tw`p-9`}>
                   <View style={tw`mt-1 w-100`}>
                     <TouchableOpacity
-                      style={tw`p-1 mt-4`}
+                      style={tw`p-1 mt-5`}
                       onPress={() => {
                         navigation.goBack();
                       }}
                     >
                       <Feather
                         name="arrow-left"
-                        size={20}
+                        size={25}
                         style={tw`text-red-800`}
                       />
                     </TouchableOpacity>
                   </View>
                   <View>
                     <Image
-                      style={[tw`h-65 w-80 mt-3`, styles.image]}
+                      style={[tw`h-55 w-80`, styles.image]}
                       source={require("../assets/images/3.png")}
                     />
                   </View>
-                  <Text style={tw`w-50 font-bold text-4xl mt-2`}>
-                    Welcome Back
-                  </Text>
+                  <Text style={tw`w-50 font-bold text-4xl`}>Welcome Back</Text>
                 </View>
-                <View style={tw`p-3 m-2`}>
+                <View style={tw`p-6 m-3`}>
                   <Input
                     style={tw`p-4 bg-gray-200 rounded-xl`}
                     placeholder="Email"

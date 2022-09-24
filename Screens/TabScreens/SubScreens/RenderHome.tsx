@@ -25,7 +25,7 @@ export default function RenderHome({ navigation, route }: any) {
   // TODO caching result of api request to prevent constant loading
   const [searchText, setSearchText] = useState();
   const [visible, setVisible] = useState<boolean>(false);
-  const [searchData, setSearchData] = useState<Object | undefined>();
+  const [searchData, setSearchData] = useState<Array<Object> | undefined>();
   let bookmarks: Array<Object>;
   const search = (text: string) => {
     setVisible(true);
@@ -72,25 +72,7 @@ export default function RenderHome({ navigation, route }: any) {
                 </View>
               </View>
               {/* icons */}
-              <View style={tw`flex flex-row justify-around p-3`}>
-                <TouchableOpacity style={tw`w-10`}>
-                  <FontAwesome name="bell" size={20} style={tw`text-red-800`} />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={tw`w-10`}
-                  onPress={() => {
-                    navigation.navigate("BookmarkScreen", {
-                      data: data,
-                    });
-                  }}
-                >
-                  <FontAwesome
-                    name="bookmark"
-                    size={20}
-                    style={tw`text-red-800`}
-                  />
-                </TouchableOpacity>
-              </View>
+              <View style={tw`flex flex-row justify-around p-3`}></View>
             </View>
           </View>
           {/* search bar */}
@@ -115,23 +97,23 @@ export default function RenderHome({ navigation, route }: any) {
                     setVisible(false);
                   }}
                 >
-                  <FontAwesome name="close" size={15} />
+                  <FontAwesome name="close" size={15} color="#8D161A" />
                 </TouchableOpacity>
                 {/* return items */}
-                {searchData?.map((item: any) => {
+                {searchData?.slice(0, 3)?.map((item: any) => {
                   return (
                     <TouchableOpacity
                       key={item.id}
                       onPress={() => {
                         navigation.navigate("CourseDetails", { data: item });
                       }}
-                      style={tw`flex p-1 m-1 flex-row`}
+                      style={tw`flex p-2 mt-3  flex-row`}
                     >
                       <Image
                         source={{ uri: item.thumbnail }}
                         style={tw`h-15 w-15 rounded-full`}
                       />
-                      <View style={tw`ml-2 mt--1`}>
+                      <View style={tw`ml-2 mt-1`}>
                         <Text style={tw`font-bold`}>{item.title}</Text>
                         <Text style={tw`text-gray-400`}>
                           {item.short_description.slice(0, 40) + "..."}
@@ -147,9 +129,6 @@ export default function RenderHome({ navigation, route }: any) {
             )}
           </View>
         </View>
-        {/* Offers Component */}
-        {/* <AllCourses /> */}
-        {/* Top Courses Component */}
         <TopCourses navigation={navigation} />
       </View>
     </>

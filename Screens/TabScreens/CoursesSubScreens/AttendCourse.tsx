@@ -20,10 +20,12 @@ interface ResponseData {
 }
 
 export default function AttendCourse({ navigation, route }: any) {
-  const [fetchedData, setFetchedData] = useState<object>();
+  const [fetchedData, setFetchedData] = useState<Object[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { courseData } = route.params;
   const userData = React.useContext(NetworkContext);
+
+  console.log(userData.token);
 
   try {
     useEffect(() => {
@@ -70,7 +72,7 @@ export default function AttendCourse({ navigation, route }: any) {
             contentContainerStyle={tw`pb-20`}
             showsVerticalScrollIndicator={false}
           >
-            {fetchedData.map((item) => {
+            {fetchedData?.map((item) => {
               return (
                 <View
                   style={tw`p-5 flex justify-between flex-row bg-gray-200 mt-3 mb-3 rounded-lg`}

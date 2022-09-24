@@ -2,7 +2,7 @@
 
 const axios = require("axios").default;
 
-const API_BASE_URI = "https://iosand.e-limi.africa/api";
+const API_BASE_URI = "https://e-limi.africa/api";
 
 async function apiCall(config) {
   try {
@@ -193,8 +193,7 @@ module.exports = {
   enrol: (token, courseID) => {
     if (token && courseID) {
       return apiCall({
-        url: "enrol",
-        method: "post",
+        url: "enroll_free_course",
         data: `course_id=${courseID}`,
         headers: { Auth: token },
       });
@@ -242,7 +241,7 @@ module.exports = {
   fetchLessons: (token, type, id) => {
     if (token && type && id) {
       return apiCall({
-        url: "api_lessons",
+        url: "lessons",
         headers: { Auth: token },
         params: { type: type, cou_sec_les_id: id },
       });
@@ -257,6 +256,31 @@ module.exports = {
         headers: { Auth: token },
         params: { lesson_id: lessonID },
       });
+  },
+
+  // Fetch Lesson Files Details
+  fetchLessonFileDetails: (lessonID) => {
+    if (lessonID)
+      return apiCall({
+        url: "/lesson_file_details",
+        params: { lesson_id: lessonID },
+      });
+  },
+
+  // Fetch Lesson Files URL
+  fetchLessonFileUrl: (lessonID) => {
+    if (lessonID)
+      return apiCall({
+        url: "/lesson_file_url",
+        params: { lesson_id: lessonID },
+      });
+  },
+
+  fetchLessonVideoUrl: (lessonID) =>{
+    if (lessonID)
+    return apiCall({
+      url: `/lesson_videourl/${lessonID}`,
+    })
   },
 
   fetchLessonThumbnailUrl: (token, lessonID) => {
@@ -339,16 +363,17 @@ module.exports = {
   },
 
   // Course Purchase and create Records on Payment Table
-  coursePurchase: (token, amount, courseID, method = "flutterwave") => {
-    if (token && method && amount && courseID) {
+  coursePurchase: (token, amountPaid, courseID, method = "flutterwave") => {
+    if (token && method && amountPaid && courseID) {
       return apiCall({
         url: "course_purchase",
         method: "post",
-        data: `method=${method}&amount_paid=${amount}&course_id=${courseID}`,
+        data: `method=${method}&amount_paid=${amountPaid}&course_id=${courseID}`,
         headers: { Auth: token },
       });
     }
   },
+  // 2748
 
   // Fetch Payment History of a user
   fetchPaymentHistory: (token) => {
@@ -371,22 +396,11 @@ module.exports = {
     else console.log("Illegal arguments");
   },
 
-  // RewriteCond %{HTTPS} !=on
-  // RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
-
-  // RewriteCond %{HTTPS} off
-  // RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-  // course_purchase_post
-  // course_purchase      Crud_Model.php
-
   // upload_user_image    User_Model
 
   // get_user_image_url   User_Model
 
   // add_submission       Crud_Model.php
-
-  // getWishLists         Crud_Model.php
 
   // Submit Quiz
   submitQuiz: (token, lessonID) => {

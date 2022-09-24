@@ -13,6 +13,7 @@ import tw, { useDeviceContext, useAppColorScheme } from "twrnc";
 import { StatusBar } from "expo-status-bar";
 import SearchResultsScreen from "./SubScreens/SearchResultsScreen";
 import PaymentScreen from "./SubScreens/PaymentScreen";
+import AllTopCourses from "./SubScreens/AllTopCourses";
 
 const Stack = createStackNavigator();
 
@@ -32,7 +33,7 @@ export default function HomeScreen() {
           <Stack.Screen name="CourseDetails" component={CourseDetails} />
           <Stack.Screen name="BookmarkScreen" component={BookmarkScreen} />
           <Stack.Screen name="AccountDetails" component={AccountDetails} />
-          <Stack.Screen name="SearchResults" component={SearchResultsScreen} />
+          <Stack.Screen name="AllTopCourses" component={AllTopCourses} />
           <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
         </Stack.Navigator>
       </NetworkContext.Provider>

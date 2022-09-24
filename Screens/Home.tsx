@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
 import React from "react";
 import tw from "twrnc";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -16,11 +23,25 @@ import { NetworkContext } from "../Components/ContextProvider";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-export default function Home({ navigation, route, hasLoggedIn }: any) {
+const TabBarButton = (props: any) => {
+  const { onPress, name, color, accessibilityState } = props;
+  const focused = accessibilityState.selected;
+  return (
+    <TouchableOpacity onPress={onPress} style={tw`p-3 ml-16.5`}>
+      <Feather
+        size={20}
+        name={name}
+        color={focused === true ? color : "black"}
+      />
+    </TouchableOpacity>
+  );
+};
+
+export default function Home({ navigation, route }: any) {
   const color = "#8D161A";
   const { data } = route.params;
-  let hasLoggedInPreviously = hasLoggedIn;
   console.log(data);
+
   return (
     <NetworkContext.Provider value={data}>
       <Tab.Navigator
@@ -28,45 +49,44 @@ export default function Home({ navigation, route, hasLoggedIn }: any) {
         screenOptions={{
           headerShown: false,
           tabBarLabelPosition: "below-icon",
-          tabBarLabelStyle: { fontWeight: "bold" },
+          tabBarShowLabel: false,
           tabBarActiveTintColor: "#8D161A",
           tabBarInactiveTintColor: "black",
-          tabBarStyle: { height: 50, padding: 3 },
+          tabBarHideOnKeyboard: true,
+          tabBarStyle: {
+            height: 60,
+            padding: 8,
+            position: "absolute",
+            margin: 10,
+            borderRadius: 10,
+            marginBottom: 20,
+          },
         }}
       >
         <Tab.Screen
           name="HomeScreen"
           options={{
-            tabBarIcon: ({ color }) => {
-              return <Feather name="home" size={20} color={color} />;
-            },
+            tabBarButton: (props) => (
+              <TabBarButton {...props} name="home" color={color} />
+            ),
           }}
           component={HomeScreen}
         />
         <Tab.Screen
           name="Inbox"
           options={{
-            tabBarIcon: ({ color }) => {
-              return <Feather name="message-square" color={color} size={20} />;
-            },
+            tabBarButton: (props) => (
+              <TabBarButton {...props} name="message-square" color={color} />
+            ),
           }}
           component={InboxScreen}
         />
         <Tab.Screen
-          name="Cart"
-          options={{
-            tabBarIcon: ({ color }) => {
-              return <Feather name="shopping-cart" color={color} size={20} />;
-            },
-          }}
-          component={CartScreen}
-        />
-        <Tab.Screen
           name="Courses"
           options={{
-            tabBarIcon: ({ color }) => {
-              return <Feather name="book" color={color} size={20} />;
-            },
+            tabBarButton: (props) => (
+              <TabBarButton {...props} name="book" color={color} />
+            ),
           }}
           component={CoursesScreen}
         />

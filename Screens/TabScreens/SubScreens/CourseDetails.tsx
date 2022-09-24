@@ -25,7 +25,15 @@ interface ResponseData {
 }
 
 //TODO defining a data type to be recognised by the userData variable
-interface UserDataType {}
+interface UserDataType {
+  email: string;
+  first_name: string;
+  last_name: string;
+  role: string;
+  token: string;
+  user_id: number;
+  validity: number;
+}
 
 export default function CourseDetails({ route, navigation }: any) {
   const { data }: any = route.params;
@@ -46,7 +54,7 @@ export default function CourseDetails({ route, navigation }: any) {
   };
 
   // !read only
-  const userData: Object | undefined = React.useContext(NetworkContext);
+  const userData: UserDataType = React.useContext(NetworkContext);
 
   const addToCart = () => {
     if (addedToCart === true) {
@@ -167,17 +175,17 @@ export default function CourseDetails({ route, navigation }: any) {
             >
               <FontAwesome
                 size={20}
-                style={tw`text-red-300`}
+                style={tw`text-red-800`}
                 name="arrow-left"
               />
             </TouchableOpacity>
             {/* Share Button */}
             <TouchableOpacity onPress={shareData} style={tw`left-78 top--3`}>
-              <Ionicons name="share" size={30} style={tw`text-red-300`} />
+              <Ionicons name="share" size={30} style={tw`text-red-800`} />
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView style={tw`p-2`}>
+        <ScrollView style={tw`p-2 mb-17`}>
           {/* Title */}
           <View style={tw` mt-3 flex flex-row justify-between m-2`}>
             <Text style={tw`text-3xl w-85 ml-2 text-black font-bold`}>
@@ -188,12 +196,12 @@ export default function CourseDetails({ route, navigation }: any) {
           <View style={tw`ml-4 mr-4`}>
             <View style={tw`flex flex-row`}>
               <View
-                style={tw`bg-red-200 w-20 p-3 items-center content-center p-1 rounded-xl`}
+                style={tw`bg-red-800 w-20 p-3 items-center content-center p-1 rounded-xl`}
               >
                 {data.discount_flag === null ? (
-                  <Text style={tw`font-bold text-red-800`}>Paid</Text>
+                  <Text style={tw`font-bold text-white`}>Paid</Text>
                 ) : (
-                  <Text style={tw`font-bold text-red-800`}>Discounted</Text>
+                  <Text style={tw`font-bold text-white`}>Discounted</Text>
                 )}
               </View>
             </View>
@@ -201,11 +209,11 @@ export default function CourseDetails({ route, navigation }: any) {
               <Text style={tw`font-bold text-red-800 text-xl`}>
                 {data.price}
               </Text>
-              {data.discounted_flag === null ? null : (
+              {/* {data.discounted_flag === null ? null : (
                 <Text style={tw`text-gray-400 ml-4 mt-2`}>
                   {data.discounted_price}
                 </Text>
-              )}
+              )} */}
             </View>
             <View
               style={tw`flex flex-row items-start content-start justify-between ml-2 mr-2 mt-3`}

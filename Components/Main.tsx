@@ -8,24 +8,28 @@ import Login from "../Screens/Login";
 import Home from "../Screens/Home";
 import ForgotPassword from "../Screens/ForgotPassword";
 import { StatusBar } from "expo-status-bar";
+import { NetworkContext } from "./ContextProvider";
 
 const Stack = createStackNavigator();
 
 export default function Main() {
+  const { data } = React.useContext(NetworkContext);
   return (
     <>
       <StatusBar style="dark" />
       <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="OnBoard"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen name="OnBoard" component={OnBoard} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="CreateAccount" component={CreateAccount} />
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-        </Stack.Navigator>
+        <NetworkContext.Provider value={data}>
+          <Stack.Navigator
+            initialRouteName="OnBoard"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen name="OnBoard" component={OnBoard} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="CreateAccount" component={CreateAccount} />
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          </Stack.Navigator>
+        </NetworkContext.Provider>
       </NavigationContainer>
     </>
   );
